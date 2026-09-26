@@ -8,6 +8,14 @@ Your global skill location is:
 %USERPROFILE%\.agents\skills\
 ```
 
+## Skill dependencies are part of the workflow
+
+Some skills are orchestrators that explicitly invoke other skills. Installing only the wrapper is not enough. For example, the current `grill-with-docs` skill explicitly calls `grilling` and `domain-modeling`. The upstream documentation also warns that missing child skills can cause the model to improvise instead of running the intended workflow.
+
+The workflow therefore resolves dependency closure before invoking a routed skill.
+
+See [`dev/skill-dependencies.md`](../dev/skill-dependencies.md) for the complete matrix.
+
 ## 1. Core Workflow Skills
 
 These are the recommended starting set:
@@ -25,18 +33,34 @@ These are the recommended starting set:
 
 ### Example installation
 
+Install parents **and their known dependencies**:
+
 ```bash
+# Grilling
 npx skills@latest add mattpocock/skills --skill grill-with-docs --global
+npx skills@latest add mattpocock/skills --skill grilling --global
+npx skills@latest add mattpocock/skills --skill domain-modeling --global
+
+# Large-work planning
 npx skills@latest add mattpocock/skills --skill wayfinder --global
+npx skills@latest add mattpocock/skills --skill research --global
+npx skills@latest add mattpocock/skills --skill prototype --global
+
+# Implementation / quality
 npx skills@latest add mattpocock/skills --skill tdd --global
+npx skills@latest add mattpocock/skills --skill codebase-design --global
 npx skills@latest add mattpocock/skills --skill diagnosing-bugs --global
 npx skills@latest add mattpocock/skills --skill code-review --global
+
+# Session / understanding
 npx skills@latest add mattpocock/skills --skill handoff --global
 npx skills@latest add mattpocock/skills --skill wait-what --global
+
+# Architecture review
 npx skills@latest add mattpocock/skills --skill improve-codebase-architecture --global
 ```
 
-These commands install only the selected skills rather than the entire collection.
+**Do not** assume that a `skills` installer recursively installs a child skill named inside `SKILL.md`. Resolve dependencies explicitly.
 
 ## 2. Design Skills
 

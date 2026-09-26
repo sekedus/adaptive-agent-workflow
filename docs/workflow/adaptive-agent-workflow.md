@@ -154,6 +154,24 @@ Stop grilling when implementation-critical ambiguity is sufficiently resolved.
 
 Persist durable domain vocabulary in `CONTEXT.md` and hard-to-reverse architectural choices in ADRs.
 
+### Skill Dependency Closure
+
+Skill routing is dependency-aware. Some orchestrators explicitly invoke other skills. The current `grill-with-docs` skill, for example, explicitly calls `grilling` and `domain-modeling`.
+
+```text
+routed parent
+    ↓
+known dependency closure
+    ↓
+availability check
+    ↓
+parent invocation
+    ↓
+child skill invocation as specified upstream
+```
+
+If a required dependency is unavailable, stop the specialized workflow rather than recreating it from memory. Report the missing skill and provide the installation command. See `dev/skill-dependencies.md`.
+
 ---
 
 ## 7. Build Policy

@@ -176,3 +176,17 @@ RAG app    -> AI/RAG/prompt-injection security
 ```
 
 If the project crosses several domains, select one primary assessment workflow and only the targeted secondary checks that match the changed surfaces.
+
+## A skill ran, but its workflow was incomplete
+
+A common cause is a missing child skill. `grill-with-docs`, for example, explicitly calls both `grilling` and `domain-modeling`. The upstream docs warn that a missing child can make the model improvise the interview rather than execute the intended primitive.
+
+Symptoms include: all questions arriving in one batch, missing `CONTEXT.md` updates, or a result that looks plausible but lacks the expected behavior of the parent workflow.
+
+Fix:
+
+1. Read `dev/skill-dependencies.md`.
+2. Verify the child skills are installed.
+3. Reload the harness if it caches skill discovery.
+4. Re-run the parent skill.
+5. Do not replace the child skill with an improvised prompt unless the user explicitly chooses a fallback.

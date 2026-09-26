@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow Wiki
 
-Complete English documentation for installing, using, recovering, and maintaining the **Adaptive Agent Workflow**.
+Complete documentation for installing, using, recovering, and maintaining the **Adaptive Agent Workflow**.
 
 ## Start here
 
@@ -40,3 +40,5 @@ The workflow keeps multiple design options available:
 Users do not need to memorize security-skill names. The workflow classifies the project's attack surface in `dev/security.md` and routes to the smallest relevant security workflow.
 
 See [Skills](10-skills.md) and [Security / Quality Gates](06-quality-gates.md) for the routing model.
+
+For dependency-aware installation, see [Skill Dependencies](15-skill-dependencies.md).

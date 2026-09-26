@@ -45,7 +45,7 @@ Next session/model/device can recover from repository state
 
 ```text
 1. Solve the Problem — Useful & Usable
-2. Unique Design — Desirable & Distinctive
+2. Distinctive Design — Desirable & Distinctive
 3. Secure by Design
 ```
 
@@ -82,11 +82,12 @@ When the target project already contains similar workflow files, prefer merging 
 - `dev/roadmap.md` — milestones and direction.
 - `dev/quality.md` — adaptive quality-gate policy and three-pillar quality model.
 - `dev/security.md` — project-specific security profile and security-skill routing.
+- `dev/skill-dependencies.md` — known skill dependency closure and installation guidance.
 - `dev/parking-lot.md` — unrelated ideas that should not hijack the active task.
 - `dev/tasks/` — bounded executable tasks.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
-- `wiki/` — complete English user and maintenance guide for the workflow.
+- `wiki/` — complete user and maintenance guide for the workflow.
 
 ## Install into a new project
 
@@ -126,4 +127,8 @@ Chat history is temporary. The repository is the durable memory.
 
 ## Documentation
 
-See [the Adaptive Agent Workflow Wiki](wiki/README.md) for the complete English usage guide, setup instructions, recovery procedures, skill routing, and maintenance guidance.
+See [the Adaptive Agent Workflow Wiki](wiki/README.md) for the complete usage guide, setup instructions, recovery procedures, skill routing, and maintenance guidance.
+
+## Skill dependency closure
+
+Some routed skills are orchestrators that invoke other skills. This template tracks their known dependency closure so the workflow does not attempt to use a parent without the primitives it expects. See `dev/skill-dependencies.md`.

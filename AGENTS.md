@@ -204,7 +204,33 @@ At minimum it records:
 
 ---
 
-## 10. Skills, Quality Gates, and the Three Pillars
+## 10. Skill Dependency Closure
+
+Some routed skills are orchestrators that explicitly invoke other skills. A parent skill is not considered ready until its required dependency closure is available to the current harness.
+
+Before invoking a routed skill:
+
+1. Resolve its known dependency closure in `dev/skill-dependencies.md`.
+2. Verify required dependencies are installed and discoverable.
+3. Invoke the parent skill only when required dependencies are available.
+4. Let the parent skill invoke its own model-invoked primitives as specified by its upstream `SKILL.md`.
+5. If a required dependency is missing, do not imitate the missing workflow from memory. Report the dependency and provide its installation command.
+
+Example:
+
+```text
+/grill-with-docs
+    ↓
+requires: grilling + domain-modeling
+    ↓
+verify both are available
+    ↓
+invoke /grill-with-docs
+```
+
+Do not treat a successful invocation of the parent skill as proof that its child skills actually ran. Expected side effects are part of verification.
+
+## 11. Skills, Quality Gates, and the Three Pillars
 
 Evaluate meaningful product work through three pillars:
 
@@ -236,7 +262,7 @@ Explicitly invoke a skill when the workflow requires it, even if the skill is co
 
 ---
 
-## 11. Quality Claims
+## 12. Quality Claims
 
 Do not claim that something is fixed, secure, compatible, complete, or tested without evidence appropriate to the claim.
 
@@ -250,7 +276,7 @@ Distinguish clearly between:
 
 ---
 
-## 12. Style and Existing Patterns
+## 13. Style and Existing Patterns
 
 Before introducing a new pattern, abstraction, dependency, naming convention, or file organization:
 
@@ -264,7 +290,7 @@ Prefer the smallest simple solution that fits current requirements and project c
 
 ---
 
-## 13. Compatibility / Legacy
+## 14. Compatibility / Legacy
 
 Never silently invent a legacy-support target.
 
@@ -274,7 +300,7 @@ If a baseline is missing and the decision materially affects implementation, est
 
 ---
 
-## 14. New Ideas During Work
+## 15. New Ideas During Work
 
 A new idea is not automatically a task switch.
 
@@ -286,7 +312,7 @@ When an unrelated idea appears:
 
 ---
 
-## 15. Natural-Language Resume
+## 16. Natural-Language Resume
 
 When the user says things such as:
 
@@ -304,7 +330,7 @@ Do not require the user to repeat workflow instructions.
 
 ---
 
-## 16. Output Style
+## 17. Output Style
 
 Keep technical explanations concise and readable.
 

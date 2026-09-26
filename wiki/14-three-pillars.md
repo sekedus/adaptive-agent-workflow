@@ -10,6 +10,7 @@ Adaptive Agent Workflow uses three pillars as the product-quality model:
    Desirable & Distinctive
 
 3. Secure by Design
+   Security is part of design and verification
 ```
 
 The goal is not to turn every feature into a giant checklist. The goal is to prevent a common failure mode of AI-assisted development:
