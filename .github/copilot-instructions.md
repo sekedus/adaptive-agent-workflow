@@ -18,3 +18,12 @@ When a substantial or ambiguous feature/product idea requires requirements disco
 When work becomes large or likely to exceed the current context, prefer bounded tasks, checkpoints, and `/wayfinder` or `/handoff` when appropriate.
 
 Do not modify production code for questions, explanations, or review requests unless the user clearly requests implementation/fixing.
+
+
+Product-quality routing:
+
+- Solve the Problem — Useful & Usable
+- Distinctive Design — Desirable & Distinctive
+- Secure by Design
+
+Use `dev/quality.md` and `dev/security.md` to select only the relevant quality and security skills for the current change. Do not require the user to name the correct security skill manually.

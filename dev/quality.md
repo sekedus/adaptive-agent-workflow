@@ -1,92 +1,230 @@
 # Adaptive Quality Gates
 
-The goal is not to run every review/skill on every change.
+The product is evaluated through three primary pillars:
 
-Select only the gates that match the change's size, risk, and affected domain.
+1. **Solve the Problem** — Useful & Usable
+2. **Distinctive Design** — Desirable & Distinctive
+3. **Secure by Design** — Security is part of the product design, not a final checkbox
 
-## Gate Selection
+The workflow uses quality gates selectively. The purpose is to increase confidence without wasting context on every change.
 
-### Simple / Local Change
+## 1. The Three-Pillar Model
 
-Use when the change is small, obvious, and low-risk.
+### Pillar 1 — Solve the Problem
 
-Minimum:
+The product must solve the intended problem and be usable in the real workflow of its users.
 
-- targeted verification/test when applicable;
-- inspect the final diff for accidental changes.
+Evaluate as appropriate:
 
-Avoid heavyweight skill invocation.
+- functional correctness;
+- task completion;
+- information architecture;
+- interaction clarity;
+- error and empty states;
+- accessibility;
+- performance that affects usability;
+- compatibility with the declared runtime/browser baseline.
 
-### Normal Feature
+Typical gates:
 
-Use when the change affects multiple files or user-visible behavior but remains bounded.
-
-Minimum:
-
+- `/grill-with-docs` for unclear user requirements;
+- `/tdd` for important behavior;
 - targeted tests;
-- appropriate code review;
-- compatibility check when relevant.
+- browser/E2E verification with Playwright when user interaction matters.
 
-### Large / Cross-Cutting Feature
+### Pillar 2 — Distinctive Design
 
-Use when the change spans modules, architecture, migrations, or likely exceeds one context window.
+The product should be desirable and visually/experientially distinctive when visual design is part of the product.
+
+Evaluate as appropriate:
+
+- clear design direction;
+- visual hierarchy;
+- typography;
+- color and contrast;
+- spacing and composition;
+- motion and interaction details;
+- responsive behavior;
+- consistency with the project's design language;
+- avoidance of generic AI-generated patterns.
+
+Typical gates:
+
+- `impeccable` for frontend design shaping, critique, audit, polish, and refinement;
+- Anthropic `frontend-design` for deliberate visual direction and implementation;
+- Microsoft `frontend-design-review` for post-implementation review;
+- Playwright/browser verification when UI behavior and responsive states matter.
+
+Do not run a full design workflow for a one-line CSS fix.
+
+### Pillar 3 — Secure by Design
+
+Security should be considered at requirement, architecture, implementation, and verification stages.
+
+Evaluate as appropriate:
+
+- trust boundaries;
+- authentication and authorization;
+- input handling;
+- secrets and sensitive data;
+- external integrations;
+- file and network boundaries;
+- abuse cases;
+- dependency/supply-chain risk;
+- runtime attack surface.
+
+Use `dev/security.md` to map the project's actual attack surface to targeted security skills.
+
+Do not treat a generic security checklist or a single AI review as a security guarantee.
+
+## 2. Classification Dimensions
+
+Before selecting gates, consider:
+
+- task size;
+- security sensitivity;
+- user-visible impact;
+- UI impact;
+- architectural impact;
+- regression risk;
+- browser/runtime compatibility;
+- likelihood of requiring real-world verification.
+
+## 3. Small / Local Change
+
+Example:
+
+```text
+Fix a typo in a label.
+```
+
+Gate:
+
+```text
+targeted verification
+```
+
+Do not run a full security assessment, design audit, or architecture review.
+
+## 4. Normal Feature
+
+Example:
+
+```text
+Add bookmark tags.
+```
+
+Typical gates:
+
+```text
+behavioral tests
+-> relevant pillar checks
+-> code review
+```
+
+Only activate the pillars affected by the change.
+
+## 5. Large / Cross-Cutting Feature
 
 Use:
 
-- `/grill-with-docs` when requirements are ambiguous;
-- `/wayfinder` for large work when available;
+- `/grill-with-docs` when requirements are unresolved;
+- `/wayfinder` when the work genuinely spans multiple sessions;
 - bounded tasks;
-- checkpoint after meaningful units;
-- `/code-review` before considering the implementation complete.
+- checkpoints after meaningful units;
+- targeted quality gates for all affected pillars;
+- `/code-review` before considering implementation complete.
 
-### Bug / Unknown Failure
+## 6. Bug / Unknown Failure
 
 Use:
 
 - `/diagnosing-bugs` when available;
-- reproduce or establish an observable failure;
-- apply the smallest fix;
-- regression test;
-- verify.
+- reproduction or an observable failure;
+- the smallest valid fix;
+- regression testing;
+- verification.
 
-### Security-Sensitive Change
+Do not redesign the system before establishing the actual failure.
+
+## 7. Security Gate
+
+Use `dev/security.md` to classify the attack surface first.
+
+Security routing should follow:
+
+```text
+project type
+    -> trust boundaries
+    -> attack surface
+    -> security domain
+    -> primary assessment skill
+    -> targeted tests
+    -> evidence
+```
 
 Examples:
 
-- authentication;
-- authorization;
-- sessions/tokens;
-- file uploads;
-- payments;
-- untrusted input;
-- secrets;
-- externally reachable services.
+```text
+Web app
+  -> web application security
 
-Use targeted security skills relevant to the changed attack surface. Do not invoke an entire cybersecurity catalog unnecessarily.
+OAuth/OIDC
+  -> identity + OAuth-specific testing
 
-A useful source is `mukul975/Anthropic-Cybersecurity-Skills` when installed and appropriate.
+REST/GraphQL API
+  -> API security + authorization/data-exposure checks
 
-Security review is not the same as a security guarantee. Prefer actual tests/tool evidence where possible.
+Mobile app
+  -> mobile security + mobile API security
 
-### UI / Frontend Change
+Kubernetes
+  -> container + Kubernetes/cloud security
+
+CI/CD
+  -> DevSecOps + supply-chain security
+
+LLM/RAG/MCP
+  -> AI security + prompt/tool abuse testing
+```
+
+Do not install or invoke the entire cybersecurity catalog for every project. Select only the domains and skills justified by the project's attack surface.
+
+## 8. UI / Frontend Change
 
 For a new or substantially redesigned UI:
 
-- use an appropriate frontend-design/taste skill when distinctive design is required;
-- use frontend-design review when available;
-- use Playwright/browser verification when behavior or responsive layout matters.
+```text
+design direction
+-> implementation
+-> design review
+-> browser verification when appropriate
+```
 
-Do not run large design workflows for a one-line CSS correction.
+Preferred design routing:
 
-### Behavior / Regression Work
+```text
+new/design-heavy UI
+    -> impeccable and/or frontend-design
+
+implemented UI
+    -> frontend-design-review
+
+interactive/responsive UI
+    -> Playwright
+```
+
+Use `impeccable` when the task is about shaping, critiquing, auditing, polishing, clarifying, distilling, or refining a frontend interface. It provides a larger design vocabulary and deterministic detectors for common AI-generated design patterns.
+
+## 9. Behavior / Regression Work
 
 Use `/tdd` when test-first development materially improves confidence.
 
 Prefer tests around public behavior rather than implementation details.
 
-### Stress / Failure Testing
+## 10. Stress / Failure Testing
 
-Do not interpret "stress testing" as one universal test.
+"Stress testing" is not one universal operation.
 
 Select relevant categories:
 
@@ -97,39 +235,43 @@ Select relevant categories:
 - network failure;
 - timeout/retry behavior;
 - browser/E2E behavior;
-- load/performance tests when the system needs them.
+- load/performance tests when the system needs them;
+- abuse-case/security testing.
 
-For web applications, Playwright/browser tooling can provide valuable real-browser verification.
+Select the smallest meaningful set based on the feature's risk.
 
-### Codebase-Wide Architecture Review
+## 11. Codebase-Wide Architecture Review
 
 Do not perform architecture refactoring after every task.
 
-Use `/improve-codebase-architecture` or an equivalent architecture review periodically or when repeated changes reveal structural friction.
+Use `/improve-codebase-architecture` periodically or when repeated changes reveal structural friction.
 
-## Review Sequence
+## 12. Review Sequence
 
-Prefer this sequence:
+Normal feature:
 
 ```text
-implement
+understand
+  -> implement
   -> targeted verification
-  -> selective quality gates
+  -> relevant pillar gates
   -> code review
   -> checkpoint
 ```
 
-For higher-risk work:
+Higher-risk feature:
 
 ```text
-implement
+understand / grill
+  -> plan
+  -> implement in bounded units
   -> tests
-  -> security / UI / E2E / failure checks as appropriate
+  -> security / design / E2E / failure checks as appropriate
   -> code review
   -> checkpoint
 ```
 
-## Evidence Levels
+## 13. Evidence Levels
 
 Use these labels in task notes when useful:
 
@@ -137,3 +279,5 @@ Use these labels in task notes when useful:
 - `TESTED` — a relevant automated/manual test was executed.
 - `VERIFIED` — expected behavior was confirmed with appropriate evidence.
 - `UNVERIFIED` — work exists but evidence is incomplete.
+
+Never convert "no obvious issue found" into "secure", "bug-free", or "production-ready" without evidence appropriate to that claim.

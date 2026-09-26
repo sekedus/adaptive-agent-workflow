@@ -1,27 +1,29 @@
 # Recommended Skills
 
-This workflow does not require every available skill. It is designed around **selective activation**.
+The workflow is designed around **selective activation**, not installing or invoking every skill for every task.
 
-## Tier 1: Core skills
+Your global skill location is:
 
-These are the most useful for the workflow itself.
+```text
+%USERPROFILE%\.agents\skills\
+```
 
-| Skill | Why install it | Typical trigger |
+## 1. Core Workflow Skills
+
+These are the recommended starting set:
+
+| Skill | Why use it | Typical trigger |
 |---|---|---|
-| `grill-with-docs` | Codebase-aware requirement grilling and shared understanding | New/ambiguous feature |
-| `wayfinder` | Multi-session planning for large or foggy work | Large/cross-cutting task |
-| `tdd` | Behavior-first testing and tight implementation loops | Important behavior |
-| `diagnosing-bugs` | Evidence-driven debugging loop | Hard bug/performance regression |
-| `code-review` | Review implementation against standards/spec | After meaningful implementation |
-| `handoff` | Bridge between large sessions/models | Context pressure / session boundary |
-| `wait-what` | Re-explain a confusing prior answer | User does not understand |
-| `improve-codebase-architecture` | Architecture-level cleanup and design review | Repeated structural friction |
+| `grill-with-docs` | Turns unclear product/feature ideas into shared understanding | New or ambiguous requirements |
+| `wayfinder` | Maps genuinely large work into bounded multi-session tasks | Large/cross-cutting work |
+| `tdd` | Keeps behavioral implementation/test loops tight | Important behavior |
+| `diagnosing-bugs` | Forces evidence-driven debugging | Unknown/hard bugs |
+| `code-review` | Reviews implementation against standards/spec | After meaningful implementation |
+| `handoff` | Preserves context across sessions/models | Context pressure/session boundary |
+| `wait-what` | Re-explains confusing agent output | User does not understand an explanation |
+| `improve-codebase-architecture` | Finds structural friction across the codebase | Periodic/deep architecture review |
 
-Matt Pocock's current engineering skill collection includes these workflows and describes it as a composable set intended to work with different models.
-
-### Install
-
-The current installer supports global installation and individual skill selection. Use the space-separated `--skill <name>` form when selecting a skill.
+### Example installation
 
 ```bash
 npx skills@latest add mattpocock/skills --skill grill-with-docs --global
@@ -34,148 +36,227 @@ npx skills@latest add mattpocock/skills --skill wait-what --global
 npx skills@latest add mattpocock/skills --skill improve-codebase-architecture --global
 ```
 
-If your environment already exposes the global skills under `%USERPROFILE%\.agents\skills\`, verify the resulting path after installation.
+These commands install only the selected skills rather than the entire collection.
 
-## Tier 2: Optional productivity/engineering skills
+## 2. Design Skills
 
-Install when your projects need them:
+### `impeccable` — recommended
 
-- `prototype` — explore a design/interaction question without committing to the final architecture.
-- `research` — investigate questions against primary sources and capture cited findings.
-- `implement` — structured implementation workflow after a clear spec/ticket set.
+Install **Impeccable** for frontend design work. The current project describes it as a design language for AI coding agents with dozens of commands, deterministic design-pattern detectors, live browser iteration, and project-specific product/design context. The upstream repository currently contains an Agents Skills-compatible `impeccable` skill. [Upstream repository](https://github.com/pbakaus/impeccable)
 
-Matt's current engineering catalog distinguishes implementation, Wayfinder planning, prototype work, debugging, and research rather than treating them as one universal process.
+Preferred global installation for this workflow:
 
-## Tier 3: Frontend design
+```bash
+npx skills@latest add pbakaus/impeccable --skill impeccable --global
+```
+
+If you use the upstream installer directly instead, follow the repository's current `npx impeccable install` flow. Do not use both installers for the same global copy unless you intentionally want separate installations.
+
+Use it for:
+
+- new frontend direction;
+- redesigns;
+- visual critique;
+- UX/UI audits;
+- polishing an existing interface;
+- eliminating generic AI-generated visual patterns;
+- responsive/accessibility/design-system refinement.
 
 ### Anthropic `frontend-design`
 
-Use when creating or reshaping UI that should have deliberate visual identity instead of generic defaults.
-
-Depending on how your skills CLI discovers the Anthropic repository, install the specific skill rather than blindly loading the entire repository.
-
-A direct skill source can be used with the skills CLI when supported:
+Use for deliberate, distinctive frontend creation when you want the Anthropic design workflow.
 
 ```bash
-npx skills@latest add https://github.com/anthropics/skills --skill frontend-design --global
+npx skills@latest add anthropics/skills --skill frontend-design --global
 ```
 
-### Leonxlnx `taste-skill`
-
-The current default install name is `design-taste-frontend` and v2 is experimental. It is specifically aimed at anti-slop frontend direction and uses variance/motion/density controls. Treat it as an optional experimental design layer rather than a universal requirement.
-
-```bash
-npx skills@latest add https://github.com/Leonxlnx/taste-skill --skill design-taste-frontend --global
-```
-
-For projects that need stable old behavior, the repository also preserves `design-taste-frontend-v1`.
+Do not automatically run both `impeccable` and `frontend-design` for every UI task. Choose the skill that fits the design phase.
 
 ### Microsoft `frontend-design-review`
 
-Use after UI implementation when you need design-system, accessibility, responsive, theme, and UI quality review. The current skill explicitly supports design reviews and creative frontend work and is not intended for backend-only work.
+Use as a post-implementation design review when you need systematic checks for design quality, accessibility, responsive behavior, theme behavior, and design-system compliance.
 
 ```bash
 npx skills@latest add microsoft/skills --skill frontend-design-review --global
 ```
 
-## Tier 4: Browser testing
+### Design routing
 
-### Playwright CLI skill
+Prefer:
 
-For web projects, this is strongly recommended when browser behavior matters.
+```text
+new/ambitious UI
+    -> impeccable OR frontend-design
 
-Install the CLI:
+existing UI needs critique/polish
+    -> impeccable
+
+implemented UI needs independent quality review
+    -> frontend-design-review
+
+browser interaction/responsive verification
+    -> Playwright
+```
+
+`impeccable` is particularly useful for the user's **Desirable & Distinctive** pillar.
+
+## 3. Browser / E2E Skills
+
+For web applications, Playwright is strongly recommended when real browser behavior matters.
+
+Typical uses:
+
+- authentication flows;
+- form behavior;
+- navigation;
+- responsive layout;
+- loading/error/empty states;
+- repeated interactions;
+- browser regression testing.
+
+The Playwright CLI provides an Agents Skills installation path into `.agents/skills`.
+
+Example:
 
 ```bash
 npm install -g @playwright/cli@latest
-```
-
-Install the skill into the vendor-neutral agent skills directory:
-
-```bash
 playwright-cli install --skills=agents -g
 ```
 
-Playwright documents this exact `.agents/skills` global layout, and the skill covers browser automation, snapshots, tracing, storage state, test generation, and test execution.
+Prefer the project's local Playwright version when the repository already pins one.
 
-## Tier 5: Security
+## 4. Security Skills: Do Not Guess From Skill Names
 
-### Anthropic Cybersecurity Skills
+The security library is intentionally huge. The current `mukul975/Anthropic-Cybersecurity-Skills` repository reports **817 skills across 34 security domains** on its current main branch. It includes web application security, API security, cloud security, mobile security, container security, DevSecOps, AI security, identity/access management, and many other domains.
 
-This is a very large library. The current repository reports 818 skills across many cybersecurity domains and explicitly supports GitHub Copilot among other agents.
+Source: [Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills)
 
-Do **not** treat the entire library as a mandatory daily dependency.
+You do **not** need to know which one to use from memory.
 
-Install targeted skills as needed.
+Use the project's `dev/security.md` as the routing layer.
 
-For example, the repository currently contains:
+### Security selection process
 
 ```text
-performing-web-application-penetration-test
-performing-web-application-vulnerability-triage
-configuring-oauth2-authorization-flow
+1. Identify the project type.
+2. Identify trust boundaries.
+3. Identify the attack surface that changed.
+4. Map the attack surface to a security domain.
+5. Choose one primary assessment workflow.
+6. Add only targeted skills for specific risks.
+7. Run actual tests/tools where possible.
+8. Record evidence and remaining uncertainty.
 ```
 
-The OAuth skill covers Authorization Code + PKCE, token lifecycle, scope design, state validation, redirect URI restrictions, and related controls. The web application pentest skill follows OWASP WSTG-style testing.
+### Security routing matrix
 
-Install a specific skill rather than the whole security collection when possible:
+| Project / changed area | Start with | Add targeted checks when relevant |
+|---|---|---|
+| Public web application | Web application security / OWASP WSTG-style testing | XSS, CSRF, SSRF, file upload, business logic |
+| REST / GraphQL API | API security | BOLA/IDOR, authz, schema/input validation, sensitive data |
+| OAuth / OIDC / SSO | Identity + OAuth-specific testing | redirect URI, state/nonce, PKCE, token leakage, scope escalation |
+| JWT | JWT security testing | algorithm confusion, claim validation, key handling |
+| Mobile app | Mobile application penetration testing | mobile API auth, storage, transport, platform controls |
+| Cloud deployment | Cloud security for the actual provider | IAM, secrets, network exposure, storage permissions |
+| Kubernetes | Kubernetes/container security | RBAC, network policies, workload identity, image/admission controls |
+| CI/CD / package supply chain | DevSecOps + supply-chain security | secrets, SBOM, signing, dependency confusion/typosquatting |
+| LLM / RAG / MCP | AI security | prompt injection, indirect injection, tool abuse, data exfiltration |
+| Sensitive data | Data protection / sensitive-data exposure | API keys, PII, logs, storage, transmission |
+| Network infrastructure | Network security | segmentation, exposed services, authentication |
+| Cryptography / key management | Cryptography security | key lifecycle, algorithms, storage, rotation |
 
-```bash
-npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill configuring-oauth2-authorization-flow --global
-npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill performing-web-application-vulnerability-triage --global
-```
+The repository itself documents security subdomains such as web-application-security, cloud-security, container-security, API-security, mobile-security, IAM, cryptography, DevSecOps, AI security, and others. Use those domain labels to narrow discovery rather than browsing hundreds of unrelated skills.
 
-For a full authorized web application security assessment, install/use the dedicated web application penetration-testing skill only when the project actually calls for it.
+### Practical discovery
 
-## Tier 6: Find more skills
-
-The skills CLI can search the ecosystem:
+If the exact skill is unknown:
 
 ```bash
 npx skills find security
-npx skills find typescript
-npx skills find playwright
+npx skills find oauth
+npx skills find api-security
+npx skills find kubernetes-security
+npx skills find mobile-security
 ```
 
-Use discovery when a task requires a specialized domain that is not already covered by your installed core skills.
+Then filter the results against `dev/security.md`.
 
-## Recommended minimum set for this workflow
+### Targeted examples
 
-If you want the smallest useful starting point:
+For a web application:
+
+```bash
+npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill performing-web-application-penetration-test --global
+```
+
+For vulnerability-finding triage:
+
+```bash
+npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill performing-web-application-vulnerability-triage --global
+```
+
+For mobile:
+
+```bash
+npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill conducting-mobile-app-penetration-test --global
+```
+
+For other domains, use `dev/security.md` and `npx skills find ...` rather than copying a random skill because its name sounds close.
+
+## 5. Security Is a Routing Problem, Not a Memory Test
+
+The goal is not:
+
+> "The user must memorize 817 skill names."
+
+The goal is:
 
 ```text
-mattpocock:
+project
+  -> security profile
+  -> attack surface
+  -> security domain
+  -> targeted skill
+```
+
+That makes security usable even for a user who is not a security specialist.
+
+## 6. Recommended Starting Set
+
+If the immediate goal is to keep the global skill installation small:
+
+```text
+Core:
 - grill-with-docs
 - wayfinder
-- diagnosing-bugs
 - tdd
+- diagnosing-bugs
 - code-review
 - handoff
 - wait-what
+- improve-codebase-architecture
 
-web projects:
-- playwright-cli
+Design:
+- impeccable
 - frontend-design-review
 
-optional UI:
-- design-taste-frontend
-- frontend-design
+Browser:
+- Playwright CLI skill
 
-security projects:
-- install targeted Anthropic Cybersecurity skills only
+Security:
+- do NOT install the entire catalog initially
+- install targeted security skills after classifying the project
 ```
 
-## Update policy
+## 7. Skill Update Policy
 
-Do not blindly update every skill in the middle of a project.
+Do not update a large skill collection in the middle of a critical implementation without checking what changed.
 
 Prefer:
 
 ```text
 finish/verify current work
--> update a skill
--> check for behavior changes
+-> update selected skill
+-> verify the skill still behaves as expected
 -> continue
 ```
-
-The skills CLI supports scoped `skills update` operations.

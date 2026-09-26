@@ -149,3 +149,30 @@ Also check that your agent actually supports the skill location being used.
 Skill repositories can evolve.
 
 Record important project dependencies on skill behavior in project docs if the behavior is critical. Update deliberately rather than blindly in the middle of a critical task.
+
+
+## Security skill seems wrong
+
+Do not guess from a skill name. Open `dev/security.md` and classify the changed attack surface first.
+
+Use:
+
+```text
+project type
+-> trust boundary
+-> attack surface
+-> security domain
+-> targeted skill
+```
+
+For example:
+
+```text
+OAuth login -> identity/OAuth testing
+REST API   -> API security / authorization
+Mobile app -> mobile application security
+Kubernetes -> container/Kubernetes/cloud security
+RAG app    -> AI/RAG/prompt-injection security
+```
+
+If the project crosses several domains, select one primary assessment workflow and only the targeted secondary checks that match the changed surfaces.

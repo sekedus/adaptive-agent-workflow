@@ -79,6 +79,20 @@ verification state
 constraints
 ```
 
+## `dev/security.md`
+
+**Question answered:** Which security surface does this project actually have, and which security workflows apply?
+
+Use it to record: 
+
+- project security classification;
+- trust boundaries;
+- sensitive data and external integrations;
+- the security domain(s) relevant to the project;
+- targeted skills selected for those domains.
+
+Do not turn this into a catalog of every security skill available.
+
 ## `dev/parking-lot.md`
 
 **Question answered:** What interesting things are intentionally not being done now?

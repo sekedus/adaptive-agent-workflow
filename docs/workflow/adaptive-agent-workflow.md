@@ -171,36 +171,70 @@ A task may contain multiple implementation units. A chat session does not need t
 
 ---
 
-## 8. Quality-Gate Policy
+## 8. Three-Pillar Quality Model
 
-The workflow is adaptive rather than universal.
+Meaningful product work is evaluated through three primary pillars:
 
-Use `dev/quality.md` to select the smallest set of gates that provides appropriate confidence.
+```text
+1. Solve the Problem
+   Useful & Usable
 
-The same project may use:
+2. Distinctive Design
+   Desirable & Distinctive
+
+3. Secure by Design
+   Security is part of design and verification
+```
+
+The pillars are not a fixed checklist. Apply each at the depth justified by the change.
+
+Use `dev/quality.md` for quality-gate selection and `dev/security.md` for security-skill routing.
+
+Examples:
 
 ```text
 small CSS fix
--> targeted check
+-> Useful/Usable light check + targeted verification
 
-normal feature
--> tests + code review
-
-authentication
--> tests + security review + relevant E2E/failure tests + code review
+normal user feature
+-> behavior tests + relevant usability check + code review
 
 new public UI
--> design skill + UI review + browser verification
+-> impeccable/frontend-design + design review + browser verification
+
+authentication
+-> behavior tests + targeted security workflows + E2E/failure tests + code review
+
+LLM/RAG feature
+-> behavior tests + AI-security checks + abuse-case testing
 
 large architectural feature
--> grill/wayfinder + tests + review + ADR
+-> grill/wayfinder + tests + affected pillar gates + review + ADR
 ```
 
 Do not run every expensive skill on every change.
 
+## 9. Security Skill Routing
+
+The user should not have to memorize security skill names. Classify the project's attack surface first:
+
+```text
+project type
+  -> trust boundaries
+  -> attack surface
+  -> security domain
+  -> primary assessment skill
+  -> targeted tests
+  -> evidence
+```
+
+`dev/security.md` is the project-specific routing layer.
+
+The security library is intentionally large. Select the smallest set of skills that covers the changed attack surface.
+
 ---
 
-## 9. Recovery-First Execution
+## 10. Recovery-First Execution
 
 A session can fail at any time:
 
@@ -242,7 +276,7 @@ Only after reconciliation should implementation continue.
 
 ---
 
-## 10. Context Safety
+## 11. Context Safety
 
 The goal is not to consume the maximum advertised context window.
 
@@ -268,7 +302,7 @@ not the entire previous conversation.
 
 ---
 
-## 11. Project Switching
+## 12. Project Switching
 
 A project switch is not a loss of state.
 

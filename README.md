@@ -13,6 +13,16 @@ Designed for:
 
 The workflow is intentionally conservative: the user does not need to type `MODE:` or repeat workflow instructions for ordinary work.
 
+## Three primary product pillars
+
+```text
+1. Solve the Problem — Useful & Usable
+2. Distinctive Design — Desirable & Distinctive
+3. Secure by Design
+```
+
+The workflow activates the smallest meaningful quality gates for the change instead of running every skill on every task.
+
 ## Core idea
 
 ```text
@@ -50,7 +60,8 @@ Next session/model/device can recover from repository state
 - `dev/constraints.md` — compatibility/legacy/runtime/resource constraints.
 - `dev/now.md` — the primary current-state checkpoint.
 - `dev/roadmap.md` — milestones and direction.
-- `dev/quality.md` — adaptive quality-gate policy and skill routing.
+- `dev/quality.md` — adaptive quality-gate policy and three-pillar quality model.
+- `dev/security.md` — project-specific security profile and security-skill routing.
 - `dev/parking-lot.md` — unrelated ideas that should not hijack the active task.
 - `dev/tasks/` — bounded executable tasks.
 - `docs/adr/` — durable architectural decisions.

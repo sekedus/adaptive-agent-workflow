@@ -204,13 +204,17 @@ At minimum it records:
 
 ---
 
-## 10. Skills and Adaptive Quality Gates
+## 10. Skills, Quality Gates, and the Three Pillars
+
+Evaluate meaningful product work through three pillars:
+
+1. **Solve the Problem** — Useful & Usable
+2. **Distinctive Design** — Desirable & Distinctive
+3. **Secure by Design** — Security is part of the design and verification process
 
 Use specialized skills when they provide a materially better workflow than ad-hoc reasoning.
-
 Do not invoke expensive or large skills for trivial tasks.
-
-Route selectively using `dev/quality.md`.
+Route selectively using `dev/quality.md` and `dev/security.md`.
 
 Examples:
 
@@ -221,10 +225,12 @@ Examples:
 - test-first behavioral work → `/tdd`
 - implementation review → `/code-review`
 - codebase-wide architecture friction → `/improve-codebase-architecture`
-- UI creation requiring distinctive design → appropriate frontend-design/taste skill
-- UI validation → frontend-design review / Playwright when available
-- security-sensitive change → targeted cybersecurity skill(s), not the entire security library
+- UI creation or redesign → `/impeccable` and/or a suitable frontend-design skill
+- UI validation → `frontend-design-review` / Playwright when appropriate
+- security-sensitive change → classify the attack surface in `dev/security.md`, then invoke targeted cybersecurity skill(s)
 - handoff/context pressure → `/handoff`
+
+Do not require the user to know the name of a security skill. Infer the security domain from the project attack surface and use `dev/security.md` to route it.
 
 Explicitly invoke a skill when the workflow requires it, even if the skill is configured as manually invoked.
 

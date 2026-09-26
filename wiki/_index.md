@@ -14,3 +14,4 @@
 - [Troubleshooting](11-troubleshooting.md)
 - [End-to-end examples](12-examples.md)
 - [Maintenance](13-maintenance.md)
+- [The three product pillars](14-three-pillars.md)

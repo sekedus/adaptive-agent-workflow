@@ -1,21 +1,85 @@
 # Adaptive Quality Gates
 
-The workflow uses quality gates selectively. The purpose is to increase confidence without wasting context on every task.
+Adaptive Agent Workflow evaluates meaningful product work through three pillars:
 
-## 1. Classification dimensions
+```text
+1. Solve the Problem — Useful & Usable
+2. Distinctive Design — Desirable & Distinctive
+3. Secure by Design
+```
 
-Before selecting gates, consider:
+The purpose is not to run every skill after every change. Select the smallest meaningful set of gates based on task size, risk, and affected product surface.
 
-- task size;
-- security sensitivity;
-- user-visible impact;
-- UI impact;
-- architectural impact;
-- regression risk;
-- browser/runtime compatibility;
-- likelihood of requiring real-world verification.
+## 1. Pillar 1 — Solve the Problem
 
-## 2. Small change
+Use when behavior or user workflow changes.
+
+Typical checks:
+
+- requirements still match the user's problem;
+- intended user can complete the task;
+- errors, loading, and empty states are usable;
+- supported runtime/browser behavior is preserved;
+- tests cover important public behavior.
+
+Typical skills:
+
+- `/grill-with-docs`
+- `/tdd`
+- `/diagnosing-bugs`
+- Playwright for real browser flows
+
+## 2. Pillar 2 — Distinctive Design
+
+Use when frontend/interface design is affected.
+
+Preferred routing:
+
+```text
+new / redesign / polish
+    -> impeccable and/or frontend-design
+
+implemented UI review
+    -> frontend-design-review
+
+real browser/responsive verification
+    -> Playwright
+```
+
+Do not run a full design workflow for a one-line CSS correction.
+
+## 3. Pillar 3 — Secure by Design
+
+Before choosing a security skill, classify the changed attack surface in `dev/security.md`.
+
+Use this sequence:
+
+```text
+project type
+    -> trust boundary
+    -> attack surface
+    -> security domain
+    -> primary assessment workflow
+    -> targeted tests
+    -> evidence
+```
+
+Examples:
+
+```text
+web app -> web application security
+REST/GraphQL -> API security
+OAuth/OIDC -> IAM + OAuth testing
+JWT -> token security
+mobile -> mobile security
+Kubernetes -> container/Kubernetes/cloud security
+CI/CD -> DevSecOps + supply chain
+LLM/RAG/MCP -> AI security
+```
+
+Do not invoke the entire cybersecurity library for a normal feature.
+
+## 4. Small / Local Change
 
 Example:
 
@@ -29,9 +93,7 @@ Gate:
 targeted verification
 ```
 
-Do not run a full security audit or architecture review.
-
-## 3. Normal feature
+## 5. Normal Feature
 
 Example:
 
@@ -39,16 +101,17 @@ Example:
 Add bookmark tags.
 ```
 
-Typical gates:
+Typical flow:
 
 ```text
-behavioral tests
+implement
+-> tests
+-> affected pillar checks
 -> code review
+-> checkpoint
 ```
 
-TDD can be used when behavior is important or unclear. Matt's engineering skills currently include TDD, code review, and implementation workflows designed to keep changes bounded.
-
-## 4. Hard bug
+## 6. Hard Bug
 
 Example:
 
@@ -62,97 +125,69 @@ Route to:
 /diagnosing-bugs
 ```
 
-The current skill is designed around an evidence loop: reproduce, minimize, hypothesize, instrument, fix, and regression-test.
-
-## 5. Authentication or sensitive data
-
-Typical gates:
+Then:
 
 ```text
-behavioral tests
--> targeted security review
--> relevant E2E/failure tests
--> code review
+reproduce
+-> minimize
+-> hypothesize
+-> verify
+-> fix
+-> regression test
 ```
 
-Do not automatically load the entire cybersecurity library.
+## 7. Large / Cross-Cutting Feature
 
-The current Anthropic Cybersecurity Skills repository contains hundreds of specialized security workflows, including web application security and OAuth-related skills. The repository currently reports 818 skills on `main`, so selective routing is important for context economy.
-
-## 6. UI feature
-
-Typical gates:
-
-```text
-frontend design guidance
--> implementation
--> frontend design review
--> browser verification when appropriate
-```
-
-Anthropic's `frontend-design` skill is explicitly aimed at distinctive, intentional UI rather than generic template-like output. Microsoft's current `frontend-design-review` skill can review UI for design quality, accessibility, responsiveness, theme behavior, and implementation quality.
-
-## 7. Browser/E2E testing
-
-For web projects, use Playwright when actual browser behavior matters.
-
-The current Playwright CLI skill supports browser automation, snapshots, tracing, video, storage-state workflows, test generation, and running Playwright tests. It is designed to be token-efficient compared with loading a large MCP schema into context.
-
-## 8. Large architectural work
-
-Typical route:
+Use:
 
 ```text
 /grill-with-docs (when requirements are unresolved)
         |
         v
-/wayfinder
+/wayfinder (when the work genuinely spans multiple sessions)
         |
         v
 bounded tasks
         |
         v
-implementation + verification
+implementation + targeted pillar gates
         |
         v
 /code-review
 ```
 
-The current Wayfinder guidance recommends it for work genuinely larger than one agent session, while smaller single-session planning can stay with grilling.
+## 8. Stress / Failure Testing
 
-## 9. Architecture cleanup
+"Stress testing" is layered. Select the relevant categories:
 
-Do not run a full architecture review after every tiny feature.
+- edge cases;
+- invalid input;
+- repeated actions;
+- concurrency/races;
+- network failure;
+- timeout/retry behavior;
+- browser/E2E behavior;
+- load/performance tests;
+- security abuse cases.
 
-Use `/improve-codebase-architecture` periodically or when evidence shows architectural friction such as duplicated responsibilities, tangled dependencies, or modules becoming difficult to change.
+Do not run all of them unless the feature justifies it.
 
-## 10. Stress testing is layered
+## 9. Periodic Architecture Review
 
-"Stress testing" is not one universal operation.
+Use `/improve-codebase-architecture` when repeated changes reveal structural friction or when the codebase needs a deliberate architecture review.
 
-Depending on the feature, it can include:
+Do not perform a repository-wide refactor after every small feature.
 
-```text
-edge-case tests
-integration tests
-browser/E2E tests
-failure/recovery tests
-property-based tests
-load/performance tests
-security testing
-```
+## 10. Quality-Gate Output
 
-Select the smallest meaningful set.
-
-## 11. Quality-gate output
-
-The agent should record:
+When useful, record:
 
 ```text
+Pillar:
 Gate:
 Result:
 Evidence:
 Remaining uncertainty:
 ```
 
-Never turn "no obvious issue found" into "secure" or "bug-free".
+Never turn "no obvious issue found" into "secure", "bug-free", or "production-ready" without appropriate evidence.
