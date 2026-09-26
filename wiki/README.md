@@ -1,57 +1,42 @@
 # Adaptive Agent Workflow Wiki
 
-This wiki is the operational manual for the **Adaptive Agent Workflow**.
+Complete English documentation for installing, using, recovering, and maintaining the **Adaptive Agent Workflow**.
 
-It is written for a user who:
-
-- primarily understands HTML, CSS, and JavaScript;
-- uses AI agents heavily for other programming languages and frameworks;
-- may use free or low-context models;
-- may switch models, sessions, IDEs, harnesses, devices, or projects;
-- prefers natural-language prompts instead of command-heavy prompts;
-- needs durable project state so a new agent can resume without old chat history.
-
-## Read this first
+## Start here
 
 1. [Principles](00-principles.md)
-2. [Installation and prerequisites](01-installation.md)
-3. [Starting a project](02-project-setup.md)
-4. [Daily usage](03-daily-usage.md)
-5. [Intent routing](04-intent-routing.md)
-6. [Grilling ideas with `/grill-with-docs`](05-grilling-and-requirements.md)
-7. [Adaptive quality gates](06-quality-gates.md)
-8. [Recovery and context limits](07-recovery-and-handoff.md)
-9. [Project state files](08-project-state.md)
-10. [Switching projects/devices](09-project-switching.md)
-11. [Recommended skills](10-skills.md)
+2. [Installation](01-installation.md)
+3. [Project Setup](02-project-setup.md)
+4. [Daily Usage](03-daily-usage.md)
+5. [Intent Routing](04-intent-routing.md)
+6. [Grilling & Requirements](05-grilling-and-requirements.md)
+7. [Quality Gates](06-quality-gates.md)
+8. [Recovery & Handoff](07-recovery-and-handoff.md)
+9. [Project State](08-project-state.md)
+10. [Project Switching](09-project-switching.md)
+11. [Skills](10-skills.md)
 12. [Troubleshooting](11-troubleshooting.md)
-13. [End-to-end examples](12-examples.md)
+13. [Examples](12-examples.md)
 14. [Maintenance](13-maintenance.md)
+15. [Three-Pillar Product Model](14-three-pillars.md)
 
-## The mental model
+## Important distinction
 
-```text
-Natural-language request
-        |
-        v
-Intent + size + risk assessment
-        |
-        +--> discuss / review
-        |
-        +--> grill / clarify
-        |
-        +--> plan
-        |
-        +--> build / fix
-        |
-        v
-Selective quality gates
-        |
-        v
-Verify + checkpoint
-        |
-        v
-Repository becomes the durable memory
-```
+The repository root `README.md` is the **template repository README**. When the workflow is installed into another project, do **not** overwrite that project's root `README.md` with the template README unless the user explicitly asks.
 
-The workflow is deliberately **adaptive**. It is not a ritual where every request runs every phase or every skill.
+The `wiki/` directory is optional project documentation. Keep it in the target project when the user wants the workflow guide available locally; otherwise it can remain only in the template repository.
+
+## Design skills
+
+The workflow keeps multiple design options available:
+
+- `impeccable` — primary option for shaping, critiquing, auditing, polishing, and refining frontend interfaces.
+- Anthropic `frontend-design` — alternative for deliberate, distinctive frontend design and implementation.
+- Leonxlnx `taste-skill` (`design-taste-frontend`) — alternative for design taste / anti-generic visual direction. It should remain available alongside `impeccable` and `frontend-design`; choose based on the project's needs rather than running all design skills together.
+- Microsoft `frontend-design-review` — independent post-implementation design review.
+
+## Security skills
+
+Users do not need to memorize security-skill names. The workflow classifies the project's attack surface in `dev/security.md` and routes to the smallest relevant security workflow.
+
+See [Skills](10-skills.md) and [Security / Quality Gates](06-quality-gates.md) for the routing model.

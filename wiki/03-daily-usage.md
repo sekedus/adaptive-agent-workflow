@@ -8,6 +8,12 @@ You can simply say:
 continue
 ```
 
+or:
+
+```text
+resume
+```
+
 The agent should read `dev/now.md`, the referenced task, and only the relevant project material.
 
 ## 2. Asking a question

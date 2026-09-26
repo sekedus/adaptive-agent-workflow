@@ -48,7 +48,7 @@ Remove this endpoint.
 
 When the user's intent is ambiguous, choose the least destructive interpretation that still moves the work forward.
 
-Do not turn:
+**Do not** turn:
 
 ```text
 Can we use PostgreSQL?
@@ -70,7 +70,7 @@ Before asking the user a question, inspect:
 - available tools;
 - existing skills when appropriate.
 
-Do not ask for information the repository already contains.
+**Do not** ask for information the repository already contains.
 
 ## 5. Make small assumptions when safe
 
@@ -80,7 +80,7 @@ Ask before high-impact, irreversible, security-sensitive, or materially user-vis
 
 ## 6. Context is a budget
 
-Do not optimize for consuming the largest advertised context window.
+**Do not** optimize for consuming the largest advertised context window.
 
 Instead:
 
@@ -102,7 +102,7 @@ Chat history is useful context, but it is not the source of truth.
 
 Use a skill when it materially improves a task.
 
-Do not run large skills merely because they exist.
+**Do not** run large skills merely because they exist.
 
 ## 9. Evidence beats confidence
 
@@ -114,7 +114,7 @@ Distinguish:
 - assumed;
 - not tested.
 
-Do not claim security, compatibility, correctness, or completion without suitable evidence.
+**Do not** claim security, compatibility, correctness, or completion without suitable evidence.
 
 ## 10. Optimize for recovery
 

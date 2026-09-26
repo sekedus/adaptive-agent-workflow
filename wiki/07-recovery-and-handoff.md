@@ -91,7 +91,7 @@ The next agent should inspect the diff, understand what already exists, finish o
 
 ## 4. Context danger zone
 
-Do not wait for the advertised context window to reach 100%.
+**Do not** wait for the advertised context window to reach 100%.
 
 For weaker/free models, treat high context utilization as a reason to stop at the next safe boundary.
 

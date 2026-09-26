@@ -2,7 +2,7 @@
 
 ## 1. Keep the workflow small
 
-Do not turn `AGENTS.md` into a giant prompt encyclopedia.
+**Do not** turn `AGENTS.md` into a giant prompt encyclopedia.
 
 Keep stable orchestration rules in `AGENTS.md`.
 Keep domain terms in `CONTEXT.md`.
@@ -83,4 +83,4 @@ one rule
 -> keep or revert
 ```
 
-Do not make ten workflow changes at once and then lose track of which one caused a regression.
+**Do not** make ten workflow changes at once and then lose track of which one caused a regression.

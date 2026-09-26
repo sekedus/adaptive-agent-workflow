@@ -27,7 +27,7 @@ For example:
 I want to build a bookmark manager.
 ```
 
-Do not write a long specification unless you already have one.
+**Do not** write a long specification unless you already have one.
 
 The agent should inspect the repository and decide whether the idea is already sufficiently defined.
 
@@ -69,7 +69,7 @@ Resource constraints:
 CPU-first; no GPU requirement
 ```
 
-Do not invent legacy support that the project never requested.
+**Do not** invent legacy support that the project never requested.
 
 ## 5. Create the first bounded task
 

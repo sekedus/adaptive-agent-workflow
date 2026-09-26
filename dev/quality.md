@@ -3,7 +3,7 @@
 The product is evaluated through three primary pillars:
 
 1. **Solve the Problem** — Useful & Usable
-2. **Distinctive Design** — Desirable & Distinctive
+2. **Unique Design** — Desirable & Distinctive
 3. **Secure by Design** — Security is part of the product design, not a final checkbox
 
 The workflow uses quality gates selectively. The purpose is to increase confidence without wasting context on every change.
@@ -52,10 +52,13 @@ Typical gates:
 
 - `impeccable` for frontend design shaping, critique, audit, polish, and refinement;
 - Anthropic `frontend-design` for deliberate visual direction and implementation;
+- Leonxlnx `taste-skill` (`design-taste-frontend`) as an alternative for a more opinionated visual-taste / anti-generic pass;
 - Microsoft `frontend-design-review` for post-implementation review;
 - Playwright/browser verification when UI behavior and responsive states matter.
 
-Do not run a full design workflow for a one-line CSS fix.
+**Do not** automatically invoke all three design-creation skills. Choose the smallest useful combination.
+
+**Do not** run a full design workflow for a one-line CSS fix.
 
 ### Pillar 3 — Secure by Design
 
@@ -75,7 +78,7 @@ Evaluate as appropriate:
 
 Use `dev/security.md` to map the project's actual attack surface to targeted security skills.
 
-Do not treat a generic security checklist or a single AI review as a security guarantee.
+**Do not** treat a generic security checklist or a single AI review as a security guarantee.
 
 ## 2. Classification Dimensions
 
@@ -104,7 +107,7 @@ Gate:
 targeted verification
 ```
 
-Do not run a full security assessment, design audit, or architecture review.
+**Do not** run a full security assessment, design audit, or architecture review.
 
 ## 4. Normal Feature
 
@@ -145,7 +148,7 @@ Use:
 - regression testing;
 - verification.
 
-Do not redesign the system before establishing the actual failure.
+**Do not** redesign the system before establishing the actual failure.
 
 ## 7. Security Gate
 
@@ -188,7 +191,7 @@ LLM/RAG/MCP
   -> AI security + prompt/tool abuse testing
 ```
 
-Do not install or invoke the entire cybersecurity catalog for every project. Select only the domains and skills justified by the project's attack surface.
+**Do not** install or invoke the entire cybersecurity catalog for every project. Select only the domains and skills justified by the project's attack surface.
 
 ## 8. UI / Frontend Change
 
@@ -205,7 +208,13 @@ Preferred design routing:
 
 ```text
 new/design-heavy UI
-    -> impeccable and/or frontend-design
+    -> impeccable OR frontend-design OR taste-skill
+
+stronger visual-taste / anti-generic direction
+    -> taste-skill
+
+existing UI needs critique / polish
+    -> impeccable
 
 implemented UI
     -> frontend-design-review
@@ -242,7 +251,7 @@ Select the smallest meaningful set based on the feature's risk.
 
 ## 11. Codebase-Wide Architecture Review
 
-Do not perform architecture refactoring after every task.
+**Do not** perform architecture refactoring after every task.
 
 Use `/improve-codebase-architecture` periodically or when repeated changes reveal structural friction.
 

@@ -42,7 +42,7 @@ These commands install only the selected skills rather than the entire collectio
 
 ### `impeccable` — recommended
 
-Install **Impeccable** for frontend design work. The current project describes it as a design language for AI coding agents with dozens of commands, deterministic design-pattern detectors, live browser iteration, and project-specific product/design context. The upstream repository currently contains an Agents Skills-compatible `impeccable` skill. [Upstream repository](https://github.com/pbakaus/impeccable)
+Install **Impeccable** for frontend design work. The upstream project provides an Agents Skills-compatible workflow for design critique, audit, polish, refinement, and anti-generic design work. [Upstream repository](https://github.com/pbakaus/impeccable)
 
 Preferred global installation for this workflow:
 
@@ -62,6 +62,32 @@ Use it for:
 - eliminating generic AI-generated visual patterns;
 - responsive/accessibility/design-system refinement.
 
+### Leonxlnx `taste-skill` (`design-taste-frontend`) — alternative
+
+Keep **Leonxlnx `taste-skill`** as a design option alongside `impeccable` and Anthropic `frontend-design`. Its `design-taste-frontend` skill is useful when you want stronger visual direction, anti-generic design guidance, and a more opinionated design-taste pass.
+
+```bash
+npx skills@latest add https://github.com/Leonxlnx/taste-skill --skill design-taste-frontend --global
+```
+
+**Do not** automatically run all three design systems on the same task; choose the smallest combination that gives useful signal.
+
+Use this routing as a default:
+
+```text
+new / redesign-heavy UI
+    -> impeccable OR frontend-design OR taste-skill
+
+visual concept needs a stronger taste pass
+    -> taste-skill
+
+existing UI needs critique / polish
+    -> impeccable
+
+implemented UI needs independent review
+    -> frontend-design-review
+```
+
 ### Anthropic `frontend-design`
 
 Use for deliberate, distinctive frontend creation when you want the Anthropic design workflow.
@@ -70,7 +96,7 @@ Use for deliberate, distinctive frontend creation when you want the Anthropic de
 npx skills@latest add anthropics/skills --skill frontend-design --global
 ```
 
-Do not automatically run both `impeccable` and `frontend-design` for every UI task. Choose the skill that fits the design phase.
+**Do not** automatically run both `impeccable` and `frontend-design` for every UI task. Choose the skill that fits the design phase.
 
 ### Microsoft `frontend-design-review`
 
@@ -250,7 +276,7 @@ Security:
 
 ## 7. Skill Update Policy
 
-Do not update a large skill collection in the middle of a critical implementation without checking what changed.
+**Do not** update a large skill collection in the middle of a critical implementation without checking what changed.
 
 Prefer:
 

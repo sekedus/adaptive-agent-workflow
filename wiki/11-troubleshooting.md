@@ -16,7 +16,7 @@ If it edits anyway:
 3. revert or retain the change deliberately;
 4. reinforce the execution boundary in project instructions if the request exposed a missing case.
 
-Do not let one incident become a reason to add dozens of prompt rules.
+**Do not** let one incident become a reason to add dozens of prompt rules.
 
 ## Agent asks too many questions
 
@@ -50,7 +50,7 @@ For very large work, route through `/wayfinder`.
 
 ## Agent repeats work after context failure
 
-Do not trust the last chat message.
+**Do not** trust the last chat message.
 
 Run the recovery protocol:
 
@@ -110,7 +110,7 @@ design direction
 
 ## Security review is shallow
 
-Do not ask the general coding model to "make it secure" and stop there.
+**Do not** ask the general coding model to "make it secure" and stop there.
 
 Route sensitive areas to targeted security skills and provide actual runtime/tool evidence when possible.
 
@@ -153,7 +153,7 @@ Record important project dependencies on skill behavior in project docs if the b
 
 ## Security skill seems wrong
 
-Do not guess from a skill name. Open `dev/security.md` and classify the changed attack surface first.
+**Do not** guess from a skill name. Open `dev/security.md` and classify the changed attack surface first.
 
 Use:
 

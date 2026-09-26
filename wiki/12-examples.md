@@ -133,7 +133,7 @@ large/cross-cutting
 -> periodic architecture/code review
 ```
 
-Do not attempt the entire feature in one chat.
+**Do not** attempt the entire feature in one chat.
 
 ## Example 7: Very long user prompt, tiny actual problem
 
@@ -196,7 +196,7 @@ reconcile
 -> checkpoint
 ```
 
-Do not restart blindly.
+**Do not** restart blindly.
 
 ## Example 10: Switching projects
 

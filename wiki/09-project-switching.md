@@ -24,7 +24,7 @@ checkpoint / handoff
 Project B
 ```
 
-Do not leave Project A with an unclear current state.
+**Do not** leave Project A with an unclear current state.
 
 ## 2. Returning after days or weeks
 
@@ -38,7 +38,7 @@ The agent should rely on `dev/now.md`, the current task, and actual repository s
 
 ## 3. Switching models
 
-Do not depend on transferring a giant conversation from model A to model B.
+**Do not** depend on transferring a giant conversation from model A to model B.
 
 Instead:
 

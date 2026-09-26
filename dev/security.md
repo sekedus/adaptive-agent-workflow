@@ -163,7 +163,7 @@ Typical skills:
 
 ## 4. Selection Rule
 
-Do not ask:
+**Do not** ask:
 
 > "Which security skill should I use?"
 
@@ -182,7 +182,7 @@ Project type
 ```
 
 Prefer one primary assessment workflow plus a small number of targeted tests.
-Do not invoke a broad penetration-testing workflow when a focused check is sufficient.
+**Do not** invoke a broad penetration-testing workflow when a focused check is sufficient.
 
 ## 5. Security Gate Levels
 

@@ -23,7 +23,7 @@ Do not modify production code for questions, explanations, or review requests un
 Product-quality routing:
 
 - Solve the Problem — Useful & Usable
-- Distinctive Design — Desirable & Distinctive
+- Unique Design — Desirable & Distinctive
 - Secure by Design
 
 Use `dev/quality.md` and `dev/security.md` to select only the relevant quality and security skills for the current change. Do not require the user to name the correct security skill manually.

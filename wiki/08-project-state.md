@@ -13,7 +13,7 @@ Use it for:
 - agreed terminology;
 - concepts that should remain consistent across sessions.
 
-Do not turn it into a task log or implementation diary.
+**Do not** turn it into a task log or implementation diary.
 
 ## `docs/adr/`
 
@@ -91,7 +91,7 @@ Use it to record:
 - the security domain(s) relevant to the project;
 - targeted skills selected for those domains.
 
-Do not turn this into a catalog of every security skill available.
+**Do not** turn this into a catalog of every security skill available.
 
 ## `dev/parking-lot.md`
 

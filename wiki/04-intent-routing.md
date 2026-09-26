@@ -110,7 +110,7 @@ Actions:
 
 A new or ambiguous product/feature idea may route to `/grill-with-docs`.
 
-Do not grill trivial changes.
+**Do not** grill trivial changes.
 
 ## 8. Handoff
 

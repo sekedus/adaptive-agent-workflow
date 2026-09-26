@@ -69,5 +69,5 @@ Project template initialized.
 ## Resume Instruction
 
 Read this file first. Then inspect the current task and relevant files.
-Do not restart completed work.
-Do not expand scope without an explicit user request.
+**Do not** restart completed work.
+**Do not** expand scope without an explicit user request.

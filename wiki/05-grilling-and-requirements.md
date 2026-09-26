@@ -16,7 +16,7 @@ Use it when:
 - architecture could change depending on the answer;
 - implementation would otherwise require guessing.
 
-Do not use it for:
+**Do not** use it for:
 
 - typo fixes;
 - obvious local changes;
@@ -90,6 +90,6 @@ Stop grilling once:
 
 ## Important rule
 
-Do not use grilling to compensate for poor repository inspection.
+**Do not** use grilling to compensate for poor repository inspection.
 
 If the codebase already answers a question, inspect it instead of asking the user.

@@ -15,7 +15,7 @@ Use this file for constraints that materially affect technical decisions.
 - Minimum browser version(s):
 - Legacy support policy:
 
-Do not invent additional legacy support beyond this policy.
+**Do not** invent additional legacy support beyond this policy.
 
 ## Resource Constraints
 

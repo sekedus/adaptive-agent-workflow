@@ -51,13 +51,13 @@ git              actual code/worktree state
 The user should normally be able to say:
 
 ```text
-lanjutkan
-kenapa ini error?
-coba cek auth
-saya mau bikin subscription
-benerin ini
-buatkan test
-saya nggak ngerti
+continue
+why is this failing?
+can you check the auth?
+i want to build a subscription
+fix this
+write some tests
+i don't understand
 ```
 
 The agent translates that into an internal intent.
@@ -77,7 +77,7 @@ Examples:
 - "What do you think?"
 - "Could this be a bug?"
 
-Do not edit production code merely to answer these questions.
+**Do not** edit production code merely to answer these questions.
 
 ### Plan
 
@@ -113,7 +113,7 @@ Characteristics:
 - few files;
 - little or no architectural consequence.
 
-Do not add unnecessary process.
+**Do not** add unnecessary process.
 
 ### Medium
 
@@ -150,7 +150,7 @@ Before grilling, inspect the repository so the user is not asked questions that 
 
 Stop grilling when implementation-critical ambiguity is sufficiently resolved.
 
-Do not turn every small change into a long interview.
+**Do not** turn every small change into a long interview.
 
 Persist durable domain vocabulary in `CONTEXT.md` and hard-to-reverse architectural choices in ADRs.
 
@@ -179,7 +179,7 @@ Meaningful product work is evaluated through three primary pillars:
 1. Solve the Problem
    Useful & Usable
 
-2. Distinctive Design
+2. Unique Design
    Desirable & Distinctive
 
 3. Secure by Design
@@ -200,7 +200,7 @@ normal user feature
 -> behavior tests + relevant usability check + code review
 
 new public UI
--> impeccable/frontend-design + design review + browser verification
+-> impeccable OR frontend-design OR taste-skill + design review + browser verification
 
 authentication
 -> behavior tests + targeted security workflows + E2E/failure tests + code review
@@ -212,7 +212,27 @@ large architectural feature
 -> grill/wayfinder + tests + affected pillar gates + review + ADR
 ```
 
-Do not run every expensive skill on every change.
+**Do not** run every expensive skill on every change.
+
+### Design Skill Routing
+
+Keep multiple design options available instead of treating one design skill as mandatory:
+
+```text
+impeccable
+  -> design shaping, critique, audit, polish, refinement
+
+frontend-design
+  -> deliberate frontend visual direction and implementation
+
+taste-skill / design-taste-frontend
+  -> alternative, more opinionated visual-taste and anti-generic pass
+
+frontend-design-review
+  -> independent post-implementation review
+```
+
+Select the smallest useful combination. Do not automatically run all design skills on every UI change.
 
 ## 9. Security Skill Routing
 
@@ -250,7 +270,7 @@ The workflow assumes interruptions are normal.
 
 ### After interruption
 
-Do not trust the last conversational claim.
+**Do not** trust the last conversational claim.
 
 Reconcile:
 

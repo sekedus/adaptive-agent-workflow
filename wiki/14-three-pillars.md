@@ -6,7 +6,7 @@ Adaptive Agent Workflow uses three pillars as the product-quality model:
 1. Solve the Problem
    Useful & Usable
 
-2. Distinctive Design
+2. Unique Design
    Desirable & Distinctive
 
 3. Secure by Design
@@ -69,7 +69,7 @@ Consider:
 
 ### Distinctive
 
-Do not accept generic AI output as the default.
+**Do not** accept generic AI output as the default.
 
 The design should have a deliberate point of view appropriate to the product.
 

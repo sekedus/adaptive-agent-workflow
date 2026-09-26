@@ -4,7 +4,7 @@ Adaptive Agent Workflow evaluates meaningful product work through three pillars:
 
 ```text
 1. Solve the Problem — Useful & Usable
-2. Distinctive Design — Desirable & Distinctive
+2. Unique Design — Desirable & Distinctive
 3. Secure by Design
 ```
 
@@ -46,7 +46,7 @@ real browser/responsive verification
     -> Playwright
 ```
 
-Do not run a full design workflow for a one-line CSS correction.
+**Do not** run a full design workflow for a one-line CSS correction.
 
 ## 3. Pillar 3 — Secure by Design
 
@@ -77,7 +77,7 @@ CI/CD -> DevSecOps + supply chain
 LLM/RAG/MCP -> AI security
 ```
 
-Do not invoke the entire cybersecurity library for a normal feature.
+**Do not** invoke the entire cybersecurity library for a normal feature.
 
 ## 4. Small / Local Change
 
@@ -170,13 +170,13 @@ implementation + targeted pillar gates
 - load/performance tests;
 - security abuse cases.
 
-Do not run all of them unless the feature justifies it.
+**Do not** run all of them unless the feature justifies it.
 
 ## 9. Periodic Architecture Review
 
 Use `/improve-codebase-architecture` when repeated changes reveal structural friction or when the codebase needs a deliberate architecture review.
 
-Do not perform a repository-wide refactor after every small feature.
+**Do not** perform a repository-wide refactor after every small feature.
 
 ## 10. Quality-Gate Output
 
