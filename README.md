@@ -82,7 +82,7 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` without inventing product scope.
 5. Set the workflow phase to `DISCOVERY_PENDING`.
 6. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
-7. Validate the installation and offer the user an **`Initial commit`** checkpoint.
+7. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
 
 ### Root README rule
 
@@ -94,8 +94,19 @@ The template root README is not copied into target projects. In an empty/new pro
 2. Synchronize affected state artifacts.
 3. Review whether the project's root README needs a meaningful update.
 4. Run a state-integrity check.
-5. If relevant work is uncommitted, offer a commit as a checkpoint for review/recovery/continuation.
-6. Do not auto-commit unless explicitly authorized.
+5. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and safety checks pass.
+6. Never auto-commit unrelated user changes.
+
+## Commit policy
+
+Commit behavior is persistent per project and is stored in `dev/commit-policy.md`. The two checkpoints are independent:
+
+```yaml
+initial: ask
+task: ask
+```
+
+These are the defaults. The user can change either one to `auto` at installation time or later using natural language. Auto-commit still requires verification, state-integrity checks, and a cleanly attributable commit scope. It never implies `git push`.
 
 ## Files
 
@@ -111,6 +122,7 @@ The template root README is not copied into target projects. In an empty/new pro
 - `dev/skill-dependencies.md` — known skill dependency closure.
 - `dev/state-integrity.md` — state invariants and state transactions.
 - `dev/readme-policy.md` — policy for the project's user-facing README.
+- `dev/commit-policy.md` — persistent initial/task commit policy.
 - `dev/parking-lot.md` — unrelated ideas that should not hijack active work.
 - `dev/tasks/` — bounded executable tasks; `.task-template.md` is a template only.
 - `docs/adr/` — durable architectural decisions.
@@ -138,10 +150,10 @@ The workflow handles intent, task sizing, grilling, state reconciliation, skill 
 Use a normal request such as:
 
 ```text
-Install the Adaptive Agent Workflow in this project.
+Install sekedus/adaptive-agent-workflow in this project.
 ```
 
-The agent should bootstrap the workflow, create a project README, leave product discovery pending, validate the state, and offer an `Initial commit`.
+The agent should bootstrap the workflow, create a project README, leave product discovery pending, validate the state, and apply the `initial` commit policy (default: `ask`).
 
 ## Installation into an existing project
 

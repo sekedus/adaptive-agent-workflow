@@ -403,10 +403,12 @@ If these cannot be answered, the handoff is incomplete.
 
 ## v5 State-Integrity Lifecycle
 
-Adaptive Agent Workflow separates bootstrap from product development. Installing the workflow in an empty/new project does not create product tasks. It produces a `DISCOVERY_PENDING` state, creates a project-specific root README, validates the installation, and offers an `Initial commit`.
+Adaptive Agent Workflow separates bootstrap from product development. Installing the workflow in an empty/new project does not create product tasks. It produces a `DISCOVERY_PENDING` state, creates a project-specific root README, validates the installation, and applies the `initial` commit policy (default: `ask`).
 
 The first real product requirement creates `T-0001`. Task creation is a state transaction that updates the task file, roadmap, and `now.md`.
 
-Task completion is also a state transaction: verify the task, synchronize affected artifacts, review README impact, run a state-integrity check, and offer a commit when relevant work remains uncommitted.
+Task completion is also a state transaction: verify the task, synchronize affected artifacts, review README impact, run a state-integrity check, then apply the persistent `task` commit policy (`ask` by default or `auto` when configured).
+
+Commit policy is stored in `dev/commit-policy.md`. `initial` and `task` are independent settings. Auto-commit requires verification, state-integrity checks, and a commit scope containing only attributable checkpoint changes.
 
 The template repository's own root README is agent-facing documentation and is not copied verbatim into target projects. For an empty/new project, the agent generates a user-facing README from the actual project state. Existing project READMEs are preserved and updated only when project understanding materially changes.

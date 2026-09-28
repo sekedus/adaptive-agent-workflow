@@ -45,7 +45,7 @@ Update it after meaningful project-understanding changes, not every code change.
 
 ## 5. Commit discipline
 
-**Do not** auto-commit unless the project explicitly authorizes it.
+Commit behavior is controlled by `dev/commit-policy.md`. The default is `ask`; the project may set `initial: auto` and/or `task: auto`.
 
 After every completed task:
 
@@ -54,7 +54,7 @@ verify
 -> synchronize state
 -> review README
 -> state-integrity check
--> offer commit when uncommitted
+-> apply task commit policy
 ```
 
 Commit boundaries are especially valuable for recovery, review, and moving work across sessions/devices.

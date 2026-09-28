@@ -38,13 +38,13 @@ Roadmap tasks: none
 
 ## 3. Initial commit checkpoint
 
-After an empty/new project has been bootstrapped, the README and workflow files validated, and Git changes are ready, offer:
+After an empty/new project has been bootstrapped, the README and workflow files validated, apply `dev/commit-policy.md`:
 
-```text
-Initial commit
+```yaml
+initial: ask
 ```
 
-**Do not** auto-commit unless explicitly authorized.
+The default is to ask before creating the `Initial commit`. The user may change it to `initial: auto` during installation or later.
 
 The purpose of the initial commit is to establish a durable recovery/review boundary before product implementation begins.
 

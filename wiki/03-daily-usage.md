@@ -73,21 +73,23 @@ verify
 -> offer commit when work is uncommitted
 ```
 
-A commit is recommended because it provides a durable review and recovery boundary. It is not automatic unless you explicitly authorize it.
+A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. If `task: auto` is configured in `dev/commit-policy.md`, the agent creates the checkpoint automatically after safety checks.
 
-Example:
+Example when the policy is `ask`:
 
-> `T-0001` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review and recovery. Commit now?
+> `T-0001` is complete and verified. A commit is recommended as a checkpoint for review and recovery. Commit now?
 
 ## 6. Initial project commit
 
 For an empty/new project, installation itself creates the first useful recovery boundary.
 
-After the workflow and project README are validated, the agent should offer:
+After the workflow and project README are validated, the agent applies the `initial` commit policy. With the default `initial: ask`, it offers:
 
 ```text
 Initial commit
 ```
+
+With `initial: auto`, it creates the checkpoint automatically after the auto-commit safety checks pass.
 
 ## 7. Root README updates
 

@@ -262,19 +262,38 @@ The template repository's own root README is agent-facing documentation. When in
 
 ## 11. Commit Checkpoint Policy
 
-Do not automatically commit unless the user explicitly asks or the active project policy explicitly authorizes automatic commits.
+Read `dev/commit-policy.md` as the source of truth for commit behavior. The default policy is `ask` for both initial bootstrap and completed tasks.
+
+The user may explicitly change either checkpoint to `auto`:
+
+- `initial: auto` — automatically commit after empty/new-project bootstrap validation.
+- `task: auto` — automatically commit after every completed and verified task.
+
+The two settings are independent.
+
+### Auto-Commit Safety
+
+Automatic commits are allowed only after:
+
+1. required verification succeeds;
+2. affected state artifacts are synchronized;
+3. README impact is reviewed;
+4. state integrity passes;
+5. Git status/diff confirms that only current-checkpoint changes will be committed.
+
+Never auto-commit unrelated user changes. If commit scope is ambiguous, stop the automatic commit and ask the user.
+
+Automatic commits do not imply `git push`.
 
 ### After Initial Bootstrap of an Empty/New Project
 
-When workflow installation creates the project's initial files and a user-facing root README:
+If `initial: ask`, offer an `Initial commit` after validation.
 
-- validate the installation;
-- show the user what was created;
-- offer an `Initial commit`.
+If `initial: auto`, create the initial checkpoint automatically after validation.
 
-Suggested wording:
+Suggested ask wording:
 
-> The project is bootstrapped and the initial README/state are ready. A Git commit is useful as a recovery/checkpoint boundary. Would you like me to create the `Initial commit` now?
+> The project is bootstrapped and the initial README/state are ready. A Git commit is useful as a recovery/checkpoint boundary. Commit the `Initial commit` now?
 
 ### After Every Completed Task
 
@@ -284,15 +303,17 @@ When a task reaches its completion criteria:
 2. update affected project state;
 3. review whether the root README needs a meaningful update;
 4. run a state-integrity check;
-5. if relevant changes are uncommitted, offer a commit.
+5. apply the `task` commit policy.
 
-Suggested wording:
+If `task: ask`, offer a commit:
 
-> `T-xxxx` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review, recovery, and safe continuation. Commit now?
+> `T-xxxx` is complete and verified. A commit is recommended as a checkpoint for review, recovery, and safe continuation. Commit now?
 
-Do not offer a duplicate commit when the relevant work is already committed and the working tree is clean.
+If `task: auto`, create the checkpoint automatically after the safety checks pass.
 
-A commit offer is not a requirement to stop the user from continuing. The user may continue with uncommitted work.
+Do not offer or create a duplicate commit when the relevant work is already committed and the working tree is clean.
+
+A user may override the persistent policy for a specific checkpoint by explicitly asking to commit, skip, or stop before committing.
 
 ---
 

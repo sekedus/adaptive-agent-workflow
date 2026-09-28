@@ -16,7 +16,7 @@ The agent should:
 4. set `dev/now.md` to `DISCOVERY_PENDING`;
 5. leave `dev/tasks/` without a product task;
 6. validate the installation;
-7. offer an `Initial commit`.
+7. apply `dev/commit-policy.md` (default: ask; `initial: auto` may create the checkpoint automatically after safety checks).
 
 The first product task is **not** created during installation.
 

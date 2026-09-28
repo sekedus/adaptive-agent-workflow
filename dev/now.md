@@ -65,6 +65,13 @@ Evidence:
 - Workflow files installed.
 - No product task created yet.
 
+## Commit Policy
+
+Initial: ASK
+Task: ASK
+
+See `dev/commit-policy.md`. The user may switch either checkpoint to `AUTO`.
+
 ## Last Commit
 
 None. Initial commit has not been created.

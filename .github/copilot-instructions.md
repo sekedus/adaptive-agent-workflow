@@ -28,9 +28,9 @@ After every completed task:
 - synchronize affected state artifacts;
 - check whether the root README needs a meaningful update;
 - verify the state is consistent;
-- offer a commit when relevant changes are uncommitted.
+- apply the `task` commit policy from `dev/commit-policy.md`.
 
-Do not auto-commit unless explicitly authorized.
+The default commit policy is `ask`. The user may set `initial` and/or `task` to `auto`. Auto-commit is allowed only after verification, state-integrity checks, and confirmation that unrelated user changes will not be included. Auto-commit never implies `git push`.
 
 Three-pillar product quality:
 

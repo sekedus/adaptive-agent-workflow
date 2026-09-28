@@ -53,19 +53,43 @@ implementation
 -> commit offer
 ```
 
-## Commit offer
+## Commit policy
 
-The workflow does not auto-commit by default.
+Commit behavior is persistent in `dev/commit-policy.md` and has two independent checkpoints:
 
-The agent should offer a commit when:
+```yaml
+initial: ask
+task: ask
+```
 
-- the initial project bootstrap is validated;
-- a task is completed and verified;
-- a meaningful checkpoint is reached and the user is likely to benefit from a durable snapshot.
+The default is to ask the user. The user may set either checkpoint to `auto`.
 
-Suggested language:
+### `initial`
 
-> `T-0004` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review and recovery. Commit now?
+- `ask` — offer `Initial commit` after bootstrap validation.
+- `auto` — create the initial checkpoint automatically after bootstrap validation and README/state creation.
+
+### `task`
+
+- `ask` — offer a commit after each completed and verified task.
+- `auto` — automatically commit each completed and verified task.
+
+### Auto-commit safety
+
+Auto-commit is never blind. Before an automatic commit, the agent must:
+
+1. verify the relevant work;
+2. synchronize affected state;
+3. review README impact;
+4. pass state-integrity checks;
+5. inspect Git status/diff;
+6. confirm that unrelated user changes will not be committed.
+
+If unrelated or ambiguous changes are present, do not auto-commit. Preserve the work and ask the user. Automatic commit never implies `git push`.
+
+Suggested wording when the policy is `ask`:
+
+> `T-0004` is complete and verified. A commit is recommended as a checkpoint for review and recovery. Commit now?
 
 ## README update policy
 

@@ -84,11 +84,9 @@ finish bounded unit
 
 Commits are useful recovery boundaries.
 
-The workflow does **not** auto-commit by default.
+The default commit policy is `ask`. Read `dev/commit-policy.md` to determine whether to ask or auto-commit at the initial bootstrap and task-completion checkpoints.
 
-For an empty/new project, offer `Initial commit` after bootstrap.
-
-For every completed task, offer a commit when relevant work remains uncommitted.
+`initial: auto` applies only to the bootstrap checkpoint. `task: auto` applies only after completed and verified tasks.
 
 Example:
 

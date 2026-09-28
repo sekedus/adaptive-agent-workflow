@@ -233,7 +233,7 @@ bootstrap
 -> create project README
 -> initialize DISCOVERY_PENDING state
 -> validate
--> offer Initial commit
+-> apply initial commit policy
 ```
 
 **Do not** invent `T-0001` merely to represent installation.
@@ -246,7 +246,9 @@ User:
 finish the task
 ```
 
-After the task meets its acceptance criteria, the agent should:
+After the task meets its acceptance criteria, the agent should apply `dev/commit-policy.md`. With the default `task: ask`, it should offer the commit; with `task: auto`, it should create the checkpoint after safety checks.
+
+The agent should:
 
 ```text
 verify
