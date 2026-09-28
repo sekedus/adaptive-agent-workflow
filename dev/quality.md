@@ -290,3 +290,17 @@ Use these labels in task notes when useful:
 - `UNVERIFIED` — work exists but evidence is incomplete.
 
 Never convert "no obvious issue found" into "secure", "bug-free", or "production-ready" without evidence appropriate to that claim.
+
+## 14. Completion Checkpoint
+
+A task is not considered operationally complete until the agent has:
+
+```text
+verify task
+  -> synchronize task/roadmap/now
+  -> review README impact
+  -> state-integrity check
+  -> offer commit when relevant changes are uncommitted
+```
+
+The commit offer is a checkpoint recommendation, not an automatic commit. Commits create useful recovery and review boundaries, especially when the project may later be resumed from a different session, model, IDE, or device.

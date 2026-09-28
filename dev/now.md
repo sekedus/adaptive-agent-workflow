@@ -1,15 +1,23 @@
 # NOW
 
-> Primary current-state checkpoint. Keep this short.
-> Update after meaningful bounded work, verification, major decisions, blockers, or interruptions.
+> Primary current-state checkpoint and navigation layer.
+> Keep this short. It must be reconciled against durable project artifacts and Git when relevant.
 
-## Status
+## Workflow Phase
 
-PLANNED
+DISCOVERY_PENDING
+
+## State Integrity
+
+CONSISTENT
+
+## Current Milestone
+
+None yet.
 
 ## Current Task
 
-T-0000 — No active task
+None — product work has not been defined yet.
 
 ## Current Step
 
@@ -17,15 +25,19 @@ None.
 
 ## Objective
 
-[What we are trying to achieve right now.]
+[Populate after the first real project objective is discovered.]
 
 ## Last Completed
 
-- Project initialized.
+- Adaptive Agent Workflow bootstrapped.
+
+## Last State Transaction
+
+BOOTSTRAP_COMPLETE
 
 ## Next Action
 
-Define the first bounded task.
+Define the first real project objective from the user's next request.
 
 ## Current Blocker
 
@@ -33,8 +45,12 @@ None.
 
 ## Relevant Files
 
+- `README.md`
 - `dev/project.md`
+- `dev/constraints.md`
 - `dev/roadmap.md`
+- `dev/quality.md`
+- `dev/security.md`
 
 ## Constraints
 
@@ -42,32 +58,35 @@ None.
 
 ## Verification
 
-Status: NOT STARTED
+Status: BOOTSTRAP_VALIDATED
 
-Command:
+Evidence:
 
-```text
-[verification command]
-```
+- Workflow files installed.
+- No product task created yet.
 
-Result:
+## Last Commit
 
-[Not run]
+None. Initial commit has not been created.
+
+## README Status
+
+READY_FOR_INITIAL_PROJECT_README
 
 ## Important Context
 
-[Only the facts the next session must know.]
+The workflow is installed, but product discovery has not started. Do not invent T-0001 or a milestone until the project objective is known.
 
 ## Do Not Change
 
-- Unrelated features or architecture.
+- Do not invent product scope.
+- Do not create implementation tasks merely to populate the roadmap.
+- Do not overwrite an existing project README during bootstrap.
 
 ## Last Session
 
-Project template initialized.
+Workflow bootstrap completed.
 
 ## Resume Instruction
 
-Read this file first. Then inspect the current task and relevant files.
-**Do not** restart completed work.
-**Do not** expand scope without an explicit user request.
+Read this file first. Since no active task exists, wait for or inspect the user's project objective. Once the objective is known, reconcile project-level artifacts before creating the first task.

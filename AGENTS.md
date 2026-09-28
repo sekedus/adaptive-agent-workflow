@@ -1,47 +1,80 @@
 # Adaptive Agent Workflow — Project Rules
 
-## 1. Source of Truth
+## 1. Repository Is Durable Project Memory
 
-The repository is the durable project memory.
+The repository is the durable project memory. Chat history is temporary.
 
-When resuming work, read in this order:
+When resuming work:
 
-1. `dev/now.md`
-2. the current task referenced by `dev/now.md`
-3. only the project documents relevant to the task
-4. the relevant source/tests
+1. Read `dev/now.md`.
+2. Resolve the current task, if one exists.
+3. Verify the current task against `dev/roadmap.md`.
+4. Inspect `git status` and relevant diffs when code state may matter.
+5. Read only project documents relevant to the task.
+6. Inspect the relevant source/tests.
 
-Do not reconstruct project state from old chat history when the repository already contains the state.
+Do not reconstruct project state from old chat history when repository state is available.
+
+`dev/now.md` is the navigation and checkpoint layer. It is not an absolute source of truth when it conflicts with durable task, roadmap, project, ADR, or Git evidence.
 
 ---
 
-## 2. Natural-Language Intent
+## 2. Bootstrap Is Not Product Development
+
+Installing the Adaptive Agent Workflow into an empty or new project is a bootstrap operation.
+
+After bootstrap:
+
+- the workflow files may be installed;
+- project discovery may be pending;
+- no product task should be invented merely to populate `dev/tasks/`;
+- task IDs begin at `T-0001` only after the first real product/work requirement is defined.
+
+For an empty/new project:
+
+1. Install the workflow files.
+2. Create a user-facing root `README.md` describing the actual project state. Do not copy the template repository's agent-oriented root README verbatim.
+3. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` to reflect the real project.
+4. Set the workflow state to `DISCOVERY_PENDING` until a real project objective exists.
+5. Offer the user an `Initial commit` checkpoint after installation and README creation.
+
+For an existing project:
+
+- preserve the existing root `README.md`;
+- merge workflow files with existing project-specific instructions;
+- reconcile project state before claiming installation is complete.
+
+Never copy the template source repository's root `README.md` into an existing project merely because it exists in the template. That README is documentation for agents and for the template itself.
+
+---
+
+## 3. Natural-Language Intent
 
 The user normally communicates in natural language. Do not require explicit workflow labels such as `MODE: BUILD`.
 
 Infer intent from:
 
 - the user's request;
-- the current project state;
-- the current task;
+- current project state;
+- current task;
 - repository evidence;
 - available tools and skills.
 
-Use these internal intent categories when useful:
+Useful internal categories:
 
-- `DISCUSS` — explain, compare, brainstorm, or answer questions.
+- `DISCUSS` — explain, compare, brainstorm, answer questions.
 - `REVIEW` — inspect behavior, code, security, performance, design, or correctness.
 - `PLAN` — define scope, acceptance criteria, or implementation steps.
 - `BUILD` — implement a clearly requested change.
 - `FIX` — apply a requested or approved fix.
-- `RESUME` — recover and continue the recorded task.
+- `RESUME` — reconcile and continue the recorded task.
 - `HANDOFF` — checkpoint without starting new work.
 
 The user does not need to name these modes.
 
 ---
 
-## 3. Clarification vs. Grilling
+## 4. Clarification vs. Grilling
 
 Do not ask a question merely because something is technically ambiguous.
 
@@ -62,31 +95,17 @@ Do not grill trivial or already-defined changes.
 
 ---
 
-## 4. Execution Boundary
+## 5. Execution Boundary
 
 Questions, explanations, and review requests do not grant production-code modification permission.
 
-Examples that normally do **not** permit editing:
-
-- "Why does this fail?"
-- "Can you check this?"
-- "Could this be a security issue?"
-- "How would you fix this?"
-- "What do you think?"
-
-Clear action-oriented requests normally permit implementation within scope:
-
-- "Fix this."
-- "Add this."
-- "Implement this."
-- "Change this."
-- "Remove this."
+Clear action-oriented requests normally permit implementation within scope.
 
 When intent is uncertain, prefer the least destructive interpretation.
 
 ---
 
-## 5. Scope Control
+## 6. Scope Control
 
 Do not expand the active task merely because related improvements are visible.
 
@@ -101,11 +120,11 @@ Do not silently:
 
 Unrelated ideas go to `dev/parking-lot.md` or become a separate task.
 
-A bare confirmation such as `yes`, `do that`, or `go ahead` refers only to the immediately preceding actionable proposal. Before executing, resolve what that proposal actually includes and keep it bounded.
+A bare confirmation such as `yes`, `do that`, or `go ahead` refers only to the immediately preceding actionable proposal. Resolve exactly what that proposal means before executing it.
 
 ---
 
-## 6. Task Size Triage
+## 7. Task Size Triage
 
 Do not infer task size from prompt length.
 
@@ -115,230 +134,248 @@ Estimate size from actual repository impact after inspection.
 
 Direct, local, low-risk change with clear scope.
 
-Action: implement, verify, checkpoint.
-
 ### Medium
 
 Multiple files or behavioral decisions, but still bounded.
-
-Action: plan as needed, implement in bounded units, verify each meaningful unit.
 
 ### Large / Cross-cutting
 
 Many modules, architectural changes, major product features, migration work, or work likely to exceed one context window.
 
-Action: clarify/grill when needed, use `/wayfinder` when available, create bounded tasks, and do not attempt the whole change in one conversation.
+For large work, use `/wayfinder` when available and create bounded tasks instead of attempting the entire change in one conversation.
 
 ---
 
-## 7. Context Discipline
+## 8. Project State Integrity
+
+The workflow maintains multiple durable artifacts. Keep them synchronized according to the state transition that occurred.
+
+Required invariants:
+
+1. The current task in `dev/now.md` must exist in `dev/tasks/`.
+2. The current task ID and objective must match its entry in `dev/roadmap.md`.
+3. A completed task must not remain the active task.
+4. A task marked complete must have appropriate verification evidence.
+5. A new task must never reuse an existing task ID.
+6. A material project-definition change must update project-level documentation before implementation proceeds.
+7. A commit state recorded in `dev/now.md` must agree with Git evidence.
+8. `dev/now.md` must identify whether its state is `CONSISTENT` or `RECONCILIATION_REQUIRED`.
+
+Before answering `what's next?`, `continue`, or `resume`:
+
+- audit the current state;
+- detect contradictions between `now.md`, task files, roadmap, and Git when relevant;
+- reconcile before proposing or executing the next step.
+
+Never silently choose one contradictory artifact over another.
+
+---
+
+## 9. State Transactions
+
+Treat meaningful project events as state transitions rather than isolated file edits.
+
+### Project Discovery Completed
+
+Update as applicable:
+
+- `dev/project.md`
+- `CONTEXT.md`
+- `dev/constraints.md`
+- `dev/quality.md`
+- `dev/security.md`
+- `dev/roadmap.md`
+- `dev/now.md`
+- ADRs when durable decisions were made
+
+### Task Created
+
+Update:
+
+- new `dev/tasks/T-xxxx-*.md`
+- `dev/roadmap.md`
+- `dev/now.md`
+
+### Task Progress / Completion
+
+Update:
+
+- current task
+- `dev/now.md`
+- `dev/roadmap.md` when task status or milestone state changes
+- root `README.md` when project-understanding information changed materially
+
+### Architectural Decision
+
+Update:
+
+- ADR
+- relevant `CONTEXT.md` terminology
+- task and `now.md` when the active work is affected
+
+### Verification Completed
+
+Update the task and `dev/now.md` with evidence. Do not claim completion without appropriate evidence.
+
+### Commit Created
+
+After creating a commit:
+
+1. verify the commit and worktree state;
+2. update `dev/now.md` with the checkpoint commit when relevant;
+3. reconcile task status and README state;
+4. do not claim the repository is clean unless `git status` proves it.
+
+State-synchronization edits are mandatory bookkeeping for the current work. They are not unrelated scope expansion.
+
+---
+
+## 10. Root README Policy
+
+The root `README.md` is a concise, user-facing explanation of the project.
+
+It should answer enough of these questions for a new human contributor/user to understand the repository:
+
+- What is this project?
+- What problem does it solve?
+- What are the important capabilities or current scope?
+- What is the relevant architecture or workflow at a high level?
+- How do I run/use it?
+- What important constraints or prerequisites matter?
+
+Update the README when project-understanding information changes materially, especially after:
+
+- initial project discovery;
+- completion of a user-visible feature;
+- meaningful architecture changes;
+- setup/install changes;
+- major compatibility changes;
+- important workflow changes.
+
+Do not update the README for every internal implementation detail, small bug fix, or routine test change unless it affects how a user understands or uses the project.
+
+After task completion, explicitly check whether the README needs an update. If not, leave it unchanged.
+
+The template repository's own root README is agent-facing documentation. When installing into an actual project, create or update the target project's README from the project's real state instead of copying template-only instructions.
+
+---
+
+## 11. Commit Checkpoint Policy
+
+Do not automatically commit unless the user explicitly asks or the active project policy explicitly authorizes automatic commits.
+
+### After Initial Bootstrap of an Empty/New Project
+
+When workflow installation creates the project's initial files and a user-facing root README:
+
+- validate the installation;
+- show the user what was created;
+- offer an `Initial commit`.
+
+Suggested wording:
+
+> The project is bootstrapped and the initial README/state are ready. A Git commit is useful as a recovery/checkpoint boundary. Would you like me to create the `Initial commit` now?
+
+### After Every Completed Task
+
+When a task reaches its completion criteria:
+
+1. verify the task;
+2. update affected project state;
+3. review whether the root README needs a meaningful update;
+4. run a state-integrity check;
+5. if relevant changes are uncommitted, offer a commit.
+
+Suggested wording:
+
+> `T-xxxx` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review, recovery, and safe continuation. Commit now?
+
+Do not offer a duplicate commit when the relevant work is already committed and the working tree is clean.
+
+A commit offer is not a requirement to stop the user from continuing. The user may continue with uncommitted work.
+
+---
+
+## 12. Context Discipline
 
 Context is a limited resource.
 
-Prefer:
+Prefer current task, relevant files, focused tool calls, existing artifacts, and incremental verification.
 
-- current task;
-- relevant files;
-- focused tool calls;
-- existing project artifacts;
-- incremental verification;
-- durable checkpoints.
+When context is becoming large enough to threaten focus or continuation:
 
-Avoid reading the entire repository or all historical logs without a reason.
-
-When the session is becoming large enough that continued work risks compaction, failure, or loss of focus:
-
-1. finish only the smallest safe bounded unit;
+1. finish the smallest safe bounded unit;
 2. verify it;
 3. update `dev/now.md`;
 4. use `/handoff` when useful;
-5. stop the current execution rather than consuming the remaining context blindly.
-
-A new session must be able to continue from repository state without the previous chat.
+5. stop before the session becomes unreliable.
 
 ---
 
-## 8. Interruption / Recovery Protocol
+## 13. Interruption / Recovery Protocol
 
-A session may stop because of context limits, free-model limits, connection errors, tool failures, IDE crashes, or other interruptions.
+A session may stop because of context limits, free-model limits, connection errors, tool failures, IDE crashes, or human interruption.
 
 Never assume the last attempted operation completed.
 
 On resume:
 
 1. read `dev/now.md`;
-2. read the current task;
+2. resolve and verify the current task;
 3. inspect `git status`;
 4. inspect relevant diffs;
 5. compare the repository with the checkpoint;
 6. run targeted verification when needed;
-7. classify the state as complete, partially complete, unchanged, or inconsistent;
-8. reconcile the checkpoint before continuing.
-
-Repository state and verification evidence are stronger than unverified chat claims.
+7. classify the state as `COMPLETE`, `PARTIAL`, `UNCHANGED`, or `INCONSISTENT`;
+8. reconcile the checkpoint and project artifacts before continuing.
 
 Do not blindly repeat an interrupted operation.
 
 ---
 
-## 9. Checkpoint Rule
+## 14. Checkpoint Rule
 
-A checkpoint is required after a meaningful bounded unit of implementation, verification, decision-making, or a significant interruption.
+A checkpoint is required after a meaningful bounded unit of implementation, verification, decision-making, or significant interruption.
 
-The checkpoint lives in `dev/now.md`.
-
-At minimum it records:
-
-- current status;
-- current task;
-- current step;
-- last completed action;
-- exact next action;
-- blockers;
-- relevant files;
-- verification state;
-- important assumptions/constraints;
-- whether the current work is verified.
-
-`dev/now.md` is a current-state document, not a chronological diary.
+`dev/now.md` remains short and operational. It is not a chronological diary.
 
 ---
 
-## 10. Skill Dependency Closure
+## 15. Skill Dependency Closure
 
-Some routed skills are orchestrators that explicitly invoke other skills. A parent skill is not considered ready until its required dependency closure is available to the current harness.
+Some routed skills explicitly invoke other skills. A parent skill is not considered ready until its required dependency closure is available to the current harness.
 
 Before invoking a routed skill:
 
-1. Resolve its known dependency closure in `dev/skill-dependencies.md`.
-2. Verify required dependencies are installed and discoverable.
-3. Invoke the parent skill only when required dependencies are available.
-4. Let the parent skill invoke its own model-invoked primitives as specified by its upstream `SKILL.md`.
-5. If a required dependency is missing, do not imitate the missing workflow from memory. Report the dependency and provide its installation command.
+1. resolve its known dependency closure in `dev/skill-dependencies.md`;
+2. verify required dependencies are installed and discoverable;
+3. invoke the parent skill only when required dependencies are available;
+4. do not imitate a missing dependency from memory;
+5. report missing dependencies and give installation guidance when needed.
 
-Example:
+---
 
-```text
-/grill-with-docs
-    ↓
-requires: grilling + domain-modeling
-    ↓
-verify both are available
-    ↓
-invoke /grill-with-docs
-```
-
-Do not treat a successful invocation of the parent skill as proof that its child skills actually ran. Expected side effects are part of verification.
-
-## 11. Skills, Quality Gates, and the Three Pillars
+## 16. Skills, Quality Gates, and the Three Pillars
 
 Evaluate meaningful product work through three pillars:
 
 1. **Solve the Problem** — Useful & Usable
-2. **Distinctive Design** — Desirable & Distinctive
-3. **Secure by Design** — Security is part of the design and verification process
+2. **Unique Design** — Desirable & Distinctive
+3. **Secure by Design**
 
-Use specialized skills when they provide a materially better workflow than ad-hoc reasoning.
-Do not invoke expensive or large skills for trivial tasks.
-Route selectively using `dev/quality.md` and `dev/security.md`.
+Use `dev/quality.md` and `dev/security.md` to route only relevant skills.
 
-Examples:
-
-- ambiguous/new feature → `/grill-with-docs`
-- large/cross-cutting change → `/wayfinder`
-- unclear previous explanation → `/wait-what`
-- debugging/root cause → `/diagnosing-bugs`
-- test-first behavioral work → `/tdd`
-- implementation review → `/code-review`
-- codebase-wide architecture friction → `/improve-codebase-architecture`
-- UI creation or redesign → `/impeccable` and/or a suitable frontend-design skill
-- UI validation → `frontend-design-review` / Playwright when appropriate
-- security-sensitive change → classify the attack surface in `dev/security.md`, then invoke targeted cybersecurity skill(s)
-- handoff/context pressure → `/handoff`
-
-Do not require the user to know the name of a security skill. Infer the security domain from the project attack surface and use `dev/security.md` to route it.
-
-Explicitly invoke a skill when the workflow requires it, even if the skill is configured as manually invoked.
+Do not require the user to know the correct security skill manually.
 
 ---
 
-## 12. Quality Claims
-
-Do not claim that something is fixed, secure, compatible, complete, or tested without evidence appropriate to the claim.
+## 17. Verification Claims
 
 Distinguish clearly between:
 
-- implemented;
-- tested;
-- verified;
-- assumed;
-- not tested.
+- `IMPLEMENTED` — code exists;
+- `TESTED` — a relevant test was executed;
+- `VERIFIED` — expected behavior was confirmed with appropriate evidence;
+- `UNVERIFIED` — evidence is incomplete.
 
----
-
-## 13. Style and Existing Patterns
-
-Before introducing a new pattern, abstraction, dependency, naming convention, or file organization:
-
-1. inspect nearby existing code;
-2. prefer the established project pattern when it is sound;
-3. document a meaningful deliberate deviation.
-
-Do not make code "more optimal" by adding speculative abstractions.
-
-Prefer the smallest simple solution that fits current requirements and project conventions.
-
----
-
-## 14. Compatibility / Legacy
-
-Never silently invent a legacy-support target.
-
-Read `dev/constraints.md` before making runtime/browser/platform compatibility decisions.
-
-If a baseline is missing and the decision materially affects implementation, establish the baseline before proceeding.
-
----
-
-## 15. New Ideas During Work
-
-A new idea is not automatically a task switch.
-
-When an unrelated idea appears:
-
-1. capture it in `dev/parking-lot.md` when useful;
-2. keep the active task unchanged;
-3. switch projects/tasks only when the user explicitly changes direction.
-
----
-
-## 16. Natural-Language Resume
-
-When the user says things such as:
-
-- `continue`
-- `resume`
-- `lanjutkan`
-- `what's next?`
-- `continue where we stopped`
-
-interpret this as `RESUME`.
-
-Read `dev/now.md` first and reconcile the workspace if necessary.
-
-Do not require the user to repeat workflow instructions.
-
----
-
-## 17. Output Style
-
-Keep technical explanations concise and readable.
-
-When the user is likely unfamiliar with a programming language or framework:
-
-- say what changed;
-- say why it matters;
-- explain unfamiliar terms briefly;
-- use small concrete examples when useful.
-
-Do not add motivational filler.
+Never claim something is secure, bug-free, compatible, complete, or production-ready without evidence appropriate to that claim.

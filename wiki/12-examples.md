@@ -217,3 +217,50 @@ open A
 -> reconcile
 -> resume the exact recorded task
 ```
+
+## Example 11: Empty project installation
+
+User:
+
+```text
+Install the Adaptive Agent Workflow in this project.
+```
+
+Expected route:
+
+```text
+bootstrap
+-> create project README
+-> initialize DISCOVERY_PENDING state
+-> validate
+-> offer Initial commit
+```
+
+**Do not** invent `T-0001` merely to represent installation.
+
+## Example 12: Completed task and commit checkpoint
+
+User:
+
+```text
+finish the task
+```
+
+After the task meets its acceptance criteria, the agent should:
+
+```text
+verify
+-> update task
+-> update roadmap if status changed
+-> update now
+-> review README impact
+-> state-integrity check
+-> offer commit if uncommitted
+```
+
+Example offer:
+
+> `T-0003` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review and recovery. Commit now?
+
+The agent should not auto-commit unless explicitly authorized.
+

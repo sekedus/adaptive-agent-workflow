@@ -1,32 +1,26 @@
 # Project State Files
 
-The workflow separates current state, durable knowledge, work definitions, and history.
+The workflow separates current state, durable knowledge, work definitions, human orientation, and Git history.
+
+## Root `README.md`
+
+**Question answered:** How should a new human understand this project?
+
+It is a concise orientation document, not a changelog.
+
+Update it when project understanding changes materially.
 
 ## `CONTEXT.md`
 
 **Question answered:** What does the domain mean?
 
-Use it for:
-
-- domain vocabulary;
-- definitions;
-- agreed terminology;
-- concepts that should remain consistent across sessions.
-
-**Do not** turn it into a task log or implementation diary.
+Use it for domain vocabulary, definitions, agreed terminology, and concepts that should remain consistent across sessions.
 
 ## `docs/adr/`
 
 **Question answered:** Why did we choose this?
 
 Use ADRs for decisions that are important, durable, and difficult to reverse.
-
-Examples:
-
-- database choice;
-- authentication model;
-- deployment architecture;
-- public API strategy.
 
 ## `dev/project.md`
 
@@ -38,83 +32,60 @@ Keep purpose, scope, stack, and stable project facts here.
 
 **Question answered:** What boundaries must the implementation respect?
 
-Examples:
-
-- supported runtime versions;
-- browser baseline;
-- memory limits;
-- deployment limitations;
-- licensing constraints.
-
 ## `dev/roadmap.md`
 
 **Question answered:** Where are we going?
 
-Keep milestones and broad direction here.
+It is the authoritative index of milestones and task IDs. Do not invent tasks during bootstrap.
 
 ## `dev/tasks/`
 
 **Question answered:** What specific work must be done?
 
-Each task should be bounded and executable.
+Each task is bounded and executable.
 
 ## `dev/now.md`
 
 **Question answered:** What are we doing right now?
 
-This is the most important resume file.
+This is the primary resume/checkpoint file and navigation layer.
 
-It should remain small.
+It is intentionally short and is **not** the absolute source of truth when it conflicts with durable artifacts or Git evidence.
 
-A good `now.md` tells a new agent:
+## `dev/state-integrity.md`
 
-```text
-current task
-current step
-last completed
-next action
-blocker
-relevant files
-verification state
-constraints
-```
+**Question answered:** How do these state artifacts stay consistent?
+
+Use it for invariants and state-transition rules.
+
+## `dev/readme-policy.md`
+
+**Question answered:** When should the user-facing README change?
 
 ## `dev/security.md`
 
-**Question answered:** Which security surface does this project actually have, and which security workflows apply?
-
-Use it to record: 
-
-- project security classification;
-- trust boundaries;
-- sensitive data and external integrations;
-- the security domain(s) relevant to the project;
-- targeted skills selected for those domains.
-
-**Do not** turn this into a catalog of every security skill available.
-
-## `dev/parking-lot.md`
-
-**Question answered:** What interesting things are intentionally not being done now?
-
-Use it to prevent new ideas from hijacking the active task.
+**Question answered:** Which security surface does this project have, and which security workflows apply?
 
 ## Git
 
-**Question answered:** What actually changed in the worktree/history?
+**Question answered:** What actually changed?
 
-Git is the physical source of code state. `now.md` explains what the changes mean; Git shows what actually changed.
+Git is the physical source of code/worktree history.
 
 ## Why these are separate
 
-A common failure is keeping all of these concepts in one giant log.
+A common failure is treating one file as the entire project's memory. The workflow instead uses layers:
 
-That creates a document that is:
+```text
+README          human orientation
+CONTEXT         domain memory
+project         project identity
+constraints     boundaries
+roadmap         direction + task index
+tasks           bounded work
+now             current execution checkpoint
+ADRs            durable decisions
+Git             actual repository state
+```
 
-- long;
-- stale;
-- hard to read;
-- expensive to load into a small context window;
-- ambiguous about what is current.
-
-The Adaptive Agent Workflow deliberately keeps the active state small and makes history opt-in.
+When these contradict each other, reconcile before continuing.

@@ -1,5 +1,7 @@
 # Adaptive Agent Workflow
 
+**Workflow version: v5**
+
 ## 1. Design Goal
 
 The workflow is designed for a user who:
@@ -396,3 +398,15 @@ Before ending a meaningful session, `dev/now.md` should answer:
 8. What remains uncertain?
 
 If these cannot be answered, the handoff is incomplete.
+
+---
+
+## v5 State-Integrity Lifecycle
+
+Adaptive Agent Workflow separates bootstrap from product development. Installing the workflow in an empty/new project does not create product tasks. It produces a `DISCOVERY_PENDING` state, creates a project-specific root README, validates the installation, and offers an `Initial commit`.
+
+The first real product requirement creates `T-0001`. Task creation is a state transaction that updates the task file, roadmap, and `now.md`.
+
+Task completion is also a state transaction: verify the task, synchronize affected artifacts, review README impact, run a state-integrity check, and offer a commit when relevant work remains uncommitted.
+
+The template repository's own root README is agent-facing documentation and is not copied verbatim into target projects. For an empty/new project, the agent generates a user-facing README from the actual project state. Existing project READMEs are preserved and updated only when project understanding materially changes.

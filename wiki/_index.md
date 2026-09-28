@@ -16,3 +16,4 @@
 - [Maintenance](13-maintenance.md)
 - [The three product pillars](14-three-pillars.md)
 - [Skill dependencies](15-skill-dependencies.md)
+- [State integrity, README updates, and commit checkpoints](16-state-integrity-and-commits.md)

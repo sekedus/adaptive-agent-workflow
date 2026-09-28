@@ -1,153 +1,106 @@
 # Recovery, Context Limits, and Handoff
 
-## Why recovery is a first-class feature
+## 1. Interruptions are expected
 
-An agent session can stop unexpectedly because of:
+A session can stop because of:
 
-- context-window exhaustion;
-- free-model quota/limit;
-- network loss;
+- context exhaustion;
+- free-model/provider limits;
+- network failure;
 - tool failure;
 - IDE restart;
 - agent crash;
-- user interruption.
+- human interruption.
 
 The workflow assumes this will happen.
 
-## 1. Never trust the last attempted operation
+## 2. Resume is a reconciliation operation
 
-If an agent says:
-
-```text
-I am implementing token validation now.
-```
-
-and then the session dies, do not assume the implementation did not happen.
-
-It may have:
-
-- changed 0 files;
-- changed 1 file;
-- partially changed several files;
-- changed the files successfully but failed before running tests.
-
-## 2. Reconciliation protocol
+**Do not** blindly trust the last chat message.
 
 On resume:
 
 ```text
-read dev/now.md
+dev/now.md
+  + current task
+  + roadmap
+  + git status
+  + git diff
+  + targeted tests
         |
         v
-read current task
+   state reconciliation
         |
-        v
-git status
-        |
-        v
-git diff
-        |
-        v
-inspect relevant source
-        |
-        v
-run targeted verification
-        |
-        v
-reconcile actual state
-        |
-        v
-continue
+   +----+----+
+   |         |
+consistent  inconsistent
+   |         |
+resume    reconcile
 ```
 
-Classify the task as:
+## 3. State integrity checks
+
+Before continuing, verify:
+
+- the current task exists;
+- the same task ID exists in the roadmap;
+- task objective matches roadmap objective;
+- completed tasks are not still active;
+- task status matches evidence;
+- commit claims match Git.
+
+## 4. If work is partial
+
+Suppose the agent edited two files and then lost connection.
+
+**Do not** repeat the whole operation.
+
+Instead:
 
 ```text
-COMPLETE
-PARTIAL
-UNCHANGED
-INCONSISTENT
+inspect now
+-> inspect diff
+-> understand partial changes
+-> run targeted verification
+-> finish/revert the partial work as appropriate
+-> update checkpoint
 ```
 
-## 3. Partial work is not failure
+## 5. Context pressure
 
-If the agent changed half the files and then died, recover the partial work instead of blindly restarting.
+**Do not** try to consume the entire advertised context window.
 
-Example:
-
-```text
-now.md says:
-Implement token validation.
-
-Working tree:
-reset-token.ts modified
-reset-service.ts modified
-
-tests:
-not yet run
-```
-
-The next agent should inspect the diff, understand what already exists, finish only the missing work, and test it.
-
-## 4. Context danger zone
-
-**Do not** wait for the advertised context window to reach 100%.
-
-For weaker/free models, treat high context utilization as a reason to stop at the next safe boundary.
-
-A practical rule is:
+When the session becomes unreliable:
 
 ```text
-bounded unit complete
+finish bounded unit
 -> verify
--> update now.md
--> handoff/checkpoint
+-> synchronize state
+-> optional /handoff
 -> new session
 ```
 
-The exact threshold depends on the model and IDE. Do not hard-code one universal token percentage into the repository.
+## 6. Commit checkpoints
 
-## 5. Use `/handoff` when useful
+Commits are useful recovery boundaries.
 
-Use `/handoff` when:
+The workflow does **not** auto-commit by default.
 
-- the current session has become large;
-- a task is at a clean boundary;
-- the user is changing models;
-- the next session needs a concise bridge.
+For an empty/new project, offer `Initial commit` after bootstrap.
 
-Handoff should not duplicate the whole project. Durable information belongs in project artifacts such as `CONTEXT.md`, ADRs, tasks, and `now.md`.
+For every completed task, offer a commit when relevant work remains uncommitted.
 
-## 6. Recovery across devices
+Example:
 
-On the same machine:
+> `T-0003` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review/recovery. Commit now?
 
-```text
-git worktree + dev/now.md
-```
+A user may decline and continue uncommitted work.
 
-may be enough.
+## 7. Handoff vs commit
 
-On another device:
+These solve different problems:
 
-```text
-git commit
--> git push
--> clone/pull on next device
-```
+- `now.md` / `/handoff` preserves execution context;
+- Git commit preserves an exact code/state snapshot.
 
-The workflow cannot synchronize uncommitted code across devices by documentation alone.
-
-## 7. Resume command
-
-The user can simply say:
-
-```text
-continue
-```
-
-The agent should do the reconciliation work automatically.
-
-## 8. Do not use chat history as a backup
-
-If the project can only be resumed by searching an old conversation, the checkpoint system is incomplete.
+For maximum portability across devices, the user still needs to push commits to a remote when appropriate.

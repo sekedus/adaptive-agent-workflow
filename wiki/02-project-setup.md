@@ -1,25 +1,32 @@
 # Starting a Project
 
-## 1. Create the project skeleton
+## 1. Empty / new project bootstrap
 
-Start with the template structure before writing a large amount of code.
-
-The important files are:
+Start with:
 
 ```text
-AGENTS.md
-CONTEXT.md
-dev/project.md
-dev/constraints.md
-dev/roadmap.md
-dev/now.md
-dev/quality.md
-dev/parking-lot.md
-dev/tasks/
-docs/adr/
+Install the Adaptive Agent Workflow in this project.
 ```
 
-## 2. Give the agent a natural request
+The agent should:
+
+1. install/merge workflow files;
+2. create the project's own root `README.md`;
+3. initialize project state without inventing product scope;
+4. set `dev/now.md` to `DISCOVERY_PENDING`;
+5. leave `dev/tasks/` without a product task;
+6. validate the installation;
+7. offer an `Initial commit`.
+
+The first product task is **not** created during installation.
+
+## 2. Existing project bootstrap
+
+Preserve the project's existing `README.md` and source code.
+
+The agent should adapt the workflow to the real project rather than treating the project as empty.
+
+## 3. Give the agent a natural request
 
 For example:
 
@@ -27,51 +34,42 @@ For example:
 I want to build a bookmark manager.
 ```
 
-**Do not** write a long specification unless you already have one.
-
 The agent should inspect the repository and decide whether the idea is already sufficiently defined.
 
-## 3. Greenfield project: grill first when needed
+## 4. Discovery before implementation
 
-A substantial idea normally goes through `/grill-with-docs`.
+For a substantial or ambiguous idea, use `/grill-with-docs`.
 
-The skill should:
+After discovery, synchronize:
 
-1. inspect the codebase and existing docs;
-2. ask one useful question at a time;
-3. recommend an answer when appropriate;
-4. record durable domain language in `CONTEXT.md`;
-5. record difficult-to-reverse decisions as ADRs;
-6. leave implementation requirements clear enough to become a bounded task.
+```text
+project.md
+CONTEXT.md
+constraints.md
+quality.md
+security.md
+roadmap.md
+now.md
+ADR(s) when needed
+```
 
-Matt Pocock's current skill set distinguishes `/grill-with-docs` for work that can be settled in one sitting from `/wayfinder` for work whose route genuinely spans multiple sessions.
+Only then create the first real task:
 
-## 4. Establish project constraints early
+```text
+T-0001
+```
+
+## 5. README after discovery
+
+If the project purpose or scope becomes known during discovery, update the root README so a new human can understand what the repository now is.
+
+The README should summarize the project, not reproduce the entire grill or roadmap.
+
+## 6. Establish project constraints early
 
 Before implementation, fill in `dev/constraints.md` with what is actually known.
 
-Typical constraints:
-
-```text
-Runtime:
-Node.js >= 20
-
-Browser support:
-Baseline / explicit browser versions
-
-Database:
-SQLite
-
-Deployment:
-Vercel
-
-Resource constraints:
-CPU-first; no GPU requirement
-```
-
-**Do not** invent legacy support that the project never requested.
-
-## 5. Create the first bounded task
+## 7. Create the first bounded task
 
 A task should answer:
 
@@ -83,13 +81,14 @@ A task should answer:
 - relevant files or modules;
 - how to verify it.
 
-The first task should be small enough that a weak model can complete or checkpoint it without trying to understand the entire future product.
-
-## 6. Establish the initial checkpoint
+## 8. Establish the checkpoint
 
 `dev/now.md` should identify:
 
 ```text
+workflow phase
+state integrity
+current milestone
 current task
 current step
 last completed action
@@ -97,7 +96,6 @@ next action
 blockers
 relevant files
 verification state
-important constraints
+last commit
+README status
 ```
-
-`now.md` is a current-state file. Do not turn it into a diary.

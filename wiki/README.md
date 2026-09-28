@@ -1,6 +1,8 @@
 # Adaptive Agent Workflow Wiki
 
-Complete documentation for installing, using, recovering, and maintaining the **Adaptive Agent Workflow**.
+Complete English documentation for installing, using, recovering, and maintaining the **Adaptive Agent Workflow**.
+
+For a new project, read [Installation](01-installation.md) and [State Integrity](16-state-integrity-and-commits.md) first.
 
 ## Start here
 
@@ -19,6 +21,7 @@ Complete documentation for installing, using, recovering, and maintaining the **
 13. [Examples](12-examples.md)
 14. [Maintenance](13-maintenance.md)
 15. [Three-Pillar Product Model](14-three-pillars.md)
+16. [State Integrity, README Updates, and Commit Checkpoints](16-state-integrity-and-commits.md)
 
 ## Important distinction
 
@@ -42,3 +45,5 @@ Users do not need to memorize security-skill names. The workflow classifies the 
 See [Skills](10-skills.md) and [Security / Quality Gates](06-quality-gates.md) for the routing model.
 
 For dependency-aware installation, see [Skill Dependencies](15-skill-dependencies.md).
+
+For state synchronization and commit checkpoints, see [State Integrity](16-state-integrity-and-commits.md).

@@ -14,11 +14,9 @@ or:
 resume
 ```
 
-The agent should read `dev/now.md`, the referenced task, and only the relevant project material.
+The agent reads `dev/now.md`, resolves the current task, verifies task/roadmap state, and checks Git when relevant before continuing.
 
 ## 2. Asking a question
-
-Example:
 
 ```text
 why does this fail?
@@ -58,32 +56,56 @@ Expected behavior:
 
 ```text
 identify bounded issue
--> apply the fix
+-> apply fix
 -> test
 -> checkpoint
 ```
 
-## 5. Continuing after a previous proposal
+## 5. What happens when a task finishes
 
-A short message such as:
-
-```text
-yes
-```
-
-or:
+A completed task goes through this checkpoint sequence:
 
 ```text
-do that
+verify
+-> synchronize task/roadmap/now
+-> review README impact
+-> state-integrity check
+-> offer commit when work is uncommitted
 ```
 
-must be interpreted using the immediately preceding actionable proposal, not as permission to execute an entire unrelated roadmap.
+A commit is recommended because it provides a durable review and recovery boundary. It is not automatic unless you explicitly authorize it.
 
-Before executing, the agent should know exactly what "that" means.
+Example:
 
-## 6. Introducing a new idea during active work
+> `T-0001` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review and recovery. Commit now?
 
-Suppose the current task is:
+## 6. Initial project commit
+
+For an empty/new project, installation itself creates the first useful recovery boundary.
+
+After the workflow and project README are validated, the agent should offer:
+
+```text
+Initial commit
+```
+
+## 7. Root README updates
+
+The root README is updated periodically, not after every tiny change.
+
+Update it when a task changes what a new human needs to understand, such as:
+
+- a new user-facing feature;
+- a major integration;
+- setup/install instructions;
+- runtime/browser support;
+- high-level architecture.
+
+**Do not** turn README into a changelog.
+
+## 8. Introducing a new idea during active work
+
+If the current task is:
 
 ```text
 Implement OAuth callback
@@ -97,11 +119,11 @@ What if we also add passkeys?
 
 This is not permission to switch tasks.
 
-The idea should be discussed or recorded in `dev/parking-lot.md` unless the user clearly chooses to change the active objective.
+Discuss or park the idea, then keep the current task unchanged unless the user clearly changes the objective.
 
-## 7. Stopping work
+## 9. Stopping work
 
-You do not need to write a long handoff message.
+You do not need a long handoff message.
 
 A simple:
 
@@ -111,4 +133,4 @@ I'm stopping here.
 
 should cause the agent to checkpoint if the current state is safe to record.
 
-The next session can then recover from `dev/now.md` and the actual repository state.
+The next session can recover from `dev/now.md`, task state, roadmap state, and Git evidence.

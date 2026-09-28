@@ -34,3 +34,9 @@
 
 - [Observable success criterion]
 - [Observable success criterion]
+
+## Discovery Status
+
+PENDING
+
+**Do not** invent missing project facts. Populate this file after the user's real project objective is known and the repository has been inspected.
