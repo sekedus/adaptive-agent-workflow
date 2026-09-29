@@ -70,9 +70,10 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 3. Preserve the target project's existing `README.md`.
 4. Copy/merge workflow files without blindly overwriting project-specific instructions or state.
 5. Do not copy this template repository's root `README.md` into an existing target project.
-6. Do not create product tasks until the target project's real objective is known.
-7. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` with the real project.
-8. Validate state before claiming installation is complete.
+6. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The installed core workflow does not require `wiki/` at runtime.
+7. Do not create product tasks until the target project's real objective is known.
+8. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` with the real project.
+9. Validate state before claiming installation is complete.
 
 ### Empty / new project
 
@@ -82,7 +83,8 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` without inventing product scope.
 5. Set the workflow phase to `DISCOVERY_PENDING`.
 6. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
-7. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
+7. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The agent must be able to operate from the installed core files without `wiki/`.
+8. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
 
 ### Root README rule
 
