@@ -127,6 +127,8 @@ These are the defaults. The user can change either one to `auto` at installation
 - `dev/commit-policy.md` — persistent initial/task commit policy.
 - `dev/parking-lot.md` — unrelated ideas that should not hijack active work.
 - `dev/tasks/` — bounded executable tasks; `.task-template.md` is a template only.
+- `dev/features/` — historical records for meaningful completed features; `.feature-template.md` is a template only.
+- `dev/bug-fixes/` — historical records for meaningful resolved bugs; `.bug-fix-template.md` is a template only.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
 - `wiki/` — complete English user and maintenance guide.

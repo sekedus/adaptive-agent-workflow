@@ -22,6 +22,7 @@ For a new project, read [Installation](01-installation.md) and [State Integrity]
 14. [Maintenance](13-maintenance.md)
 15. [Three-Pillar Product Model](14-three-pillars.md)
 16. [State Integrity, README Updates, and Commit Checkpoints](16-state-integrity-and-commits.md)
+17. [Feature and Bug-Fix Records](17-feature-and-bug-records.md)
 
 ## Important distinction
 

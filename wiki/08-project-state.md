@@ -44,6 +44,20 @@ It is the authoritative index of milestones and task IDs. Do not invent tasks du
 
 Each task is bounded and executable.
 
+## `dev/features/`
+
+**Question answered:** What meaningful product features have been completed?
+
+These are historical records for important user-facing features. Use `.feature-template.md` and create records only when the feature is meaningful enough to preserve.
+
+## `dev/bug-fixes/`
+
+**Question answered:** What meaningful bugs were resolved and what was learned?
+
+These are historical records for verified bug fixes. Use `.bug-fix-template.md` and preserve reusable troubleshooting, reliability, or security lessons.
+
+Feature and bug-fix records do not replace active tasks. They are created after the relevant work has been verified and are linked back to the task and commit.
+
 ## `dev/now.md`
 
 **Question answered:** What are we doing right now?
