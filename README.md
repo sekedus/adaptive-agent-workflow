@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow
 
-**Workflow version: v6**
+**Workflow version: v7**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
@@ -40,6 +40,10 @@ State transaction
   -> task / roadmap / now / README as affected
         |
         v
+Codebase memory + verification contract
+  -> ARCHITECTURE-MAP.md / dev/verification.md when affected
+        |
+        v
 Verification
         |
         v
@@ -67,7 +71,7 @@ The workflow has one portable project instruction source:
 AGENTS.md
 ```
 
-`AGENTS.md` contains the workflow rules, intent routing, state integrity rules, recovery protocol, quality-gate routing, skill dependency handling, README policy, feature/bug records, and commit policy.
+`AGENTS.md` contains the workflow rules, intent routing, state integrity rules, recovery protocol, codebase-understanding rules, quality-gate routing, skill dependency handling, README policy, feature/bug records, and commit policy.
 
 The repository may also contain:
 
@@ -97,8 +101,9 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 5. Do not copy this template repository's root `README.md` into an existing target project.
 6. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The installed core workflow does not require `wiki/` at runtime.
 7. Do not create product tasks until the target project's real objective is known.
-8. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` with the real project.
-9. Validate state before claiming installation is complete.
+8. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` with the real project.
+9. Initialize or reconcile `ARCHITECTURE-MAP.md` with the real codebase.
+10. Validate state before claiming installation is complete.
 
 ### Empty / new project
 
@@ -106,8 +111,9 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 2. Install the workflow files.
 2. Create a **new user-facing root `README.md` for the target project**. Do not copy this template's root README verbatim because it contains agent/template instructions.
 3. Keep the README concise and truthful to the project's actual state. It may begin with a project-under-definition/placeholder state.
-4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` without inventing product scope.
-5. Set the workflow phase to `DISCOVERY_PENDING`.
+4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` without inventing product scope.
+5. Initialize `ARCHITECTURE-MAP.md` as a project-specific codebase map (do not leave template placeholders once discovery starts).
+6. Set the workflow phase to `DISCOVERY_PENDING`.
 6. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
 7. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The agent must be able to operate from the installed core files without `wiki/`.
 8. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
@@ -141,11 +147,13 @@ These are the defaults. The user can change either one to `auto` at installation
 - `AGENTS.md` — portable project-level operating rules, intent router, and workflow source of truth.
 - `.github/copilot-instructions.md` — optional thin VS Code Copilot adapter; not the workflow source of truth.
 - `CONTEXT.md` — durable domain vocabulary and agreed terminology.
+- `ARCHITECTURE-MAP.md` — living codebase map: domains, ownership, dependencies, flows, hotspots, contracts, and test surfaces.
 - `dev/project.md` — project purpose, scope, stack, and stable facts.
 - `dev/constraints.md` — compatibility/legacy/runtime/resource constraints.
 - `dev/now.md` — primary current-state checkpoint.
 - `dev/roadmap.md` — milestones and direction.
 - `dev/quality.md` — adaptive quality-gate policy and three-pillar quality model.
+- `dev/verification.md` — concrete verification contract and evidence expectations.
 - `dev/security.md` — project-specific security profile and skill routing.
 - `dev/skill-dependencies.md` — known skill dependency closure.
 - `dev/state-integrity.md` — state invariants and state transactions.
@@ -157,6 +165,7 @@ These are the defaults. The user can change either one to `auto` at installation
 - `dev/bug-fixes/` — historical records for meaningful resolved bugs; `.bug-fix-template.md` is a template only.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
+- `wiki/19-architecture-map-and-engineering-discipline.md` — architecture map, root-cause tracing, reuse/YAGNI, and verification guidance.
 - `wiki/` — complete English user and maintenance guide.
 
 ## User-facing usage

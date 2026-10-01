@@ -19,3 +19,4 @@
 - [State integrity, README updates, and commit checkpoints](16-state-integrity-and-commits.md)
 - [Feature and bug-fix records](17-feature-and-bug-records.md)
 - [Harness portability](18-harness-portability.md)
+- [Architecture map and engineering discipline](19-architecture-map-and-engineering-discipline.md)
