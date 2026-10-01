@@ -1,12 +1,14 @@
 # Adaptive Agent Workflow
 
-**Workflow version: v5**
+**Workflow version: v6**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
+The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only.
+
 Designed for:
 
-- GitHub Copilot Chat in VS Code
+- agent harnesses that support `AGENTS.md` (for example OpenCode/OpenChamber and VS Code Copilot)
 - free / low-context models
 - natural-language user prompts
 - model/session/IDE/device handoff
@@ -57,6 +59,28 @@ Next session/model/device can recover from repository state
 
 The workflow activates the smallest meaningful quality gates for the change instead of running every skill on every task.
 
+## Harness portability
+
+The workflow has one portable project instruction source:
+
+```text
+AGENTS.md
+```
+
+`AGENTS.md` contains the workflow rules, intent routing, state integrity rules, recovery protocol, quality-gate routing, skill dependency handling, README policy, feature/bug records, and commit policy.
+
+The repository may also contain:
+
+```text
+.github/copilot-instructions.md
+```
+
+This file is an optional **VS Code Copilot adapter**. It must stay thin and point back to `AGENTS.md`; it must not become a second copy of the workflow.
+
+For harnesses that support `AGENTS.md`, the installed core workflow does not require `.github/copilot-instructions.md`. For harnesses that do not support `AGENTS.md`, use that harness's project-instruction mechanism as a thin adapter while keeping `AGENTS.md` as the canonical project workflow documentation.
+
+The `wiki/` directory is human documentation and is not a runtime dependency.
+
 ## For agents
 
 This repository is the **template source**, not a project-specific README to copy blindly into another project.
@@ -65,7 +89,8 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 
 ### Existing project
 
-1. Obtain this template repository/archive using the available Git, download, or file tools.
+1. Identify the active agent harness. Prefer its native support for root `AGENTS.md` when available.
+2. Obtain this template repository/archive using the available Git, download, or file tools.
 2. Read the target project before changing anything.
 3. Preserve the target project's existing `README.md`.
 4. Copy/merge workflow files without blindly overwriting project-specific instructions or state.
@@ -77,7 +102,8 @@ When the user asks you to install, clone, download, or apply the **Adaptive Agen
 
 ### Empty / new project
 
-1. Install the workflow files.
+1. Identify the active agent harness. Prefer its native support for root `AGENTS.md` when available.
+2. Install the workflow files.
 2. Create a **new user-facing root `README.md` for the target project**. Do not copy this template's root README verbatim because it contains agent/template instructions.
 3. Keep the README concise and truthful to the project's actual state. It may begin with a project-under-definition/placeholder state.
 4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, and `dev/now.md` without inventing product scope.
@@ -112,8 +138,8 @@ These are the defaults. The user can change either one to `auto` at installation
 
 ## Files
 
-- `AGENTS.md` — project-level operating rules and intent router.
-- `.github/copilot-instructions.md` — thin VS Code entry point.
+- `AGENTS.md` — portable project-level operating rules, intent router, and workflow source of truth.
+- `.github/copilot-instructions.md` — optional thin VS Code Copilot adapter; not the workflow source of truth.
 - `CONTEXT.md` — durable domain vocabulary and agreed terminology.
 - `dev/project.md` — project purpose, scope, stack, and stable facts.
 - `dev/constraints.md` — compatibility/legacy/runtime/resource constraints.
@@ -154,7 +180,7 @@ The workflow handles intent, task sizing, grilling, state reconciliation, skill 
 Use a normal request such as:
 
 ```text
-Install sekedus/adaptive-agent-workflow in this project.
+Install the Adaptive Agent Workflow in this project.
 ```
 
 The agent should bootstrap the workflow, create a project README, leave product discovery pending, validate the state, and apply the `initial` commit policy (default: `ask`).

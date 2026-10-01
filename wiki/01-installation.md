@@ -1,6 +1,18 @@
 # Installation and Prerequisites
 
-## 1. Repository template
+## 1. Harness compatibility
+
+The workflow core is designed around the portable `AGENTS.md` format. Prefer a harness that supports `AGENTS.md` directly. OpenCode documents `AGENTS.md` as its persistent project instruction mechanism, and current VS Code agent documentation also lists `AGENTS.md` as a recommended cross-agent project-instruction format.
+
+```text
+AGENTS.md                <- canonical workflow
+.github/copilot-instructions.md <- optional Copilot adapter
+wiki/                    <- optional human documentation
+```
+
+If the current harness does not support `AGENTS.md`, use its native project-instruction mechanism as a thin adapter. Keep the actual workflow rules in `AGENTS.md` so the repository remains portable.
+
+## 2. Repository template
 
 Copy/merge the Adaptive Agent Workflow into the target project using the project installation rules.
 
@@ -12,7 +24,7 @@ For your setup, the existing global location is:
 %USERPROFILE%\.agents\skills\
 ```
 
-## 2. Existing project vs. empty project
+## 3. Existing project vs. empty project
 
 ### Existing project
 
@@ -36,7 +48,7 @@ Roadmap tasks: none
 
 **Do not** create `T-0001` just to represent installation.
 
-## 3. Initial commit checkpoint
+## 4. Initial commit checkpoint
 
 After an empty/new project has been bootstrapped, the README and workflow files validated, apply `dev/commit-policy.md`:
 
@@ -48,7 +60,9 @@ The default is to ask before creating the `Initial commit`. The user may change 
 
 The purpose of the initial commit is to establish a durable recovery/review boundary before product implementation begins.
 
-## 4. Personal customization
+## 5. Personal customization
+
+Personal customization is optional. The Adaptive Agent Workflow works without it. If installed, it changes interaction style and environment/tool preferences; it does not define the project workflow.
 
 The workflow assumes the global user preferences are installed separately under:
 
@@ -56,7 +70,7 @@ The workflow assumes the global user preferences are installed separately under:
 %USERPROFILE%\.copilot\instructions\
 ```
 
-## 5. Skill Dependency Closure
+## 6. Skill Dependency Closure
 
 **Do not** install only the top-level skill that the workflow names. Some skills explicitly delegate to other skills.
 
@@ -70,7 +84,7 @@ For example:
 
 See [`dev/skill-dependencies.md`](../dev/skill-dependencies.md) for the maintained matrix and installation guidance.
 
-## 6. Verify installation
+## 7. Verify installation
 
 Before continuing to product work, verify:
 
