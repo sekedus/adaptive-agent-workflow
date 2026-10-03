@@ -25,6 +25,7 @@ For a new project, read [Installation](01-installation.md) and [State Integrity]
 17. [Feature and Bug-Fix Records](17-feature-and-bug-records.md)
 18. [Harness Portability](18-harness-portability.md)
 19. [Architecture Map and Engineering Discipline](19-architecture-map-and-engineering-discipline.md)
+20. [Workflow Migrations](20-workflow-migrations.md)
 
 ## Important distinction
 
@@ -52,3 +53,5 @@ For dependency-aware installation, see [Skill Dependencies](15-skill-dependencie
 For state synchronization and commit checkpoints, see [State Integrity](16-state-integrity-and-commits.md).
 
 For codebase memory, root-cause tracing, reuse/YAGNI, and concrete verification contracts, see [Architecture Map and Engineering Discipline](19-architecture-map-and-engineering-discipline.md).
+
+For upgrading or migrating the workflow itself, see [Workflow Migrations](20-workflow-migrations.md).

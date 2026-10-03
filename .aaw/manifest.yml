@@ -1,0 +1,4 @@
+# Adaptive Agent Workflow project manifest
+# Authoritative installed-workflow version marker.
+AAW_VERSION: 0.7.1
+AAW_SCHEMA: 1

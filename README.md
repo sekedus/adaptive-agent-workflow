@@ -1,10 +1,10 @@
 # Adaptive Agent Workflow
 
-**Workflow version: v7**
+**Workflow version: 0.7.1**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
-The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only.
+The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only. Installed version metadata lives in `.aaw/manifest.yml`.
 
 Designed for:
 
@@ -63,6 +63,12 @@ Next session/model/device can recover from repository state
 
 The workflow activates the smallest meaningful quality gates for the change instead of running every skill on every task.
 
+## AAW maintenance and migration
+
+AAW maintenance is a control-plane operation. Requests such as `update AAW to v7` or `migrate this project to AAW 0.7.1` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
+
+See [`docs/workflow/aaw-migration.md`](docs/workflow/aaw-migration.md).
+
 ## Harness portability
 
 The workflow has one portable project instruction source:
@@ -89,34 +95,34 @@ The `wiki/` directory is human documentation and is not a runtime dependency.
 
 This repository is the **template source**, not a project-specific README to copy blindly into another project.
 
-When the user asks you to install, clone, download, or apply the **Adaptive Agent Workflow** to a target project:
+When the user asks you to install, upgrade, downgrade, migrate, repair, clone, download, or apply the **Adaptive Agent Workflow** to a target project:
 
 ### Existing project
 
 1. Identify the active agent harness. Prefer its native support for root `AGENTS.md` when available.
 2. Obtain this template repository/archive using the available Git, download, or file tools.
-2. Read the target project before changing anything.
-3. Preserve the target project's existing `README.md`.
-4. Copy/merge workflow files without blindly overwriting project-specific instructions or state.
-5. Do not copy this template repository's root `README.md` into an existing target project.
-6. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The installed core workflow does not require `wiki/` at runtime.
-7. Do not create product tasks until the target project's real objective is known.
-8. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` with the real project.
-9. Initialize or reconcile `ARCHITECTURE-MAP.md` with the real codebase.
-10. Validate state before claiming installation is complete.
+3. Read the target project before changing anything.
+4. Preserve the target project's existing `README.md`.
+5. Copy/merge workflow files without blindly overwriting project-specific instructions or state.
+6. Do not copy this template repository's root `README.md` into an existing target project.
+7. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The installed core workflow does not require `wiki/` at runtime.
+8. Do not create product tasks until the target project's real objective is known.
+9. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` with the real project.
+10. Initialize or reconcile `ARCHITECTURE-MAP.md` with the real codebase.
+11. Validate state before claiming installation is complete.
 
 ### Empty / new project
 
 1. Identify the active agent harness. Prefer its native support for root `AGENTS.md` when available.
 2. Install the workflow files.
-2. Create a **new user-facing root `README.md` for the target project**. Do not copy this template's root README verbatim because it contains agent/template instructions.
-3. Keep the README concise and truthful to the project's actual state. It may begin with a project-under-definition/placeholder state.
-4. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` without inventing product scope.
-5. Initialize `ARCHITECTURE-MAP.md` as a project-specific codebase map (do not leave template placeholders once discovery starts).
-6. Set the workflow phase to `DISCOVERY_PENDING`.
-6. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
-7. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The agent must be able to operate from the installed core files without `wiki/`.
-8. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
+3. Create a **new user-facing root `README.md` for the target project**. Do not copy this template's root README verbatim because it contains agent/template instructions.
+4. Keep the README concise and truthful to the project's actual state. It may begin with a project-under-definition/placeholder state.
+5. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` without inventing product scope.
+6. Initialize `ARCHITECTURE-MAP.md` as a project-specific codebase map (do not leave template placeholders once discovery starts).
+7. Set the workflow phase to `DISCOVERY_PENDING`.
+8. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
+9. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The agent must be able to operate from the installed core files without `wiki/`.
+10. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
 
 ### Root README rule
 
@@ -144,6 +150,8 @@ These are the defaults. The user can change either one to `auto` at installation
 
 ## Files
 
+- `.aaw/manifest.yml` — authoritative installed AAW version and schema metadata.
+- `.aaw/migration.yml` — temporary durable migration lock/state; absent during normal operation.
 - `AGENTS.md` — portable project-level operating rules, intent router, and workflow source of truth.
 - `.github/copilot-instructions.md` — optional thin VS Code Copilot adapter; not the workflow source of truth.
 - `CONTEXT.md` — durable domain vocabulary and agreed terminology.
@@ -165,6 +173,7 @@ These are the defaults. The user can change either one to `auto` at installation
 - `dev/bug-fixes/` — historical records for meaningful resolved bugs; `.bug-fix-template.md` is a template only.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
+- `docs/workflow/aaw-migration.md` — agent-facing AAW migration procedure.
 - `wiki/19-architecture-map-and-engineering-discipline.md` — architecture map, root-cause tracing, reuse/YAGNI, and verification guidance.
 - `wiki/` — complete English user and maintenance guide.
 

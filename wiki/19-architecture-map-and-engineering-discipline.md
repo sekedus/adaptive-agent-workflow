@@ -1,6 +1,6 @@
 # Architecture Map and Engineering Discipline
 
-## Why v7 adds this
+## Why 0.7.0 adds this
 
 Adaptive Agent Workflow is not only a task-state system. A new session also needs to understand the **shape of the codebase** without reading the entire repository.
 

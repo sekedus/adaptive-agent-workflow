@@ -70,3 +70,23 @@ Inspect your global skills periodically and keep only what you actually need.
 ## 8. Treat experimental skills as optional
 
 Experimental skills such as `taste-skill` should remain optional unless you intentionally accept their changing behavior.
+
+
+## 9. Upgrade the workflow safely
+
+AAW maintenance is a control-plane operation. Use the migration procedure rather than treating an AAW upgrade as a normal product task.
+
+```text
+manifest/version detection
+-> migration lock
+-> freeze product work
+-> merge workflow files
+-> reconcile project-specific state
+-> verify
+-> update AGENTS/adapters last
+-> update manifest
+-> remove lock
+-> stop
+```
+
+See [Workflow Migrations](20-workflow-migrations.md).

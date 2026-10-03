@@ -1,5 +1,22 @@
 # Installation and Prerequisites
 
+## 0. AAW version metadata
+
+AAW 0.7.1 and later record the installed workflow release in:
+
+```text
+.aaw/manifest.yml
+```
+
+Example:
+
+```yaml
+AAW_VERSION: 0.7.1
+AAW_SCHEMA: 1
+```
+
+For existing installations without the manifest, use the migration procedure to establish the version from repository evidence rather than guessing.
+
 ## 1. Harness compatibility
 
 The workflow core is designed around the portable `AGENTS.md` format. Prefer a harness that supports `AGENTS.md` directly. OpenCode documents `AGENTS.md` as its persistent project instruction mechanism, and current VS Code agent documentation also lists `AGENTS.md` as a recommended cross-agent project-instruction format.
