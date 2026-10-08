@@ -42,21 +42,31 @@ It is the authoritative index of milestones and task IDs. Do not invent tasks du
 
 **Question answered:** What specific work must be done?
 
-Each task is bounded and executable.
+Each task is bounded and executable. Small tasks should stay concise; a user message is not automatically a new task.
 
-## `dev/features/`
+## `dev/milestones/`
 
-**Question answered:** What meaningful product features have been completed?
+**Question answered:** What broad bounded outcome groups these tasks?
 
-These are historical records for important user-facing features. Use `.feature-template.md` and create records only when the feature is meaningful enough to preserve.
+Use a milestone only when the request is too broad for one task. Keep it as a compact summary/navigation layer.
 
 ## `dev/bug-fixes/`
 
-**Question answered:** What meaningful bugs were resolved and what was learned?
+**Question answered:** What meaningful standalone bugs were resolved?
 
-These are historical records for verified bug fixes. Use `.bug-fix-template.md` and preserve reusable troubleshooting, reliability, or security lessons.
+Use stable `B-xxxx-<slug>.md` IDs. Bugs found inside an active task stay in that task when they remain in scope. Completed records move to `done/`.
 
-Feature and bug-fix records do not replace active tasks. They are created after the relevant work has been verified and are linked back to the task and commit.
+## `dev/hdt.md`
+
+**Question answered:** When and how should a human/runtime test be performed?
+
+Use HDT only when automated checks do not fully prove the required behavior.
+
+## `dev/parking-lot.md`
+
+**Question answered:** Which project-related ideas are intentionally deferred?
+
+It is an active queue, not an archive. Remove entries when promoted, rejected, or resolved.
 
 ## `dev/now.md`
 
@@ -64,7 +74,7 @@ Feature and bug-fix records do not replace active tasks. They are created after 
 
 This is the primary resume/checkpoint file and navigation layer.
 
-It is intentionally short and is **not** the absolute source of truth when it conflicts with durable artifacts or Git evidence.
+It is intentionally short and is **not** a chronological diary or absolute source of truth when it conflicts with durable artifacts or Git evidence.
 
 ## `dev/state-integrity.md`
 
@@ -79,6 +89,18 @@ Use it for invariants and state-transition rules.
 ## `dev/security.md`
 
 **Question answered:** Which security surface does this project have, and which security workflows apply?
+
+## `dev/changelog-policy.md`
+
+**Question answered:** When should this project keep a human-facing changelog?
+
+Use it when the project has meaningful release-facing history. The file is optional for small/private projects.
+
+## `CHANGELOG.md`
+
+**Question answered:** What meaningful changes should humans know about between releases?
+
+When present, prefer Keep a Changelog 1.1.0. Do not turn it into a task or commit dump.
 
 ## Git
 

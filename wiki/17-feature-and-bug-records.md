@@ -1,110 +1,63 @@
-# Feature and Bug-Fix Records
+# Task, Milestone, and Bug Records
 
-Adaptive Agent Workflow uses `dev/tasks/` for active work and two historical record areas for completed work:
+AAW keeps active work in `dev/tasks/`, broad bounded outcomes in `dev/milestones/`, and meaningful standalone bug records in `dev/bug-fixes/`.
 
-```text
- dev/tasks/        active executable work
-       │
-       ├── completed feature ──> dev/features/
-       │
-       └── resolved bug ───────> dev/bug-fixes/
-```
+## Tasks
 
-These records exist to make a project recoverable and understandable without forcing a future agent to reconstruct old chat sessions.
+A task is a bounded work unit, not one user message.
 
-## Feature Records
+A new request may be merged into an active task when these align:
 
-Create `dev/features/YYYYMMDD-<feature-slug>.md` for meaningful user-facing capabilities.
+- same domain/area;
+- same or compatible acceptance criteria;
+- same verification boundary;
+- small enough that the combined task remains understandable.
 
-A feature record should capture:
+Otherwise, create a separate task or park the idea.
 
-- product problem / user need;
-- user-visible behavior;
-- scope;
-- important requirements;
-- design/UX considerations;
-- concise technical summary;
-- relevant security considerations;
-- verification evidence;
-- documentation impact;
-- related task, ADR, and commit;
-- useful follow-up work.
+Keep small task files concise. Use deeper planning/evidence sections only when the work needs them.
 
-**Do not** copy the entire task plan, source code, or chat transcript into the record.
+## Milestones
 
-### Example
+A milestone groups several related tasks when one task is too narrow for the request but a second roadmap system is unnecessary.
 
-A task such as:
+A milestone should contain:
 
-```text
-T-0012 — Add WhatsApp OTP login
-```
+- objective;
+- scope/out-of-scope;
+- exit criteria;
+- task index;
+- important constraints/decisions;
+- related parking-lot candidates that the user explicitly promoted.
 
-may produce:
+The milestone is a summary/navigation layer, not a copy of task execution details.
+
+## Bugs
+
+If a bug is discovered while working on the current task and is still inside that task's scope, keep it in the task.
+
+For a standalone meaningful bug, use a stable ID:
 
 ```text
-dev/features/20260930-whatsapp-otp-login.md
+B-0001-<bug-slug>.md
 ```
 
-The task contains the execution details. The feature record explains the finished capability to a future human or agent.
+**Do not** create a standalone bug record merely because an issue was reported. The active investigation belongs in a task until the outcome is known.
 
-## Bug-Fix Records
+## Done Folders
 
-Create `dev/bug-fixes/YYYYMMDD-<bug-slug>.md` when a bug has been investigated, fixed, and appropriately verified and the incident is worth preserving.
-
-Capture:
-
-- observed behavior;
-- expected behavior;
-- reproduction;
-- impact;
-- evidence-based root cause;
-- fix;
-- security impact;
-- verification;
-- regression risk;
-- prevention / reusable lesson;
-- related task, feature, ADR, and commit.
-
-**Do not** create a bug record merely because an issue was reported. A report can remain in the active task while its cause and resolution are being determined.
-
-## YAML Frontmatter
-
-Both record types use a small, lowercase YAML frontmatter block so files are easy to search and process consistently.
-
-## When Not to Create a Record
-
-Avoid documentation noise for:
-
-- typo-only fixes;
-- trivial formatting changes;
-- internal cleanup with no meaningful behavior change;
-- changes already fully explained by an existing record.
-
-## State Integration
-
-Creating a feature or bug-fix record is a **state transaction**, not a replacement for the active task.
-
-For feature completion:
+Keep active folders easy to scan:
 
 ```text
-verify task
-  → create/update feature record if warranted
-  → update roadmap/now
-  → review README impact
-  → state-integrity check
-  → commit checkpoint according to policy
+dev/tasks/
+  T-xxxx-*.md
+  done/
+    T-xxxx-*.md
+
+dev/bug-fixes/
+  B-xxxx-*.md
+  done/
+    B-xxxx-*.md
 ```
 
-For a resolved bug:
-
-```text
-verify fix
-  → create/update bug-fix record if warranted
-  → update task/now
-  → update security/ADR when appropriate
-  → state-integrity check
-  → commit checkpoint according to policy
-```
-
-The record should reference the task and commit so the historical record can be traced back to the exact implementation.
+Git preserves historical movement, so active folders do not need to retain resolved records.

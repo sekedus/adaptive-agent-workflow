@@ -1,102 +1,70 @@
 # Architecture Map and Engineering Discipline
 
-## Why 0.7.0 adds this
+## Compact by design
 
-Adaptive Agent Workflow is not only a task-state system. A new session also needs to understand the **shape of the codebase** without reading the entire repository.
+`ARCHITECTURE-MAP.md` is a **navigation map**, not a second architecture document.
 
-`ARCHITECTURE-MAP.md` is the living navigation map for that purpose.
+The agent should be able to answer:
 
-## What belongs in the map
+- where a capability lives;
+- who owns the domain/module;
+- what important dependencies/relationships exist;
+- which execution/data flows cross boundaries;
+- where sensitive contracts/hotspots are;
+- where the relevant tests live.
 
-Keep only information that helps an agent find and reason about code:
+It should **not** attempt to document every function, historical investigation, test run, or implementation detail.
 
-- domains and module ownership;
-- entry points;
-- important dependencies;
-- execution/data flows;
-- sensitive boundaries and hotspots;
-- reusable capabilities;
-- public or internal contracts worth protecting;
-- test surfaces.
+The source code remains authoritative for implementation details. The map tells the agent where to inspect next.
 
-**Do not** turn it into a second README, full design document, or file-by-file index.
+## Update only when shape changes
 
-## When to update it
+Update the map when a task materially changes ownership, dependencies, entry points, flows, contracts, hotspots, or test boundaries.
 
-Update it when a task materially changes:
-
-- module/domain ownership;
-- dependency relationships;
-- entry points;
-- execution/data flow;
-- public contracts;
-- important hotspots;
-- test locations or test boundaries.
-
-**Do not** update it for trivial changes that do not alter the codebase shape.
+**Do not** update it for a trivial change merely to show that the task touched something.
 
 ## Trace before patching
 
-For a bug or non-trivial behavior change, do not assume the first suspicious file is the root cause.
+For non-trivial bugs or behavior changes:
 
 ```text
 symptom
   -> reproduce
-  -> trace real flow
+  -> trace actual flow
   -> identify shared/root cause
   -> smallest correct fix
-  -> regression test
+  -> regression verification
 ```
 
-This reduces repeated symptom patches and helps low-context agents avoid making the codebase more complex than necessary.
-
-## Reuse ladder
-
-Before adding a helper, abstraction, or dependency:
+## Reuse / YAGNI
 
 ```text
-1. Existing project capability
-2. Standard library / platform API
-3. Already-installed dependency
-4. New abstraction / dependency
+existing project capability
+    -> standard/platform API
+    -> existing dependency
+    -> new abstraction/dependency only when justified
 ```
 
-Move down the list only when the previous level does not satisfy the current requirement.
+Avoid creating abstractions solely for hypothetical reuse.
 
-## Verification contract
+## Verification
 
-Use `dev/verification.md` to define the actual commands and evidence expected for the project.
+`dev/verification.md` is the project's compact verification contract.
 
-The separation is intentional:
+Keep historical evidence in the task/bug record or Git history rather than growing the verification contract with old test reports.
 
-```text
-quality.md
-  -> what should be checked
-
-verification.md
-  -> how this project proves it
-```
-
-This prevents agents from inventing a generic "done" standard.
-
-## Relationship to the other AAW state files
+## State boundaries
 
 ```text
+AGENTS.md
+  = workflow instructions
+
+dev/* state
+  = project data / workflow state
+
 ARCHITECTURE-MAP.md
-    = how the codebase is shaped
+  = codebase navigation map
 
-CONTEXT.md
-    = what domain terms mean
-
-dev/tasks/
-    = what work must be done
-
-dev/now.md
-    = what is happening now
-
-dev/verification.md
-    = how completion is proven
-
-git
-    = what actually changed
+docs/
+  = human project documentation
 ```

@@ -1,7 +1,7 @@
 # NOW
 
-> Primary current-state checkpoint and navigation layer.
-> Keep this short. It must be reconciled against durable project artifacts and Git when relevant.
+> Primary current-state snapshot and navigation layer.
+> Keep this short. Do not turn it into a chronological diary.
 
 ## Workflow Phase
 
@@ -27,14 +27,6 @@ None.
 
 [Populate after the first real project objective is discovered.]
 
-## Last Completed
-
-- Adaptive Agent Workflow bootstrapped.
-
-## Last State Transaction
-
-BOOTSTRAP_COMPLETE
-
 ## Next Action
 
 Define the first real project objective from the user's next request.
@@ -51,12 +43,13 @@ None.
 - `dev/roadmap.md`
 - `dev/quality.md`
 - `dev/security.md`
+- `dev/verification.md`
 
 ## Constraints
 
 - Read `dev/constraints.md` before compatibility/platform decisions.
 
-## Verification
+## Verification Snapshot
 
 Status: BOOTSTRAP_VALIDATED
 
@@ -70,11 +63,11 @@ Evidence:
 Initial: ASK
 Task: ASK
 
-See `dev/commit-policy.md`. The user may switch either checkpoint to `AUTO`.
+See `dev/commit-policy.md`.
 
-## Last Commit
+## Last Checkpoint
 
-None. Initial commit has not been created.
+BOOTSTRAP_COMPLETE
 
 ## README Status
 
@@ -90,10 +83,6 @@ The workflow is installed, but product discovery has not started. Do not invent 
 - Do not create implementation tasks merely to populate the roadmap.
 - Do not overwrite an existing project README during bootstrap.
 
-## Last Session
-
-Workflow bootstrap completed.
-
 ## Resume Instruction
 
-Read this file first. Since no active task exists, wait for or inspect the user's project objective. Once the objective is known, reconcile project-level artifacts before creating the first task.
+Read this snapshot first. Then inspect the active task/milestone and only the other durable artifacts relevant to the current request. Do not load all historical task, bug, or parking-lot records merely to get oriented.

@@ -22,10 +22,11 @@ For a new project, read [Installation](01-installation.md) and [State Integrity]
 14. [Maintenance](13-maintenance.md)
 15. [Three-Pillar Product Model](14-three-pillars.md)
 16. [State Integrity, README Updates, and Commit Checkpoints](16-state-integrity-and-commits.md)
-17. [Feature and Bug-Fix Records](17-feature-and-bug-records.md)
+17. [Task, Milestone, and Bug Records](17-feature-and-bug-records.md)
 18. [Harness Portability](18-harness-portability.md)
 19. [Architecture Map and Engineering Discipline](19-architecture-map-and-engineering-discipline.md)
 20. [Workflow Migrations](20-workflow-migrations.md)
+21. [Human Development Testing](21-human-development-testing.md)
 
 ## Important distinction
 

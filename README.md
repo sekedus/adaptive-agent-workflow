@@ -1,10 +1,10 @@
 # Adaptive Agent Workflow
 
-**Workflow version: 0.7.1**
+**Workflow version: 0.7.2**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
-The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only. Installed version metadata lives in `.aaw/manifest.yml`.
+The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only. Installed identity and version metadata live in `.aaw/manifest.yml`. Canonical source: `https://github.com/sekedus/adaptive-agent-workflow`.
 
 Designed for:
 
@@ -46,6 +46,8 @@ Codebase memory + verification contract
         v
 Verification
         |
+        +--> HDT when human/runtime evidence matters
+        |
         v
 Commit checkpoint offered when appropriate
         |
@@ -63,9 +65,17 @@ Next session/model/device can recover from repository state
 
 The workflow activates the smallest meaningful quality gates for the change instead of running every skill on every task.
 
+## Human-friendly interaction
+
+AAW scales the amount of interaction to the work instead of forcing every change through the deepest workflow. Small local changes can remain lightweight; ambiguous, architectural, security-sensitive, or user-visible changes may use design confirmation, deeper review, and Human Development Testing (HDT).
+
+The `/wait-what` skill is optional. AAW still provides the core behavior: explain what changed, why, how to verify it, what to expect, and what to report if it fails.
+
+`dev/now.md` is a compact snapshot, `dev/parking-lot.md` is an active deferred queue, and task/bug records are bounded durable work records rather than chronological diaries.
+
 ## AAW maintenance and migration
 
-AAW maintenance is a control-plane operation. Requests such as `update AAW to v7` or `migrate this project to AAW 0.7.1` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
+AAW maintenance is a control-plane operation. Requests such as `update AAW to v7` or `migrate this project to AAW 0.7.2` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
 
 See [`docs/workflow/aaw-migration.md`](docs/workflow/aaw-migration.md).
 
@@ -150,7 +160,7 @@ These are the defaults. The user can change either one to `auto` at installation
 
 ## Files
 
-- `.aaw/manifest.yml` — authoritative installed AAW version and schema metadata.
+- `.aaw/manifest.yml` — authoritative AAW identity, canonical source, installed version, and schema metadata.
 - `.aaw/migration.yml` — temporary durable migration lock/state; absent during normal operation.
 - `AGENTS.md` — portable project-level operating rules, intent router, and workflow source of truth.
 - `.github/copilot-instructions.md` — optional thin VS Code Copilot adapter; not the workflow source of truth.
@@ -158,7 +168,9 @@ These are the defaults. The user can change either one to `auto` at installation
 - `ARCHITECTURE-MAP.md` — living codebase map: domains, ownership, dependencies, flows, hotspots, contracts, and test surfaces.
 - `dev/project.md` — project purpose, scope, stack, and stable facts.
 - `dev/constraints.md` — compatibility/legacy/runtime/resource constraints.
-- `dev/now.md` — primary current-state checkpoint.
+- `dev/now.md` — bounded current-state snapshot/checkpoint.
+- `dev/hdt.md` — Human Development Test policy for runtime/user verification.
+- `dev/milestones/` — compact milestone summaries for work broader than one task.
 - `dev/roadmap.md` — milestones and direction.
 - `dev/quality.md` — adaptive quality-gate policy and three-pillar quality model.
 - `dev/verification.md` — concrete verification contract and evidence expectations.
@@ -167,14 +179,17 @@ These are the defaults. The user can change either one to `auto` at installation
 - `dev/state-integrity.md` — state invariants and state transactions.
 - `dev/readme-policy.md` — policy for the project's user-facing README.
 - `dev/commit-policy.md` — persistent initial/task commit policy.
-- `dev/parking-lot.md` — unrelated ideas that should not hijack active work.
-- `dev/tasks/` — bounded executable tasks; `.task-template.md` is a template only.
-- `dev/features/` — historical records for meaningful completed features; `.feature-template.md` is a template only.
-- `dev/bug-fixes/` — historical records for meaningful resolved bugs; `.bug-fix-template.md` is a template only.
+- `dev/parking-lot.md` — active deferred project ideas; promoted/resolved entries are removed.
+- `dev/tasks/` — bounded executable tasks; completed tasks move to `dev/tasks/done/`.
+- `dev/bug-fixes/` — standalone meaningful bug records with stable `B-*` IDs; completed records move to `dev/bug-fixes/done/`.
+- `dev/milestones/` — compact summaries for broad bounded outcomes.
+- `CHANGELOG.md` — release-facing history for AAW itself.
+- `dev/changelog-policy.md` — optional target-project changelog guidance based on Keep a Changelog 1.1.0.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
 - `docs/workflow/aaw-migration.md` — agent-facing AAW migration procedure.
-- `wiki/19-architecture-map-and-engineering-discipline.md` — architecture map, root-cause tracing, reuse/YAGNI, and verification guidance.
+- `wiki/19-architecture-map-and-engineering-discipline.md` — compact architecture-map and engineering-discipline guidance.
+- `wiki/21-human-development-testing.md` — HDT guidance.
 - `wiki/` — complete English user and maintenance guide.
 
 ## User-facing usage

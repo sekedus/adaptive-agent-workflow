@@ -2,7 +2,7 @@
 
 ## 0. AAW version metadata
 
-AAW 0.7.1 and later record the installed workflow release in:
+AAW 0.7.1 and later record the installed workflow identity and release in:
 
 ```text
 .aaw/manifest.yml
@@ -11,7 +11,9 @@ AAW 0.7.1 and later record the installed workflow release in:
 Example:
 
 ```yaml
-AAW_VERSION: 0.7.1
+AAW_ID: adaptive-agent-workflow
+AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
+AAW_VERSION: 0.7.2
 AAW_SCHEMA: 1
 ```
 

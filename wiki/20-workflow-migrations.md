@@ -1,6 +1,6 @@
 # Workflow Migrations
 
-AAW 0.7.1 introduces a dedicated control plane for upgrading, downgrading, repairing, or migrating the workflow itself.
+AAW 0.7.1 introduced a dedicated control plane for upgrading, downgrading, repairing, or migrating the workflow itself.
 
 ## Natural-language request
 
@@ -8,8 +8,8 @@ The user does not need a migration command. Examples:
 
 ```text
 update AAW to v7
-update adaptive-agent-workflow to 0.7.1
-upgrade this project to AAW 0.7.1
+update adaptive-agent-workflow to 0.7.2
+upgrade this project to AAW 0.7.2
 ```
 
 The agent detects workflow maintenance rather than application work.
@@ -19,7 +19,9 @@ The agent detects workflow maintenance rather than application work.
 The authoritative installed version is `.aaw/manifest.yml`:
 
 ```yaml
-AAW_VERSION: 0.7.1
+AAW_ID: adaptive-agent-workflow
+AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
+AAW_VERSION: 0.7.2
 AAW_SCHEMA: 1
 ```
 
@@ -70,8 +72,10 @@ dev/constraints.md
 dev/roadmap.md
 dev/now.md
 dev/tasks/
-dev/features/
+dev/tasks/done/
 dev/bug-fixes/
+dev/bug-fixes/done/
+dev/milestones/
 docs/adr/
 existing Git changes
 ```
@@ -93,3 +97,8 @@ migration lock -> removed
 After completion, the agent stops. It must not interpret the same request as permission to start or resume application work.
 
 See [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) for the agent-facing procedure.
+
+
+## 0.7.2 workflow ergonomics
+
+Existing projects should reconcile, rather than blindly replace, the following: compact `dev/now.md`, active-only `dev/parking-lot.md`, adaptive task templates, milestone summaries, standalone `B-*` bug records, done folders, `dev/hdt.md`, and the compact `dev/verification.md` contract.
