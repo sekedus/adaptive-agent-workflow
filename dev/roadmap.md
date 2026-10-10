@@ -22,4 +22,5 @@ No product tasks have been created yet.
 - Task IDs are unique and monotonic within the project.
 - Do not create a task merely to record workflow installation.
 - When a new milestone is planned, review `dev/parking-lot.md` for related project ideas and ask the user before promoting any of them.
-- Active task state belongs in `dev/tasks/`; completed task files move to `dev/tasks/done/`.
+- Active task state belongs in `dev/tasks/`; completed task files move to `dev/tasks/done/` only after all required verification gates pass.
+- Creating a milestone and decomposing a multi-item request is planning-only unless the user explicitly authorizes implementation; leave child tasks `PLANNED` and stop.

@@ -63,21 +63,30 @@ identify bounded issue
 
 ## 5. What happens when a task finishes
 
-A completed task goes through this checkpoint sequence:
+A task goes through this sequence:
 
 ```text
-verify
+run applicable automated checks
+-> decide HDT: NOT_REQUIRED or REQUIRED
+-> if REQUIRED: wait for user HDT PASS while task stays active
+-> mark COMPLETE and move to done/ only after all required gates pass
 -> synchronize task/roadmap/now
 -> review README impact
 -> state-integrity check
--> offer commit when work is uncommitted
+-> offer/perform commit according to policy
 ```
+
+If the agent already ran automated checks successfully, it reports the commands and results; it does not ask the user to repeat them. HDT is separate and asks the user to exercise real UI/runtime behavior only when required.
+
+When the user asks to create a milestone from several work items, create the milestone and planned child tasks, update the roadmap and current-state snapshot, then stop. Do not start the first/easiest task unless the user explicitly asks for implementation too.
 
 A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. If `task: auto` is configured in `dev/commit-policy.md`, the agent creates the checkpoint automatically after safety checks.
 
-Example when the policy is `ask`:
+Example when HDT is not required and the policy is `ask`:
 
-> `T-0001` is complete and verified. A commit is recommended as a checkpoint for review and recovery. Commit now?
+> `T-0001` is complete and verified. Automated checks passed: `npm run lint`, `npm test`, `npm run compile`. A commit is recommended as a checkpoint for review and recovery. Commit now?
+
+For a task with required HDT, do not use this completion/commit message until the user reports a sufficient PASS result.
 
 ## 6. Initial project commit
 

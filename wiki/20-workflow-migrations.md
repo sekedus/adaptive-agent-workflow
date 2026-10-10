@@ -7,9 +7,9 @@ AAW 0.7.1 introduced a dedicated control plane for upgrading, downgrading, repai
 The user does not need a migration command. Examples:
 
 ```text
-update AAW to v7
-update adaptive-agent-workflow to 0.7.2
-upgrade this project to AAW 0.7.2
+update AAW to v0.7.3
+update adaptive-agent-workflow to 0.7.3
+upgrade this project to AAW 0.7.3
 ```
 
 The agent detects workflow maintenance rather than application work.
@@ -21,7 +21,7 @@ The authoritative installed version is `.aaw/manifest.yml`:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.2
+AAW_VERSION: 0.7.3
 AAW_SCHEMA: 1
 ```
 

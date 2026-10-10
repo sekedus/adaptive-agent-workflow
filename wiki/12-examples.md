@@ -238,7 +238,35 @@ bootstrap
 
 **Do not** invent `T-0001` merely to represent installation.
 
-## Example 12: Completed task and commit checkpoint
+## Example 12: Create a milestone without starting implementation
+
+User:
+
+```text
+Here are seven new tasks. Group them into a milestone.
+```
+
+Expected behavior:
+
+```text
+inspect and group the requested outcomes
+-> create M-xxxx with PLANNED status
+-> create bounded child task records, all PLANNED
+-> update roadmap and now snapshot
+-> ask about related parking-lot ideas if any
+-> summarize the plan
+-> STOP (no product implementation)
+```
+
+**Do not** start the easiest first task. A milestone-creation request is planning authorization, not implementation authorization. Start coding only when the user explicitly asks to implement a task.
+
+## Example 13: Automated verification vs required HDT
+
+For a toolchain-only change such as a TypeScript version upgrade, when the project contract says automated checks are sufficient, the agent runs the relevant type-check/lint/test/build checks and reports their results. Successful package installation alone is not enough, but no manual HDT is needed when the contract confirms there is no relevant runtime behavior to test. The agent does not ask the user to repeat successful commands.
+
+For a session-eviction change in a VS Code extension, if the project's verification matrix requires EDH for session/runtime behavior, HDT is `REQUIRED` even if unit tests pass. The agent reports automated results, sets the task to `AWAITING_HDT`, keeps it in `dev/tasks/`, and gives only the manual EDH steps. It must not say HDT is not required, mark the task complete, move it to `done/`, or offer the completion commit before the user reports PASS.
+
+## Example 14: Completed task and commit checkpoint
 
 User:
 
@@ -246,13 +274,15 @@ User:
 finish the task
 ```
 
-After the task meets its acceptance criteria, the agent should apply `dev/commit-policy.md`. With the default `task: ask`, it should offer the commit; with `task: auto`, it should create the checkpoint after safety checks.
+After the implementation and all required verification gates are satisfied, the agent should apply `dev/commit-policy.md`. If HDT is required, the task is not complete until the user reports PASS. With the default `task: ask`, offer the commit only after that gate passes; with `task: auto`, create the checkpoint only after all gates pass.
 
 The agent should:
 
 ```text
-verify
--> update task
+run automated checks
+-> resolve HDT requirement
+-> if required, wait for HDT PASS
+-> mark COMPLETE and move task to done/
 -> update roadmap if status changed
 -> update now
 -> review README impact

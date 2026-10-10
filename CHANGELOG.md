@@ -13,6 +13,22 @@ and this project follows Semantic Versioning.
 
 ### Fixed
 
+## [0.7.3] - 2026-10-10
+
+### Changed
+
+- Creating a milestone from a multi-item request is planning-only unless the user explicitly authorizes implementation; child tasks remain `PLANNED`.
+- Required HDT is now a hard completion gate: tasks remain active and outside `done/` until a PASS result is recorded.
+- Automated checks are agent-owned when tool/environment access allows; users are not asked to repeat successful `lint`, `test`, type-check, compile, or packaging commands.
+- Task templates now separate the effective HDT requirement from the HDT result/status.
+
+### Fixed
+
+- Prevented the first/easiest task from being implemented automatically just because a milestone was requested.
+- Prevented task completion, folder movement, and normal commit prompts from happening while required HDT is still pending or failed.
+- Clarified that a dependency/toolchain update is not verified by successful installation alone; applicable automated checks must run, while HDT is unnecessary when the project contract confirms no human/runtime evidence is needed.
+- Clarified that unit tests for a helper do not replace a required end-to-end/runtime check for the behavior that consumes it.
+
 ## [0.7.2] - 2026-10-08
 
 ### Added
@@ -53,6 +69,7 @@ and this project follows Semantic Versioning.
 - AAW migration control plane, manifest, and durable migration lock.
 - State-preserving, resumable, and verifiable migration rules.
 
-[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.3...HEAD
+[0.7.3]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/sekedus/adaptive-agent-workflow/releases/tag/v0.7.1

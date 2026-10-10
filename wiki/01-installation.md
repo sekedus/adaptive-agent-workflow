@@ -13,7 +13,7 @@ Example:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.2
+AAW_VERSION: 0.7.3
 AAW_SCHEMA: 1
 ```
 

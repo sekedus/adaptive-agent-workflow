@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow
 
-**Workflow version: 0.7.2**
+**Workflow version: 0.7.3**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
@@ -44,12 +44,13 @@ Codebase memory + verification contract
   -> ARCHITECTURE-MAP.md / dev/verification.md when affected
         |
         v
-Verification
+Agent-run automated verification
         |
-        +--> HDT when human/runtime evidence matters
+        +--> HDT REQUIRED: keep task active until user reports PASS
+        +--> HDT NOT_REQUIRED: record evidence, then complete
         |
         v
-Commit checkpoint offered when appropriate
+Move completed task to done/ -> commit checkpoint
         |
         v
 Next session/model/device can recover from repository state
@@ -67,15 +68,15 @@ The workflow activates the smallest meaningful quality gates for the change inst
 
 ## Human-friendly interaction
 
-AAW scales the amount of interaction to the work instead of forcing every change through the deepest workflow. Small local changes can remain lightweight; ambiguous, architectural, security-sensitive, or user-visible changes may use design confirmation, deeper review, and Human Development Testing (HDT).
+AAW scales the amount of interaction to the work instead of forcing every change through the deepest workflow. Small local changes can remain lightweight; ambiguous, architectural, security-sensitive, or user-visible changes may use design confirmation and deeper review. When HDT is required by the project's verification contract, the task stays active until human/runtime verification passes. Automated checks are run by the agent when possible; users are not asked to repeat checks that already passed.
 
-The `/wait-what` skill is optional. AAW still provides the core behavior: explain what changed, why, how to verify it, what to expect, and what to report if it fails.
+The `/wait-what` skill is optional. AAW still provides the core behavior: explain what changed and why. For automated-only changes, report checks the agent actually ran. For required HDT, provide human/runtime steps, expected behavior, and what to report if it fails.
 
 `dev/now.md` is a compact snapshot, `dev/parking-lot.md` is an active deferred queue, and task/bug records are bounded durable work records rather than chronological diaries.
 
 ## AAW maintenance and migration
 
-AAW maintenance is a control-plane operation. Requests such as `update AAW to v7` or `migrate this project to AAW 0.7.2` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
+AAW maintenance is a control-plane operation. Requests such as `update AAW to v0.7.3` or `migrate this project to AAW 0.7.3` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
 
 See [`docs/workflow/aaw-migration.md`](docs/workflow/aaw-migration.md).
 
@@ -138,14 +139,15 @@ When the user asks you to install, upgrade, downgrade, migrate, repair, clone, d
 
 The template root README is not copied into target projects. In an empty/new project, it is used only as guidance for generating the project's own README.
 
-### After every completed task
+### Task completion and commit lifecycle
 
-1. Verify the task.
-2. Synchronize affected state artifacts.
-3. Review whether the project's root README needs a meaningful update.
-4. Run a state-integrity check.
-5. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and safety checks pass.
-6. Never auto-commit unrelated user changes.
+1. The agent runs applicable automated checks and records their actual results.
+2. Resolve the effective HDT requirement from the project's verification contract.
+3. If HDT is `REQUIRED`, keep the task active as `AWAITING_HDT` until the user reports a sufficient PASS. Do not move it to `done/` or offer the normal completion commit early.
+4. If HDT is `NOT_REQUIRED`, do not ask the user to rerun automated checks that the agent already executed successfully.
+5. Only after all required gates pass, mark the task `COMPLETE`, move it to `done/`, synchronize affected state, review README impact, and check state integrity.
+6. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and all safety checks pass.
+7. Never auto-commit unrelated user changes.
 
 ## Commit policy
 

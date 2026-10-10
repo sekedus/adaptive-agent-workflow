@@ -57,7 +57,9 @@ HDT is recommended or required only when real human/runtime behavior matters. It
 - `VERIFIED` — all required checks for the task passed and expected behavior was confirmed with suitable evidence.
 - `UNVERIFIED` — evidence is incomplete.
 
-Do not claim `VERIFIED` merely because a command exited successfully when the project's actual behavior still requires human/runtime confirmation.
+Do not claim `VERIFIED` merely because a command exited successfully when the project's actual behavior still requires human/runtime confirmation. For each task, resolve any project-level `recommended` guidance into an effective task-level `REQUIRED` or `NOT_REQUIRED` HDT decision and record the reason in the task. A `REQUIRED` HDT blocks completion until PASS.
+
+Run available automated checks as the agent and record their real results. Do not ask users to repeat commands that already passed in the current worktree. Ask for user execution only when the agent cannot run a required check and the user's environment/access is genuinely needed; distinguish that from an HDT manual/runtime test.
 
 ## Evidence Retention
 
