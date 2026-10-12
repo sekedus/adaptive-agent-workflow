@@ -13,6 +13,29 @@ and this project follows Semantic Versioning.
 
 ### Fixed
 
+## [0.7.4] - 2026-10-12
+
+### Added
+
+- Explicit task/milestone/bug-record metadata using YAML frontmatter for new and updated records.
+- A `CANCELLED` task lifecycle with a dedicated `dev/tasks/cancelled/` folder and reason-preserving milestone updates.
+- A `planning` commit checkpoint for completed milestone/task planning, configurable as `ask` or `auto`.
+- MIT license for the AAW template repository.
+
+### Changed
+
+- Milestone state is reconciled whenever a linked task changes state; cancelled tasks and solely dependent exit criteria are struck through rather than removed.
+- Milestones become `COMPLETE` only when all non-cancelled tasks are complete and all remaining exit criteria are satisfied; milestones whose tasks are all cancelled become `CANCELLED`.
+- Verification evidence may be reused when relevant implementation/test inputs have not changed; metadata-only changes do not trigger redundant application test runs.
+- Tracked records are moved with `git mv` when appropriate, and rename detection is checked without creating extra commits merely to force rename presentation.
+
+### Fixed
+
+- Prevented cancelled tasks from being archived as completed tasks.
+- Clarified cancellation-reason handling: ask when absent and never invent a reason.
+- Reduced stale milestone status/exit criteria after task completion or cancellation.
+- Avoided rerunning successful product tests solely because task metadata, file paths, roadmap, milestone, or `now.md` changed.
+
 ## [0.7.3] - 2026-10-10
 
 ### Changed
@@ -69,7 +92,8 @@ and this project follows Semantic Versioning.
 - AAW migration control plane, manifest, and durable migration lock.
 - State-preserving, resumable, and verifiable migration rules.
 
-[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.3...HEAD
+[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.4...HEAD
+[0.7.4]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.3...v0.7.4
 [0.7.3]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/sekedus/adaptive-agent-workflow/releases/tag/v0.7.1

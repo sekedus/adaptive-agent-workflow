@@ -78,9 +78,9 @@ run applicable automated checks
 
 If the agent already ran automated checks successfully, it reports the commands and results; it does not ask the user to repeat them. HDT is separate and asks the user to exercise real UI/runtime behavior only when required.
 
-When the user asks to create a milestone from several work items, create the milestone and planned child tasks, update the roadmap and current-state snapshot, then stop. Do not start the first/easiest task unless the user explicitly asks for implementation too.
+When the user asks to create a milestone from several work items, create the milestone and planned child tasks, update the roadmap and current-state snapshot, run state-integrity checks, apply the `planning` commit policy (`ask` by default), then stop. Do not start the first/easiest task unless the user explicitly asks for implementation too.
 
-A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. If `task: auto` is configured in `dev/commit-policy.md`, the agent creates the checkpoint automatically after safety checks.
+A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. `planning: ask|auto` controls the checkpoint after milestone/task planning; `task: ask|auto` controls completed task checkpoints. A planning commit never authorizes implementation.
 
 Example when HDT is not required and the policy is `ask`:
 

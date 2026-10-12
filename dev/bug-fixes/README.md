@@ -62,3 +62,11 @@ Preserve only durable information:
 - security/regression risk;
 - prevention lesson;
 - related task, ADR, and commit.
+
+## Cancellation
+
+A standalone bug-fix record that is cancelled uses `status: CANCELLED` and a user-provided `cancellation_reason` in YAML frontmatter, then moves to `dev/bug-fixes/cancelled/`. Ask for a reason if none was supplied; never guess. Cancellation is not completion, and does not automatically revert code.
+
+## Metadata and verification evidence
+
+New or materially updated records use YAML frontmatter as the canonical metadata source; do not duplicate status in a body heading. Reuse successful automated evidence when relevant source/test inputs have not changed; a metadata edit or Markdown move alone does not require product tests to run again.

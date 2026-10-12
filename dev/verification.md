@@ -64,3 +64,12 @@ Run available automated checks as the agent and record their real results. Do no
 ## Evidence Retention
 
 Keep the contract itself stable. Put task-specific commands/results, HDT reports, and historical evidence in the task record or another appropriate durable record. Git history preserves exact file-level history.
+
+## Reusing Existing Evidence
+
+Reuse a successful automated check when the files and inputs relevant to that check have not changed since it ran. Task status changes, frontmatter edits, file moves between workflow folders, milestone updates, and `now.md` updates do not by themselves invalidate application test evidence.
+
+- Re-run application checks only when relevant source, tests, dependencies/lockfiles, build/test configuration, generated inputs, or required runtime conditions changed.
+- For Markdown-only changes, run only the applicable documentation/link/render checks when available.
+- A user's HDT PASS remains valid while the tested implementation is unchanged. If relevant code changes after HDT, repeat only the affected HDT scenarios.
+- Record what evidence was reused and why it remains valid when finalizing a task after documentation/status reconciliation.

@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow — Project Rules
 
-> AAW_VERSION: 0.7.3
+> AAW_VERSION: 0.7.4
 > Canonical version metadata: `.aaw/manifest.yml`
 > Canonical AAW source: `https://github.com/sekedus/adaptive-agent-workflow`
 
@@ -20,10 +20,10 @@ Adaptive Agent Workflow maintenance is a **control-plane operation**, not produc
 Before routing a natural-language request into normal project work, detect whether the user is asking to install, upgrade, downgrade, repair, migrate, or otherwise maintain AAW itself. Examples:
 
 ```text
-update adaptive-agent-workflow to 0.7.3
-update AAW to v0.7.3
+update adaptive-agent-workflow to 0.7.4
+update AAW to v0.7.4
 upgrade aaw
-migrate this project to AAW 0.7.3
+migrate this project to AAW 0.7.4
 ```
 
 Normalize legacy release labels:
@@ -348,10 +348,13 @@ Update as applicable:
 
 ### Task Created
 
+New task records use YAML frontmatter as canonical metadata (`id`, `type`, `status`, `milestone`, `size`, `created`, `updated`, `hdt_requirement`, `hdt_status`, `cancellation_reason`). Do not duplicate `status` in a body heading.
+
 Update:
 
 - `dev/tasks/T-xxxx-*.md`
 - `dev/roadmap.md`
+- linked milestone in `dev/milestones/`, if any
 - `dev/now.md`
 
 When tasks are created as part of a milestone-planning-only request, leave all child tasks `PLANNED`, leave the current-task pointer empty (unless an unrelated task was already active), record the milestone as planned, and stop. Do not start implementation merely because the first task is easy or ready.
@@ -364,6 +367,7 @@ Update only the artifacts materially affected by the work:
 
 - active task;
 - `dev/now.md`;
+- linked `dev/milestones/M-xxxx-*.md` whenever a linked task, task status, or affected exit criterion changes;
 - `dev/roadmap.md` when task/milestone state changes;
 - `ARCHITECTURE-MAP.md` when codebase shape materially changes;
 - `dev/verification.md` when the verification contract changes;
@@ -403,6 +407,20 @@ Do not interpret convenience, low task size, or a long list of tasks as permissi
 
 Do not silently absorb parking-lot ideas into the milestone.
 
+### Task and Bug Cancellation
+
+Cancellation is distinct from completion. If the user requests cancellation but has not supplied a reason, ask for it before changing the record; never invent or infer the reason. After the user provides it:
+
+1. set task frontmatter `status: CANCELLED` and record `cancellation_reason`;
+2. move the task to `dev/tasks/cancelled/` (use `git mv` for a tracked file);
+3. keep the task entry in its linked milestone and strike it through—do not delete it;
+4. if an exit criterion depended only on that task, strike through that criterion too and briefly note the cancelled scope; do not strike criteria that still need work or can be satisfied by other tasks;
+5. reconcile the linked milestone, roadmap, and `now.md` if the current pointer changed.
+
+Milestone status is `COMPLETE` when every non-cancelled task is `COMPLETE` and every remaining, non-struck exit criterion is satisfied. If the milestone has tasks and all of them are `CANCELLED`, set the milestone to `CANCELLED`, not `COMPLETE`. Preserve struck-through tasks/criteria as history. Do not automatically revert code changes just because the task was cancelled.
+
+Apply the same verification gates to standalone bug-fix records. If a standalone bug-fix record is cancelled, ask for a reason when missing and archive it separately under `dev/bug-fixes/cancelled/`, not `done/`.
+
 ### Bug Scope
 
 If a bug is discovered while the active task is being implemented and it remains within that task's scope, record and fix it inside the active task. Do not create a standalone `B-*` record.
@@ -415,7 +433,7 @@ For a bug outside the active scope, offer a bounded choice:
 
 ### Task Completion Is Gated by Verification
 
-A task or actively worked standalone bug-fix record is **not complete/closed merely because implementation and automated checks are finished**. Resolve the task's effective HDT requirement using `dev/verification.md`, the task's behavior/scope, and `dev/hdt.md` before finalizing its status.
+A task or actively worked standalone bug-fix record is **not complete/closed merely because implementation and automated checks are finished**. Resolve the task's effective HDT requirement using `dev/verification.md`, the task's behavior/scope, and `dev/hdt.md` before finalizing its status. New task, milestone, and bug-fix records use YAML frontmatter as the canonical metadata source; do not duplicate status in the body.
 
 Use this lifecycle:
 
@@ -443,16 +461,11 @@ REQUIRED:
 
 Do not mark a required-HDT task `COMPLETE`, move it to `done/`, advance the current task, or offer the normal completed-task commit checkpoint before HDT passes. If the user declines a required HDT, set the task's HDT status to `DECLINED`, keep the task active as `AWAITING_HDT` (or `BLOCKED` when there is a concrete blocker), and record the evidence gap; do not silently waive it or repeatedly ask the same question in every response. If the user explicitly asks for a partial checkpoint commit, that commit does not make the task complete or verified.
 
-A task or standalone bug-fix record with `HDT: NOT_REQUIRED` does not need a user verification round. Run the applicable commands/checks yourself when tools and environment allow, record actual outcomes, and report them. **Do not ask the user to rerun the same `lint`, `test`, `compile`, type-check, or other automated command that you already executed successfully.** If you cannot run an applicable check, state exactly why and mark it unverified; only ask the user to run it when their environment is genuinely required or tool access is unavailable.
+A task or standalone bug-fix record with `HDT: NOT_REQUIRED` does not need a user verification round. Run the applicable commands/checks yourself when tools and environment allow, record actual outcomes, and report them. **Do not ask the user to rerun the same `lint`, `test`, `compile`, type-check, or other automated command that you already executed successfully.** Reuse successful evidence if no relevant implementation/test input changed. Status/frontmatter edits, moving a Markdown record, and synchronizing roadmap/milestone/now do not by themselves require application tests to run again. Run only documentation/state-integrity checks appropriate to documentation-only changes. If relevant source, tests, dependencies, or config changed after verification, rerun only the affected checks. If you cannot run an applicable check, state exactly why and mark it unverified; only ask the user to run it when their environment is genuinely required or tool access is unavailable.
 
-When a task is complete and verified:
+When a task is complete and verified, move its tracked file to `dev/tasks/done/` using `git mv` when possible. Preserve the existing content and make only necessary metadata/state edits; verify the move with `git diff --summary --find-renames`. Git infers rename presentation from content similarity; do not create extra commits just to force a displayed rename. If the task file has never existed in the parent commit, adding it directly at its final path is correct.
 
-```text
-dev/tasks/T-xxxx-*.md
-    -> dev/tasks/done/
-```
-
-A standalone bug-fix record follows the same gate: it cannot be marked verified/closed or moved to `done/` until all required automated checks pass and required HDT has a recorded PASS.
+A cancelled task is never moved to `done/`. A standalone bug-fix record follows the same verification gate: it cannot be marked complete/closed or moved to `done/` until all required checks pass and required HDT has a recorded PASS. Cancelled standalone bug records use `dev/bug-fixes/cancelled/`.
 
 When a standalone bug-fix record is complete and verified under its own verification gate:
 
@@ -469,7 +482,7 @@ Active folders should remain easy to scan. Git preserves historical movement.
 
 ### Verification Completed
 
-Use the project-specific contract in `dev/verification.md`. Decide and record whether HDT is `REQUIRED` or `NOT_REQUIRED` for this task. If required, use `dev/hdt.md` and keep the task active until the user's report provides sufficient PASS evidence. Only after all required evidence is complete may the task be marked `COMPLETE`, moved to `done/`, and enter the normal commit checkpoint. Do not ask the user to repeat automated checks that the agent already ran successfully.
+Use the project-specific contract in `dev/verification.md`. Decide and record whether HDT is `REQUIRED` or `NOT_REQUIRED` for this task. If required, use `dev/hdt.md` and keep the task active until the user's report provides sufficient PASS evidence. Only after all required evidence is complete may the task be marked `COMPLETE`, moved to `done/`, and enter the normal commit checkpoint. Do not ask the user to repeat automated checks that the agent already ran successfully. Reuse test evidence across documentation/metadata-only closeout if relevant code/test inputs are unchanged. Whenever a task tied to a milestone changes state, reconcile that milestone's task list, exit criteria, and status in the same state transaction.
 
 ### Commit Created
 
@@ -516,20 +529,23 @@ The template repository's own root README is agent-facing documentation. When in
 
 ## 13. Commit Checkpoint Policy
 
-Read `dev/commit-policy.md` as the source of truth for commit behavior. The default policy is `ask` for both initial bootstrap and completed tasks.
+Read `dev/commit-policy.md` as the source of truth for commit behavior. The default policy is `ask` for initial bootstrap, standalone planning checkpoints, and completed tasks.
 
-The user may explicitly change either checkpoint to `auto`:
+The user may explicitly change each checkpoint to `auto`:
 
 - `initial: auto` — automatically commit after empty/new-project bootstrap validation.
+- `planning: auto` — automatically commit a validated milestone/task planning transaction.
 - `task: auto` — automatically commit after every completed and verified task.
 
-The two settings are independent.
+The settings are independent. A planning checkpoint never authorizes starting implementation.
 
 ### Auto-Commit Safety
 
-Automatic commits are allowed only after:
+Automatic commits are allowed only after checkpoint-appropriate checks succeed. For a task, all required verification gates must pass. For planning, the new/revised milestone, task index, roadmap, and `now.md` must be consistent; planning auto-commit must not include implementation changes.
 
-1. required verification succeeds;
+Then:
+
+1. required verification or planning/state checks succeed;
 2. affected state artifacts are synchronized;
 3. README impact is reviewed;
 4. state integrity passes;
@@ -548,6 +564,10 @@ If `initial: auto`, create the initial checkpoint automatically after validation
 Suggested ask wording:
 
 > The project is bootstrapped and the initial README/state are ready. A Git commit is useful as a recovery/checkpoint boundary. Commit the `Initial commit` now?
+
+### After Milestone Planning
+
+After a standalone milestone-planning transaction, reconcile the milestone, roadmap, and `now.md`, inspect the Git diff, and apply `dev/commit-policy.md`'s `planning` setting. Ask for a planning commit by default or auto-commit only when the scope is safe and contains no implementation changes. Then stop; do not start a child task. If the same user request explicitly authorizes both planning and a named implementation task, do not pause for a separate planning checkpoint; include the relevant planning-state changes in that bounded execution transaction and apply the task checkpoint at the end.
 
 ### After Every Completed Task
 

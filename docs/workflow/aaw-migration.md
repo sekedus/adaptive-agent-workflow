@@ -16,10 +16,10 @@ AAW control    = migratable
 The user should be able to use natural language:
 
 ```text
-update adaptive-agent-workflow to 0.7.3
-update AAW to v0.7.3
+update adaptive-agent-workflow to 0.7.4
+update AAW to v0.7.4
 upgrade aaw
-migrate this project to AAW 0.7.3
+migrate this project to AAW 0.7.4
 ```
 
 Legacy release labels normalize as `v6 -> 0.6.0` and `v7 -> 0.7.0`.
@@ -37,7 +37,7 @@ Example:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.3
+AAW_VERSION: 0.7.4
 AAW_SCHEMA: 1
 ```
 
@@ -69,8 +69,8 @@ Minimum contract:
 ```yaml
 mode: MIGRATION
 status: ACTIVE
-from: 0.7.2
-to: 0.7.3
+from: 0.7.3
+to: 0.7.4
 ```
 
 Optional fields such as a timestamp or migration identifier may be added.
@@ -102,10 +102,11 @@ dev/roadmap.md
 dev/now.md
 dev/tasks/
 dev/tasks/done/
+dev/tasks/cancelled/
 dev/bug-fixes/
 dev/bug-fixes/done/
+dev/bug-fixes/cancelled/
 dev/milestones/
-dev/bug-fixes/
 dev/security.md
 dev/quality.md
 dev/commit-policy.md
@@ -175,12 +176,12 @@ Update `AGENTS.md` and `.github/copilot-instructions.md` only after the target w
 
 ### 10. Write the target manifest
 
-For a 0.7.3 target:
+For a 0.7.4 target:
 
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.3
+AAW_VERSION: 0.7.4
 AAW_SCHEMA: 1
 ```
 
@@ -214,6 +215,17 @@ If migration cannot be completed safely, leave the lock active, preserve the rep
 
 Every workflow release that changes semantics should document its `AAW_VERSION`, any `AAW_SCHEMA` change, migration steps, protected/migratable files, verification requirements, and supported source versions. Never invent an undocumented migration path.
 
+## 0.7.4 migration notes
+
+When migrating to 0.7.4:
+
+- create `dev/tasks/cancelled/` and `dev/bug-fixes/cancelled/`;
+- preserve existing project records and do not bulk-rewrite history merely to add frontmatter;
+- add canonical YAML frontmatter to new or materially updated task, milestone, and bug records;
+- reconcile milestone tasks, exit criteria, and status when a linked task changes state;
+- preserve explicit cancellation reasons; never infer missing reasons. If a legacy task is already `CANCELLED` but stored under `dev/tasks/done/`, move it to `dev/tasks/cancelled/` and strike through its milestone entry. If the reason is missing, ask the user and do not fabricate one;
+- add `planning` to the existing `initial`/`task` commit-policy settings, defaulting it to `ask`;
+- reuse prior automated/HDT evidence when relevant implementation and test inputs have not changed.
 
 ## 0.7.2 migration notes
 

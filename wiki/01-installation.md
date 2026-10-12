@@ -13,7 +13,7 @@ Example:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.3
+AAW_VERSION: 0.7.4
 AAW_SCHEMA: 1
 ```
 
@@ -73,9 +73,11 @@ After an empty/new project has been bootstrapped, the README and workflow files 
 
 ```yaml
 initial: ask
+planning: ask
+task: ask
 ```
 
-The default is to ask before creating the `Initial commit`. The user may change it to `initial: auto` during installation or later.
+The default is to ask before each checkpoint. The user may change `initial`, `planning`, and/or `task` to `auto` during installation or later.
 
 The purpose of the initial commit is to establish a durable recovery/review boundary before product implementation begins.
 

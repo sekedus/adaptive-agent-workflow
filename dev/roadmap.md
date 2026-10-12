@@ -22,5 +22,8 @@ No product tasks have been created yet.
 - Task IDs are unique and monotonic within the project.
 - Do not create a task merely to record workflow installation.
 - When a new milestone is planned, review `dev/parking-lot.md` for related project ideas and ask the user before promoting any of them.
-- Active task state belongs in `dev/tasks/`; completed task files move to `dev/tasks/done/` only after all required verification gates pass.
+- Active task state belongs in `dev/tasks/`; completed task files move to `dev/tasks/done/` only after all required verification gates pass. Cancelled task files move to `dev/tasks/cancelled/`, with the reason recorded and the task crossed out—not deleted—in its milestone.
 - Creating a milestone and decomposing a multi-item request is planning-only unless the user explicitly authorizes implementation; leave child tasks `PLANNED` and stop.
+
+- When a linked task changes state, reconcile its milestone in the same state transaction. A milestone is `COMPLETE` only when every non-cancelled task is `COMPLETE` and every non-struck exit criterion is satisfied. If all tasks are cancelled, the milestone is `CANCELLED`.
+- After creating or materially replanning a milestone and its planned tasks, apply the `planning` checkpoint from `dev/commit-policy.md`, then stop unless implementation was explicitly authorized.

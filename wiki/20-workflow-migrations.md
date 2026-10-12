@@ -7,9 +7,9 @@ AAW 0.7.1 introduced a dedicated control plane for upgrading, downgrading, repai
 The user does not need a migration command. Examples:
 
 ```text
-update AAW to v0.7.3
-update adaptive-agent-workflow to 0.7.3
-upgrade this project to AAW 0.7.3
+update AAW to v0.7.4
+update adaptive-agent-workflow to 0.7.4
+upgrade this project to AAW 0.7.4
 ```
 
 The agent detects workflow maintenance rather than application work.
@@ -21,7 +21,7 @@ The authoritative installed version is `.aaw/manifest.yml`:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.3
+AAW_VERSION: 0.7.4
 AAW_SCHEMA: 1
 ```
 
@@ -102,3 +102,7 @@ See [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) for th
 ## 0.7.2 workflow ergonomics
 
 Existing projects should reconcile, rather than blindly replace, the following: compact `dev/now.md`, active-only `dev/parking-lot.md`, adaptive task templates, milestone summaries, standalone `B-*` bug records, done folders, `dev/hdt.md`, and the compact `dev/verification.md` contract.
+
+## 0.7.4 lifecycle integrity
+
+When migrating to 0.7.4, reconcile record lifecycle without bulk-rewriting historical files: new/materially updated task, milestone, and bug records use YAML frontmatter; create `dev/tasks/cancelled/` and `dev/bug-fixes/cancelled/`; preserve user-supplied cancellation reasons and never infer missing ones; reconcile linked milestones when task state changes; add the `planning` commit checkpoint; and document verification-evidence reuse. If a legacy task is already marked `CANCELLED` but stored in `done/`, move it to `cancelled/` and strike through its milestone entry. If its reason is missing, ask the user; never invent one.

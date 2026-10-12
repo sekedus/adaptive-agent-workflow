@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow
 
-**Workflow version: 0.7.3**
+**Workflow version: 0.7.4**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
@@ -76,7 +76,7 @@ The `/wait-what` skill is optional. AAW still provides the core behavior: explai
 
 ## AAW maintenance and migration
 
-AAW maintenance is a control-plane operation. Requests such as `update AAW to v0.7.3` or `migrate this project to AAW 0.7.3` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
+AAW maintenance is a control-plane operation. Requests such as `update AAW to v0.7.4` or `migrate this project to AAW 0.7.4` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
 
 See [`docs/workflow/aaw-migration.md`](docs/workflow/aaw-migration.md).
 
@@ -145,20 +145,22 @@ The template root README is not copied into target projects. In an empty/new pro
 2. Resolve the effective HDT requirement from the project's verification contract.
 3. If HDT is `REQUIRED`, keep the task active as `AWAITING_HDT` until the user reports a sufficient PASS. Do not move it to `done/` or offer the normal completion commit early.
 4. If HDT is `NOT_REQUIRED`, do not ask the user to rerun automated checks that the agent already executed successfully.
-5. Only after all required gates pass, mark the task `COMPLETE`, move it to `done/`, synchronize affected state, review README impact, and check state integrity.
-6. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and all safety checks pass.
-7. Never auto-commit unrelated user changes.
+5. Only after all required gates pass, mark the task `COMPLETE`, move it to `done/`, reconcile its linked milestone, synchronize affected state, review README impact, and check state integrity.
+6. Reuse successful application-test evidence when relevant implementation/test inputs have not changed; status/documentation-only closeout does not require rerunning product tests.
+7. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and all safety checks pass.
+8. Never auto-commit unrelated user changes.
 
 ## Commit policy
 
-Commit behavior is persistent per project and is stored in `dev/commit-policy.md`. The two checkpoints are independent:
+Commit behavior is persistent per project and is stored in `dev/commit-policy.md`. The three checkpoints are independent:
 
 ```yaml
 initial: ask
+planning: ask
 task: ask
 ```
 
-These are the defaults. The user can change either one to `auto` at installation time or later using natural language. Auto-commit still requires verification, state-integrity checks, and a cleanly attributable commit scope. It never implies `git push`.
+These are the defaults. The user can configure each checkpoint independently. Planning checkpoints cover milestone creation/replanning and never authorize implementation. Auto-commit still requires checkpoint-appropriate verification, state-integrity checks, and a cleanly attributable commit scope. It never implies `git push`.
 
 ## Files
 
@@ -180,12 +182,13 @@ These are the defaults. The user can change either one to `auto` at installation
 - `dev/skill-dependencies.md` — known skill dependency closure.
 - `dev/state-integrity.md` — state invariants and state transactions.
 - `dev/readme-policy.md` — policy for the project's user-facing README.
-- `dev/commit-policy.md` — persistent initial/task commit policy.
+- `dev/commit-policy.md` — persistent initial/planning/task commit policy.
 - `dev/parking-lot.md` — active deferred project ideas; promoted/resolved entries are removed.
-- `dev/tasks/` — bounded executable tasks; completed tasks move to `dev/tasks/done/`.
-- `dev/bug-fixes/` — standalone meaningful bug records with stable `B-*` IDs; completed records move to `dev/bug-fixes/done/`.
+- `dev/tasks/` — bounded executable tasks; completed tasks move to `dev/tasks/done/`, cancelled tasks to `dev/tasks/cancelled/`.
+- `dev/bug-fixes/` — standalone meaningful bug records with stable `B-*` IDs; completed records move to `dev/bug-fixes/done/` and cancelled records to `dev/bug-fixes/cancelled/`.
 - `dev/milestones/` — compact summaries for broad bounded outcomes.
 - `CHANGELOG.md` — release-facing history for AAW itself.
+- `LICENSE` — MIT license for the AAW template repository.
 - `dev/changelog-policy.md` — optional target-project changelog guidance based on Keep a Changelog 1.1.0.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
@@ -241,3 +244,7 @@ Update it when a new human needs to know something important about the project, 
 ## Documentation
 
 See [the Adaptive Agent Workflow Wiki](wiki/README.md) for the complete English usage guide, bootstrap behavior, state integrity, recovery, commit checkpoints, skill routing, and maintenance guidance.
+
+## License
+
+MIT – see [LICENSE](LICENSE).

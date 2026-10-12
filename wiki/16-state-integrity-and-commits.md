@@ -55,19 +55,27 @@ implementation
 
 ## Commit policy
 
-Commit behavior is persistent in `dev/commit-policy.md` and has two independent checkpoints:
+Commit behavior is persistent in `dev/commit-policy.md` and has three independent checkpoints:
 
 ```yaml
 initial: ask
+planning: ask
 task: ask
 ```
 
-The default is to ask the user. The user may set either checkpoint to `auto`.
+The default is to ask the user. The user may set each checkpoint to `auto`.
 
 ### `initial`
 
 - `ask` — offer `Initial commit` after bootstrap validation.
 - `auto` — create the initial checkpoint automatically after bootstrap validation and README/state creation.
+
+### `planning`
+
+- `ask` — offer a commit after creating/replanning a milestone and its planned task records.
+- `auto` — commit the validated planning-only changes, only when no implementation or unrelated work is included.
+
+Planning ends without starting a task unless implementation was explicitly authorized. For a combined plan-and-named-task request, skip the separate planning checkpoint and apply the task checkpoint after the bounded transaction.
 
 ### `task`
 
@@ -112,3 +120,11 @@ Good triggers:
 - temporary debugging notes.
 
 The README is not a changelog.
+
+## Cancellation and milestone reconciliation
+
+If a task cancellation has no user-supplied reason, ask before changing the record; do not guess. Record `status: CANCELLED` and the reason in task frontmatter, move the record to `dev/tasks/cancelled/`, and strike through the task entry in its milestone. Strike through an exit criterion only if the cancelled task was the sole work needed for it. Do not delete these entries. A milestone is `COMPLETE` when every non-cancelled task is complete and every remaining exit criterion passes. If every task in a non-empty milestone is cancelled, the milestone is `CANCELLED`.
+
+## Verification evidence reuse
+
+Do not rerun application tests just because status metadata, Markdown paths, roadmap, milestone, or `now.md` changed. Reuse successful evidence while relevant source/test/config/dependency inputs remain unchanged; run only invalidated application checks and any necessary Markdown/state-integrity checks.

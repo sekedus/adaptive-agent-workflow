@@ -52,15 +52,40 @@ new task file
 When a task is completed:
 
 ```text
-applicable automated checks passed
+applicable verification evidence is valid for the current implementation
 + HDT PASS if required (otherwise explicit NOT_REQUIRED rationale)
-+ task marked COMPLETE
-+ task moved to done/
-+ roadmap status
-+ now.md next task/state
-+ architecture-map update when applicable
-+ README review
++ task metadata status = COMPLETE
++ task moved to dev/tasks/done/
++ linked milestone reconciled
++ roadmap and now.md reconciled
++ affected documentation reviewed
++ state-integrity check
 ```
+
+A task cancellation is a separate state transition, not completion:
+
+```text
+reason provided? --no--> ask the user; do not guess or move the file yet
+      |
+     yes
+      -> set task metadata status = CANCELLED and record reason
+      -> move task to dev/tasks/cancelled/
+      -> strike through the task entry in its milestone; do not delete it
+      -> strike through an exit criterion only if this task was its sole required work
+      -> reconcile milestone, roadmap, and now.md
+      -> state-integrity check
+```
+
+Do not automatically revert implementation changes just because a task is cancelled. Cancellation changes the work decision; code rollback requires a separate, clear instruction.
+
+Milestone status rules:
+
+- `COMPLETE`: every non-cancelled task is `COMPLETE` and every remaining, non-struck exit criterion is satisfied.
+- `CANCELLED`: the milestone has at least one task and all its tasks are `CANCELLED`.
+- Otherwise, keep an appropriate non-terminal status such as `PLANNED`, `IN_PROGRESS`, or `BLOCKED`.
+- Preserve struck-through task and criterion entries as decision history. Do not remove them.
+
+Whenever a linked task changes status—including `AWAITING_HDT`, `COMPLETE`, `BLOCKED`, or `CANCELLED`—inspect and reconcile its milestone. Do not update only `now.md` and the roadmap while leaving the milestone stale.
 
 For a task with `HDT: REQUIRED`, `AWAITING_HDT` is an active, non-complete state. Keep its task file in `dev/tasks/` and keep it pointed to by `dev/now.md` until a PASS report is recorded. Never move it to `done/` before then. Do not ask the user to rerun automated checks already executed successfully by the agent.
 
@@ -103,6 +128,9 @@ At minimum verify:
 15. If a project maintains `CHANGELOG.md`, release-facing changes are recorded there when applicable.
 16. If `.aaw/migration.yml` is active, no product task is being executed or created.
 17. After migration completion, `.aaw/manifest.yml` reports the verified target version and `.aaw/migration.yml` is absent.
+18. A `CANCELLED` task is under `dev/tasks/cancelled/`, has a user-provided `cancellation_reason`, and remains struck through in its linked milestone; it is not under `done/`.
+19. A milestone is `COMPLETE` only when all non-cancelled tasks are `COMPLETE` and all remaining exit criteria are satisfied. If every task in a non-empty milestone is `CANCELLED`, its status is `CANCELLED`.
+20. A task linked to a milestone has that milestone reconciled on every status transition.
 
 ## Recovery
 
@@ -131,3 +159,17 @@ After a meaningful change, identify which durable artifacts actually changed in 
 - workflow policy change -> the relevant AAW workflow documentation.
 
 Unchanged artifacts should be left alone. Do not perform blanket documentation synchronization merely because the files exist.
+
+## Reusing Verification Evidence
+
+Verification evidence remains valid when no relevant implementation or test input has changed since the check. Do not rerun application `lint`, unit/integration tests, type-check, compile, or packaging solely because a task's metadata/status changed or its Markdown file moved to `done/` or `cancelled/`.
+
+Before rerunning a check, compare the current diff with the inputs that check covers. Rerun only checks invalidated by changes to relevant source, tests, dependencies/lockfiles, configuration, generated inputs, or required environment. A documentation-only or metadata-only transaction may still need Markdown/link/state checks, but not unrelated application tests. A previously recorded HDT PASS remains valid unless relevant implementation or tested behavior changes after the user's test.
+
+## Canonical Record Metadata
+
+New task, milestone, and standalone bug-fix records use YAML frontmatter for canonical metadata. Do not duplicate status in the Markdown body. Update metadata `updated` whenever record content or status changes. For existing legacy records without frontmatter, add it when the record is created or materially updated; do not bulk rewrite all historical records just to normalize formatting.
+
+## Git File Moves
+
+When moving a tracked task/bug record between active and terminal folders, prefer `git mv` and preserve its content except for the required metadata/status/record updates. Git infers rename presentation from parent/child tree similarity; rename is not a special stored object type. Verify with `git status`, `git diff --summary --find-renames`, and `git diff --cached --summary --find-renames` when changes are staged. If a file is new and never existed in the parent commit, adding it directly at its final path is correct. Do not create extra commits solely to force Git to display a rename.

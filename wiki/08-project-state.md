@@ -42,19 +42,25 @@ It is the authoritative index of milestones and task IDs. Do not invent tasks du
 
 **Question answered:** What specific work must be done?
 
-Each task is bounded and executable. Small tasks should stay concise; a user message is not automatically a new task.
+Each task is bounded and executable. New or materially updated tasks use YAML frontmatter as canonical metadata; status is not duplicated in the body. Small tasks should stay concise; a user message is not automatically a new task.
 
 ## `dev/milestones/`
 
 **Question answered:** What broad bounded outcome groups these tasks?
 
-Use a milestone only when the request is too broad for one task. Keep it as a compact summary/navigation layer.
+Use a milestone only when the request is too broad for one task. Keep it as a compact summary/navigation layer and update it whenever a linked task changes state. Do not delete cancelled task entries; strike them through. A milestone whose tasks are all cancelled is `CANCELLED`, not `COMPLETE`.
 
 ## `dev/bug-fixes/`
 
 **Question answered:** What meaningful standalone bugs were resolved?
 
-Use stable `B-xxxx-<slug>.md` IDs. Bugs found inside an active task stay in that task when they remain in scope. Completed records move to `done/`.
+Use stable `B-xxxx-<slug>.md` IDs. Bugs found inside an active task stay in that task when they remain in scope. Completed records move to `done/`; cancelled records move to `cancelled/` after a reason is recorded. A task cancellation must remain visible (struck through) in its linked milestone.
+
+## `dev/tasks/cancelled/`
+
+**Question answered:** Which task work was explicitly cancelled, and why?
+
+Keep the reason in task frontmatter; do not guess it. This is separate from `done/` because cancelled work is not completed work.
 
 ## `dev/hdt.md`
 

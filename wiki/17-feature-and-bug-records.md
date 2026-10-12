@@ -44,20 +44,28 @@ B-0001-<bug-slug>.md
 
 **Do not** create a standalone bug record merely because an issue was reported. The active investigation belongs in a task until the outcome is known.
 
-## Done Folders
+## Terminal Folders
 
-Keep active folders easy to scan:
+Keep active folders easy to scan while preserving the distinction between completion and cancellation:
 
 ```text
 dev/tasks/
   T-xxxx-*.md
   done/
     T-xxxx-*.md
+  cancelled/
+    T-xxxx-*.md
 
 dev/bug-fixes/
   B-xxxx-*.md
   done/
     B-xxxx-*.md
+  cancelled/
+    B-xxxx-*.md
 ```
 
-Git preserves historical movement, so active folders do not need to retain resolved records.
+A completed record passes all applicable verification gates. A cancelled record is not reported as complete; ask for a reason if the user has not supplied one, record it in frontmatter, and move it to `cancelled/`. Keep its task entry struck through in a milestone rather than deleting it. Git preserves historical movement.
+
+## Milestone completion
+
+Whenever a linked task changes state, reconcile the milestone, roadmap, and `now.md` as applicable. A milestone is `COMPLETE` when all non-cancelled tasks are complete and every remaining exit criterion is satisfied. If every task in a non-empty milestone is cancelled, the milestone is `CANCELLED`. Strike through a cancelled exit criterion only if its sole required task was cancelled.

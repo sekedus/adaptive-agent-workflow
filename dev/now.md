@@ -61,6 +61,7 @@ Evidence:
 ## Commit Policy
 
 Initial: ASK
+Planning: ASK
 Task: ASK
 
 See `dev/commit-policy.md`.

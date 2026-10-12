@@ -45,17 +45,19 @@ Update it after meaningful project-understanding changes, not every code change.
 
 ## 5. Commit discipline
 
-Commit behavior is controlled by `dev/commit-policy.md`. The default is `ask`; the project may set `initial: auto` and/or `task: auto`.
+Commit behavior is controlled by `dev/commit-policy.md`. The default is `ask`; the project may set `initial: auto`, `planning: auto`, and/or `task: auto`. A standalone milestone-planning transaction uses the `planning` checkpoint; a planning request does not authorize implementation.
 
 After every completed task:
 
 ```text
-verify
--> synchronize state
+verify / reuse still-valid evidence
+-> reconcile task + linked milestone + roadmap + now
 -> review README
 -> state-integrity check
 -> apply task commit policy
 ```
+
+If task status/file location changes but the relevant implementation and test inputs do not, do not rerun unrelated product tests.
 
 Commit boundaries are especially valuable for recovery, review, and moving work across sessions/devices.
 

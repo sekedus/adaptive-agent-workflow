@@ -1,46 +1,63 @@
 # Commit Policy
 
-This project uses two independent commit checkpoints:
+This project uses three independent commit checkpoints:
 
 - `initial` — after Adaptive Agent Workflow bootstrap in an empty/new project.
+- `planning` — after a standalone planning transaction creates or materially updates a milestone and its planned child tasks.
 - `task` — only after a task has met all acceptance and verification gates, including HDT when required.
 
 ## Defaults
 
 ```yaml
 initial: ask
+planning: ask
 task: ask
 ```
 
 The default is to ask the user before creating a commit.
-
----
 
 ## Allowed Values
 
 Each checkpoint may use:
 
 - `ask` — offer the commit and wait for the user.
-- `auto` — create the commit automatically when all auto-commit safety checks pass.
+- `auto` — create the commit automatically when all checkpoint-specific safety checks pass.
 
 ## Configuration Examples
 
 ```yaml
-# Ask for both checkpoint types.
+# Ask for all checkpoint types.
 initial: ask
+planning: ask
 task: ask
 
-# Automatically create the initial bootstrap commit, but ask after each completed task.
+# Bootstrap and planning auto-commit; completed tasks still ask.
 initial: auto
+planning: auto
 task: ask
 
-# Ask for the initial bootstrap commit, then automatically commit each completed task.
+# Keep bootstrap/planning asks, automatically commit completed tasks.
 initial: ask
+planning: ask
 task: auto
+```
 
-# Automatically commit both the initial bootstrap and completed tasks.
-initial: auto
-task: auto
+## Planning Checkpoint
+
+For a standalone planning-only request, after a milestone and its planned child tasks have been created or materially replanned:
+
+1. update the milestone, `dev/roadmap.md`, and `dev/now.md`;
+2. reconcile related parking-lot candidates without promoting them unless the user selected them;
+3. inspect Git status/diff and confirm the checkpoint contains only the planning changes;
+4. if `planning: ask`, offer a planning commit; if `planning: auto`, commit only when the scope is unambiguous and safe;
+5. stop after the planning checkpoint. Creating a milestone never authorizes starting a child task.
+
+If the same user request explicitly authorizes implementing a named task as well, do not pause for a separate planning checkpoint; keep the plan and implementation in the same bounded transaction and apply the task checkpoint at the end. Do not create an empty or duplicate commit.
+
+Use a concise message such as:
+
+```text
+chore: plan M-0001 <milestone-name>
 ```
 
 ## Auto-Commit Safety Rules
@@ -49,13 +66,12 @@ An `auto` policy does not bypass verification or state integrity.
 
 Before an automatic commit, the agent must:
 
-1. complete all required automated verification;
-2. complete required HDT and record a PASS result; an `AWAITING_HDT` task is not eligible for the normal completed-task checkpoint;
-3. synchronize affected project state;
-4. review the root README when applicable;
-5. pass the state-integrity check;
-6. inspect Git status and diff;
-7. ensure the commit contains only changes belonging to the current checkpoint.
+1. complete the checks appropriate to that checkpoint (for `task`, all applicable automated verification and required HDT; for `planning`, planning/state consistency checks);
+2. synchronize affected project state;
+3. review README impact when applicable;
+4. pass the state-integrity check;
+5. inspect Git status and diff;
+6. ensure the commit contains only changes belonging to the current checkpoint.
 
 If unrelated user changes are present or the intended commit scope cannot be determined safely:
 
@@ -70,12 +86,16 @@ If required HDT is pending, failed, or declined, do not apply the normal complet
 
 ## Commit Messages
 
-Use concise messages that identify the workflow checkpoint.
-
 Initial bootstrap:
 
 ```text
 chore: initialize adaptive agent workflow
+```
+
+Planning checkpoint:
+
+```text
+chore: plan M-xxxx <milestone-name>
 ```
 
 Completed task:
@@ -92,7 +112,7 @@ The user may change the policy using natural language, for example:
 
 - `keep asking before commits`
 - `automatically commit the initial setup`
+- `auto-commit after planning milestones`
 - `auto-commit after every completed task`
-- `auto-commit both initial setup and completed tasks`
 
 After changing the policy, update this file and `dev/now.md` when the change affects the current checkpoint.
