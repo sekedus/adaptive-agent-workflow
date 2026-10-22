@@ -179,7 +179,7 @@ T-0031 token validation
 After failure:
 
 ```text
-dev/now.md says implementation started
+.aaw/now.md says implementation started
 
 git diff shows two modified files
 
@@ -238,33 +238,47 @@ bootstrap
 
 **Do not** invent `T-0001` merely to represent installation.
 
-## Example 12: Create a milestone without starting implementation
+## Example 12: Decide whether a milestone is actually needed
+
+### Case A — related small changes, one coherent task
 
 User:
 
 ```text
-Here are seven new tasks. Group them into a milestone.
+Add the project logo, add the license notice to README, and fix a small typo.
+```
+
+If inspection shows these are a small, coherent deliverable with a shared verification boundary, create one task record. Do not create a milestone merely because the request has three bullets. Complete/cancel that task on its own; there is no milestone to complete.
+
+### Case B — broad work with multiple independently trackable tasks
+
+User:
+
+```text
+Plan the redesign: separate the session store migration, API changes, UI changes, runtime integration tests, and rollout. Group the coordinated work into a milestone.
 ```
 
 Expected behavior:
 
 ```text
-inspect and group the requested outcomes
+inspect and decompose the outcome
+-> confirm that 2+ independently trackable task records are justified
 -> create M-xxxx with PLANNED status
 -> create bounded child task records, all PLANNED
 -> update roadmap and now snapshot
 -> ask about related parking-lot ideas if any
+-> apply planning checkpoint
 -> summarize the plan
 -> STOP (no product implementation)
 ```
 
-**Do not** start the easiest first task. A milestone-creation request is planning authorization, not implementation authorization. Start coding only when the user explicitly asks to implement a task.
+**Do not** create a one-task milestone or start the easiest child task. A genuine milestone-creation request is planning authorization, not implementation authorization. Start coding only when the user explicitly asks to implement a task.
 
 ## Example 13: Automated verification vs required HDT
 
 For a toolchain-only change such as a TypeScript version upgrade, when the project contract says automated checks are sufficient, the agent runs the relevant type-check/lint/test/build checks and reports their results. Successful package installation alone is not enough, but no manual HDT is needed when the contract confirms there is no relevant runtime behavior to test. The agent does not ask the user to repeat successful commands.
 
-For a session-eviction change in a VS Code extension, if the project's verification matrix requires EDH for session/runtime behavior, HDT is `REQUIRED` even if unit tests pass. The agent reports automated results, sets the task to `AWAITING_HDT`, keeps it in `dev/tasks/`, and gives only the manual EDH steps. It must not say HDT is not required, mark the task complete, move it to `done/`, or offer the completion commit before the user reports PASS.
+For a session-eviction change in a VS Code extension, if the project's verification matrix requires EDH for session/runtime behavior, HDT is `REQUIRED` even if unit tests pass. The agent reports automated results, sets the task to `AWAITING_HDT`, keeps it in `.aaw/tasks/`, and gives only the manual EDH steps. It must not say HDT is not required, mark the task complete, move it to `done/`, or offer the completion commit before the user reports PASS.
 
 ## Example 14: Completed task and commit checkpoint
 
@@ -274,7 +288,7 @@ User:
 finish the task
 ```
 
-After the implementation and all required verification gates are satisfied, the agent should apply `dev/commit-policy.md`. If HDT is required, the task is not complete until the user reports PASS. With the default `task: ask`, offer the commit only after that gate passes; with `task: auto`, create the checkpoint only after all gates pass.
+After the implementation and all required verification gates are satisfied, the agent should apply `.aaw/commit-policy.md`. If HDT is required, the task is not complete until the user reports PASS. With the default `task: ask`, offer the commit only after that gate passes; with `task: auto`, create the checkpoint only after all gates pass.
 
 The agent should:
 

@@ -13,8 +13,8 @@ Example:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.4
-AAW_SCHEMA: 1
+AAW_VERSION: 0.8.0
+AAW_SCHEMA: 2
 ```
 
 For existing installations without the manifest, use the migration procedure to establish the version from repository evidence rather than guessing.
@@ -69,7 +69,7 @@ Roadmap tasks: none
 
 ## 4. Initial commit checkpoint
 
-After an empty/new project has been bootstrapped, the README and workflow files validated, apply `dev/commit-policy.md`:
+After an empty/new project has been bootstrapped, the README and workflow files validated, apply `.aaw/commit-policy.md`:
 
 ```yaml
 initial: ask
@@ -103,7 +103,7 @@ For example:
     -> domain-modeling
 ```
 
-See [`dev/skill-dependencies.md`](../dev/skill-dependencies.md) for the maintained matrix and installation guidance.
+See [`.aaw/skill-dependencies.md`](../.aaw/skill-dependencies.md) for the maintained matrix and installation guidance.
 
 ## 7. Verify installation
 
@@ -112,6 +112,6 @@ Before continuing to product work, verify:
 - required workflow files exist;
 - the project README policy is satisfied;
 - no product task was invented during bootstrap;
-- `dev/now.md` says `DISCOVERY_PENDING` for a new/empty project;
+- `.aaw/now.md` says `DISCOVERY_PENDING` for a new/empty project;
 - current task/roadmap consistency is valid;
 - no project-specific instructions were accidentally overwritten.

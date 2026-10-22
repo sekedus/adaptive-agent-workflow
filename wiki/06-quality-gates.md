@@ -50,7 +50,7 @@ real browser/responsive verification
 
 ## 3. Pillar 3 — Secure by Design
 
-Before choosing a security skill, classify the changed attack surface in `dev/security.md`.
+Before choosing a security skill, classify the changed attack surface in `.aaw/security.md`.
 
 Use this sequence:
 

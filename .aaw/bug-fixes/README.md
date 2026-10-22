@@ -1,10 +1,10 @@
 # Bug-Fix Records
 
-`dev/bug-fixes/` contains durable records for **standalone, resolved bugs** that are worth preserving after verification.
+`.aaw/bug-fixes/` contains durable records for **standalone, resolved bugs** that are worth preserving after verification.
 
 ## Active Bug Work
 
-Bug investigation and implementation belong in `dev/tasks/` while the work is active.
+Bug investigation and implementation belong in `.aaw/tasks/` while the work is active.
 
 If a bug is discovered while working on the active task and remains within that task's scope, keep it in the active task. Do **not** create a separate bug record just because the discovery is a bug.
 
@@ -65,7 +65,7 @@ Preserve only durable information:
 
 ## Cancellation
 
-A standalone bug-fix record that is cancelled uses `status: CANCELLED` and a user-provided `cancellation_reason` in YAML frontmatter, then moves to `dev/bug-fixes/cancelled/`. Ask for a reason if none was supplied; never guess. Cancellation is not completion, and does not automatically revert code.
+A standalone bug-fix record that is cancelled uses `status: CANCELLED` and a user-provided `cancellation_reason` in YAML frontmatter, then moves to `.aaw/bug-fixes/cancelled/`. Ask for a reason if none was supplied; never guess. Cancellation is not completion, and does not automatically revert code.
 
 ## Metadata and verification evidence
 

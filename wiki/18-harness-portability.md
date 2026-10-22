@@ -59,7 +59,7 @@ AAW does not require a separate personal customization package. Personal instruc
 AGENTS.md
   = project workflow and agent behavior
 
-CONTEXT.md / dev/* / docs/adr/*
+CONTEXT.md / .aaw/* / docs/adr/*
   = project state and durable knowledge
 
 .github/copilot-instructions.md

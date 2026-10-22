@@ -4,7 +4,7 @@ HDT is a human-run verification gate for behavior that automated checks cannot f
 
 ## Decide Whether HDT Is Required
 
-Read the project's `dev/verification.md` first. Set the effective task field to `REQUIRED` or `NOT_REQUIRED` and record a short reason. Do not leave the decision implied or contradictory.
+Read the project's `.aaw/verification.md` first. Set the effective task field to `REQUIRED` or `NOT_REQUIRED` and record a short reason. Do not leave the decision implied or contradictory.
 
 HDT is normally `REQUIRED` when a change depends on behavior in a real UI, VS Code/browser/IDE host, external integration, permissions/dialogs, lifecycle, or another runtime that the automated suite does not cover. It is also required when the project verification contract says so. For example, if the project verification matrix requires Extension Development Host (EDH) runtime checks for session-related changes, a session mapping/eviction change must use EDH even when unit tests cover the helper functions.
 
@@ -25,7 +25,7 @@ implementation
   -> FAIL/unclear: keep task active; investigate/fix or request missing evidence; repeat relevant test
 ```
 
-A required-HDT task must not be marked `COMPLETE`, moved into a `done/` folder, or offered the normal completed-task commit checkpoint while HDT is pending or failed. The active task remains the current task in `dev/now.md`. If the user declines a required HDT, set HDT status to `DECLINED`, record the gap, and leave the task active as `AWAITING_HDT` (or `BLOCKED` if an actual blocker prevents testing). Do not silently waive the gate or repeatedly ask the same question in every response. An explicitly requested partial checkpoint commit does not change task completion or verification status.
+A required-HDT task must not be marked `COMPLETE`, moved into a `done/` folder, or offered the normal completed-task commit checkpoint while HDT is pending or failed. The active task remains the current task in `.aaw/now.md`. If the user declines a required HDT, set HDT status to `DECLINED`, record the gap, and leave the task active as `AWAITING_HDT` (or `BLOCKED` if an actual blocker prevents testing). Do not silently waive the gate or repeatedly ask the same question in every response. An explicitly requested partial checkpoint commit does not change task completion or verification status.
 
 ## Automated Verification Is Agent-Owned
 

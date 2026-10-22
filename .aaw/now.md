@@ -38,16 +38,16 @@ None.
 ## Relevant Files
 
 - `README.md`
-- `dev/project.md`
-- `dev/constraints.md`
-- `dev/roadmap.md`
-- `dev/quality.md`
-- `dev/security.md`
-- `dev/verification.md`
+- `.aaw/project.md`
+- `.aaw/constraints.md`
+- `.aaw/roadmap.md`
+- `.aaw/quality.md`
+- `.aaw/security.md`
+- `.aaw/verification.md`
 
 ## Constraints
 
-- Read `dev/constraints.md` before compatibility/platform decisions.
+- Read `.aaw/constraints.md` before compatibility/platform decisions.
 
 ## Verification Snapshot
 
@@ -64,7 +64,7 @@ Initial: ASK
 Planning: ASK
 Task: ASK
 
-See `dev/commit-policy.md`.
+See `.aaw/commit-policy.md`.
 
 ## Last Checkpoint
 

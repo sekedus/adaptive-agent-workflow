@@ -4,7 +4,7 @@ HDT is a human-run verification gate for behavior that automated checks cannot f
 
 ## Decide Whether HDT Is Required
 
-Read the project's `dev/verification.md` and set the effective task decision to `REQUIRED` or `NOT_REQUIRED`, with a short reason. Runtime-dependent user-visible behavior, extension/browser/IDE host behavior, integration/lifecycle/permission flows, and any change the project verification contract marks as required need HDT. If a project's matrix requires EDH for session/runtime changes, that requirement applies even when helper unit tests pass. Unit tests for a helper do not prove an entire integration path. Diff size alone is not decisive, but a large or cross-boundary change should trigger closer scrutiny.
+Read the project's `.aaw/verification.md` and set the effective task decision to `REQUIRED` or `NOT_REQUIRED`, with a short reason. Runtime-dependent user-visible behavior, extension/browser/IDE host behavior, integration/lifecycle/permission flows, and any change the project verification contract marks as required need HDT. If a project's matrix requires EDH for session/runtime changes, that requirement applies even when helper unit tests pass. Unit tests for a helper do not prove an entire integration path. Diff size alone is not decisive, but a large or cross-boundary change should trigger closer scrutiny.
 
 Toolchain-only changes can be `NOT_REQUIRED` when the agent has run the relevant automated checks and the project's verification contract says they provide sufficient evidence. Installing/updating a dependency without error is not sufficient by itself.
 

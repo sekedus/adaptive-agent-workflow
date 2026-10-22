@@ -1,10 +1,14 @@
 # Adaptive Agent Workflow
 
-**Workflow version: 0.7.4**
+<picture>![GitHub repo size](https://img.shields.io/github/repo-size/sekedus/adaptive-agent-workflow?label=Size)</picture>
+[![GitHub License](https://img.shields.io/github/license/sekedus/adaptive-agent-workflow?label=License)](./LICENSE)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sekedus/adaptive-agent-workflow)
+
+**Workflow version: 0.8.0**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
-The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only. Installed identity and version metadata live in `.aaw/manifest.yml`. Canonical source: `https://github.com/sekedus/adaptive-agent-workflow`.
+The workflow core is harness-agnostic at the project level: `AGENTS.md` is the portable source of truth. Harness-specific instruction files are thin adapters only. Installed identity and version metadata live in `.aaw/manifest.yml`. AAW-managed project state and workflow policy live under `.aaw/`; `docs/` remains for human-facing project documentation and ADRs. Canonical source: `https://github.com/sekedus/adaptive-agent-workflow`.
 
 Designed for:
 
@@ -41,7 +45,7 @@ State transaction
         |
         v
 Codebase memory + verification contract
-  -> ARCHITECTURE-MAP.md / dev/verification.md when affected
+  -> ARCHITECTURE-MAP.md / .aaw/verification.md when affected
         |
         v
 Agent-run automated verification
@@ -55,6 +59,10 @@ Move completed task to done/ -> commit checkpoint
         v
 Next session/model/device can recover from repository state
 ```
+
+## Task first, milestone only when needed
+
+A user message is not automatically a task, and a list of related small requests is not automatically a milestone. Group small changes into one task when they share an outcome and verification boundary. Create a milestone only for a genuinely large/broad outcome that needs coordinated work across multiple task files (usually three or more; two only when real dependencies/phases/shared exit criteria require coordination). A few small independent tasks do not automatically need a milestone. Never wrap a single task in a milestone; that task becomes complete or cancelled on its own. A genuine milestone-planning request is planning-only unless implementation is explicitly authorized.
 
 ## Three primary product pillars
 
@@ -72,11 +80,11 @@ AAW scales the amount of interaction to the work instead of forcing every change
 
 The `/wait-what` skill is optional. AAW still provides the core behavior: explain what changed and why. For automated-only changes, report checks the agent actually ran. For required HDT, provide human/runtime steps, expected behavior, and what to report if it fails.
 
-`dev/now.md` is a compact snapshot, `dev/parking-lot.md` is an active deferred queue, and task/bug records are bounded durable work records rather than chronological diaries.
+`.aaw/now.md` is a compact snapshot, `.aaw/parking-lot.md` is an active deferred queue, and task/bug records are bounded durable work records rather than chronological diaries.
 
 ## AAW maintenance and migration
 
-AAW maintenance is a control-plane operation. Requests such as `update AAW to v0.7.4` or `migrate this project to AAW 0.7.4` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
+AAW maintenance is a control-plane operation. Requests such as `update AAW to v0.8.0` or `migrate this project to AAW 0.8.0` enter `MIGRATION` mode before normal product intent routing. While `.aaw/migration.yml` is active, product tasks and roadmap changes are frozen. Migration preserves project state, verifies the target workflow, updates `AGENTS.md` and harness adapters last, records `AAW_VERSION` in `.aaw/manifest.yml`, removes the migration lock, and stops without executing an application task.
 
 See [`docs/workflow/aaw-migration.md`](docs/workflow/aaw-migration.md).
 
@@ -118,7 +126,7 @@ When the user asks you to install, upgrade, downgrade, migrate, repair, clone, d
 6. Do not copy this template repository's root `README.md` into an existing target project.
 7. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The installed core workflow does not require `wiki/` at runtime.
 8. Do not create product tasks until the target project's real objective is known.
-9. Reconcile `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` with the real project.
+9. Reconcile `.aaw/project.md`, `.aaw/constraints.md`, `.aaw/quality.md`, `.aaw/security.md`, `.aaw/roadmap.md`, `.aaw/now.md`, and `.aaw/verification.md` with the real project.
 10. Initialize or reconcile `ARCHITECTURE-MAP.md` with the real codebase.
 11. Validate state before claiming installation is complete.
 
@@ -128,12 +136,12 @@ When the user asks you to install, upgrade, downgrade, migrate, repair, clone, d
 2. Install the workflow files.
 3. Create a **new user-facing root `README.md` for the target project**. Do not copy this template's root README verbatim because it contains agent/template instructions.
 4. Keep the README concise and truthful to the project's actual state. It may begin with a project-under-definition/placeholder state.
-5. Initialize `dev/project.md`, `dev/constraints.md`, `dev/quality.md`, `dev/security.md`, `dev/roadmap.md`, `dev/now.md`, and `dev/verification.md` without inventing product scope.
+5. Initialize `.aaw/project.md`, `.aaw/constraints.md`, `.aaw/quality.md`, `.aaw/security.md`, `.aaw/roadmap.md`, `.aaw/now.md`, and `.aaw/verification.md` without inventing product scope.
 6. Initialize `ARCHITECTURE-MAP.md` as a project-specific codebase map (do not leave template placeholders once discovery starts).
 7. Set the workflow phase to `DISCOVERY_PENDING`.
 8. Do not create `T-0001` merely to represent setup. The first real task ID is created after project discovery/definition.
 9. Keep `wiki/` only when the user wants the workflow documentation available inside the project; otherwise it may remain only in the template source. The agent must be able to operate from the installed core files without `wiki/`.
-10. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `dev/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
+10. Validate the installation. By default, ask the user whether to create an **`Initial commit`**; if `.aaw/commit-policy.md` sets `initial: auto`, create it automatically after safety checks.
 
 ### Root README rule
 
@@ -152,7 +160,7 @@ The template root README is not copied into target projects. In an empty/new pro
 
 ## Commit policy
 
-Commit behavior is persistent per project and is stored in `dev/commit-policy.md`. The three checkpoints are independent:
+Commit behavior is persistent per project and is stored in `.aaw/commit-policy.md`. The three checkpoints are independent:
 
 ```yaml
 initial: ask
@@ -160,7 +168,7 @@ planning: ask
 task: ask
 ```
 
-These are the defaults. The user can configure each checkpoint independently. Planning checkpoints cover milestone creation/replanning and never authorize implementation. Auto-commit still requires checkpoint-appropriate verification, state-integrity checks, and a cleanly attributable commit scope. It never implies `git push`.
+These are the defaults. The user can configure each checkpoint independently. Planning checkpoints cover standalone planning transactions for a task or a genuine multi-task milestone; they never authorize implementation. Auto-commit still requires checkpoint-appropriate verification, state-integrity checks, and a cleanly attributable commit scope. It never implies `git push`.
 
 ## Files
 
@@ -170,26 +178,26 @@ These are the defaults. The user can configure each checkpoint independently. Pl
 - `.github/copilot-instructions.md` — optional thin VS Code Copilot adapter; not the workflow source of truth.
 - `CONTEXT.md` — durable domain vocabulary and agreed terminology.
 - `ARCHITECTURE-MAP.md` — living codebase map: domains, ownership, dependencies, flows, hotspots, contracts, and test surfaces.
-- `dev/project.md` — project purpose, scope, stack, and stable facts.
-- `dev/constraints.md` — compatibility/legacy/runtime/resource constraints.
-- `dev/now.md` — bounded current-state snapshot/checkpoint.
-- `dev/hdt.md` — Human Development Test policy for runtime/user verification.
-- `dev/milestones/` — compact milestone summaries for work broader than one task.
-- `dev/roadmap.md` — milestones and direction.
-- `dev/quality.md` — adaptive quality-gate policy and three-pillar quality model.
-- `dev/verification.md` — concrete verification contract and evidence expectations.
-- `dev/security.md` — project-specific security profile and skill routing.
-- `dev/skill-dependencies.md` — known skill dependency closure.
-- `dev/state-integrity.md` — state invariants and state transactions.
-- `dev/readme-policy.md` — policy for the project's user-facing README.
-- `dev/commit-policy.md` — persistent initial/planning/task commit policy.
-- `dev/parking-lot.md` — active deferred project ideas; promoted/resolved entries are removed.
-- `dev/tasks/` — bounded executable tasks; completed tasks move to `dev/tasks/done/`, cancelled tasks to `dev/tasks/cancelled/`.
-- `dev/bug-fixes/` — standalone meaningful bug records with stable `B-*` IDs; completed records move to `dev/bug-fixes/done/` and cancelled records to `dev/bug-fixes/cancelled/`.
-- `dev/milestones/` — compact summaries for broad bounded outcomes.
+- `.aaw/project.md` — project purpose, scope, stack, and stable facts.
+- `.aaw/constraints.md` — compatibility/legacy/runtime/resource constraints.
+- `.aaw/now.md` — bounded current-state snapshot/checkpoint.
+- `.aaw/hdt.md` — Human Development Test policy for runtime/user verification.
+- `.aaw/milestones/` — compact milestone summaries for work broader than one task.
+- `.aaw/roadmap.md` — milestones and direction.
+- `.aaw/quality.md` — adaptive quality-gate policy and three-pillar quality model.
+- `.aaw/verification.md` — concrete verification contract and evidence expectations.
+- `.aaw/security.md` — project-specific security profile and skill routing.
+- `.aaw/skill-dependencies.md` — known skill dependency closure.
+- `.aaw/state-integrity.md` — state invariants and state transactions.
+- `.aaw/readme-policy.md` — policy for the project's user-facing README.
+- `.aaw/commit-policy.md` — persistent initial/planning/task commit policy.
+- `.aaw/parking-lot.md` — active deferred project ideas; promoted/resolved entries are removed.
+- `.aaw/tasks/` — bounded executable tasks; completed tasks move to `.aaw/tasks/done/`, cancelled tasks to `.aaw/tasks/cancelled/`.
+- `.aaw/bug-fixes/` — standalone meaningful bug records with stable `B-*` IDs; completed records move to `.aaw/bug-fixes/done/` and cancelled records to `.aaw/bug-fixes/cancelled/`.
+- `.aaw/milestones/` — compact summaries for broad bounded outcomes.
 - `CHANGELOG.md` — release-facing history for AAW itself.
 - `LICENSE` — MIT license for the AAW template repository.
-- `dev/changelog-policy.md` — optional target-project changelog guidance based on Keep a Changelog 1.1.0.
+- `.aaw/changelog-policy.md` — optional target-project changelog guidance based on Keep a Changelog 1.1.0.
 - `docs/adr/` — durable architectural decisions.
 - `docs/workflow/adaptive-agent-workflow.md` — full workflow specification.
 - `docs/workflow/aaw-migration.md` — agent-facing AAW migration procedure.
@@ -218,7 +226,7 @@ The workflow handles intent, task sizing, grilling, state reconciliation, skill 
 Use a normal request such as:
 
 ```text
-Install the Adaptive Agent Workflow in this project.
+Install sekedus/adaptive-agent-workflow in this project.
 ```
 
 The agent should bootstrap the workflow, create a project README, leave product discovery pending, validate the state, and apply the `initial` commit policy (default: `ask`).

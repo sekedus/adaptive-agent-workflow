@@ -8,7 +8,7 @@ TEMPLATE
 
 ## Purpose
 
-A compact navigation map for the codebase. This is not a full architecture essay and not a duplicate of `dev/project.md`.
+A compact navigation map for the codebase. This is not a full architecture essay and not a duplicate of `.aaw/project.md`.
 
 Use it to answer quickly:
 

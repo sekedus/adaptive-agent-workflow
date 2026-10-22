@@ -56,4 +56,4 @@ A missing dependency is a workflow failure, not an invitation for the model to i
 
 ## Full matrix
 
-See `dev/skill-dependencies.md` for installation commands and the maintenance policy.
+See `.aaw/skill-dependencies.md` for installation commands and the maintenance policy.

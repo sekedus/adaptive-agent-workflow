@@ -6,10 +6,10 @@
 
 Keep stable orchestration rules in `AGENTS.md`.
 Keep domain terms in `CONTEXT.md`.
-Keep project constraints in `dev/constraints.md`.
-Keep current execution state in `dev/now.md`.
-Keep state invariants in `dev/state-integrity.md`.
-Keep README policy in `dev/readme-policy.md`.
+Keep project constraints in `.aaw/constraints.md`.
+Keep current execution state in `.aaw/now.md`.
+Keep state invariants in `.aaw/state-integrity.md`.
+Keep README policy in `.aaw/readme-policy.md`.
 Keep specialized behavior in skills.
 
 ## 2. Add a new rule only after a real failure
@@ -45,7 +45,7 @@ Update it after meaningful project-understanding changes, not every code change.
 
 ## 5. Commit discipline
 
-Commit behavior is controlled by `dev/commit-policy.md`. The default is `ask`; the project may set `initial: auto`, `planning: auto`, and/or `task: auto`. A standalone milestone-planning transaction uses the `planning` checkpoint; a planning request does not authorize implementation.
+Commit behavior is controlled by `.aaw/commit-policy.md`. The default is `ask`; the project may set `initial: auto`, `planning: auto`, and/or `task: auto`. A standalone planning transaction (one task or a genuine milestone with child tasks) uses the `planning` checkpoint; a planning request does not authorize implementation.
 
 After every completed task:
 

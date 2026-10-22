@@ -14,7 +14,7 @@ Some skills are orchestrators that explicitly invoke other skills. Installing on
 
 The workflow therefore resolves dependency closure before invoking a routed skill.
 
-See [`dev/skill-dependencies.md`](../dev/skill-dependencies.md) for the complete matrix.
+See [`.aaw/skill-dependencies.md`](../.aaw/skill-dependencies.md) for the complete matrix.
 
 ## 1. Core Workflow Skills
 
@@ -183,7 +183,7 @@ Source: [Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-C
 
 You do **not** need to know which one to use from memory.
 
-Use the project's `dev/security.md` as the routing layer.
+Use the project's `.aaw/security.md` as the routing layer.
 
 ### Security selection process
 
@@ -229,7 +229,7 @@ npx skills find kubernetes-security
 npx skills find mobile-security
 ```
 
-Then filter the results against `dev/security.md`.
+Then filter the results against `.aaw/security.md`.
 
 ### Targeted examples
 
@@ -251,7 +251,7 @@ For mobile:
 npx skills@latest add mukul975/Anthropic-Cybersecurity-Skills --skill conducting-mobile-app-penetration-test --global
 ```
 
-For other domains, use `dev/security.md` and `npx skills find ...` rather than copying a random skill because its name sounds close.
+For other domains, use `.aaw/security.md` and `npx skills find ...` rather than copying a random skill because its name sounds close.
 
 ## 5. Security Is a Routing Problem, Not a Memory Test
 

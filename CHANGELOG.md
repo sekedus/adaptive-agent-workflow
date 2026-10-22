@@ -13,6 +13,26 @@ and this project follows Semantic Versioning.
 
 ### Fixed
 
+## [0.8.0] - 2026-10-20
+
+### Added
+
+- Moved AAW-managed workflow state and policy files from the legacy `dev/` layout into `.aaw/` while keeping human-facing project documentation in `docs/` and the root orientation files.
+- Added an explicit compatibility migration procedure for 0.7.x projects, including collision-safe file moves and path-reference reconciliation.
+- Added a task-first milestone rule: related small requests sharing one acceptance/verification boundary use a single task without a milestone.
+
+### Changed
+
+- Bumped `AAW_SCHEMA` to `2` to identify the 0.8.0 workflow-state layout.
+- Made `.aaw/` the canonical location for project workflow state, task records, milestones, bug-fix records, and verification/quality policies.
+- Tightened milestone criteria: create one only for a genuinely large/broad coordinated outcome needing multiple independently trackable child tasks, usually three or more (two only with real dependencies/phases/shared exit criteria); do not create or complete a one-task milestone.
+- Preserved 0.7.4 task lifecycle, cancellation, HDT gates, verification-evidence reuse, and planning commit policy in the new layout.
+
+### Fixed
+
+- Prevented multiple related but small user requests from being wrapped in a redundant milestone when one task record is sufficient.
+- Prevented task completion from automatically implying milestone completion when no genuine milestone exists.
+
 ## [0.7.4] - 2026-10-12
 
 ### Added

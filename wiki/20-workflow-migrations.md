@@ -7,9 +7,9 @@ AAW 0.7.1 introduced a dedicated control plane for upgrading, downgrading, repai
 The user does not need a migration command. Examples:
 
 ```text
-update AAW to v0.7.4
-update adaptive-agent-workflow to 0.7.4
-upgrade this project to AAW 0.7.4
+update AAW to v0.8.0
+update adaptive-agent-workflow to 0.8.0
+upgrade this project to AAW 0.8.0
 ```
 
 The agent detects workflow maintenance rather than application work.
@@ -21,8 +21,8 @@ The authoritative installed version is `.aaw/manifest.yml`:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.7.4
-AAW_SCHEMA: 1
+AAW_VERSION: 0.8.0
+AAW_SCHEMA: 2
 ```
 
 Legacy labels normalize as `v6 -> 0.6.0` and `v7 -> 0.7.0`.
@@ -67,20 +67,20 @@ Migration should merge workflow-owned files rather than blindly copying the temp
 ```text
 README.md
 CONTEXT.md
-dev/project.md
-dev/constraints.md
-dev/roadmap.md
-dev/now.md
-dev/tasks/
-dev/tasks/done/
-dev/bug-fixes/
-dev/bug-fixes/done/
-dev/milestones/
+.aaw/project.md
+.aaw/constraints.md
+.aaw/roadmap.md
+.aaw/now.md
+.aaw/tasks/
+.aaw/tasks/done/
+.aaw/bug-fixes/
+.aaw/bug-fixes/done/
+.aaw/milestones/
 docs/adr/
 existing Git changes
 ```
 
-For 0.7.0+, `ARCHITECTURE-MAP.md` and `dev/verification.md` must describe the real project. They are not template content to copy verbatim.
+For 0.7.0+, `ARCHITECTURE-MAP.md` and `.aaw/verification.md` must describe the real project. They are not template content to copy verbatim.
 
 ## Completion
 
@@ -101,8 +101,17 @@ See [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) for th
 
 ## 0.7.2 workflow ergonomics
 
-Existing projects should reconcile, rather than blindly replace, the following: compact `dev/now.md`, active-only `dev/parking-lot.md`, adaptive task templates, milestone summaries, standalone `B-*` bug records, done folders, `dev/hdt.md`, and the compact `dev/verification.md` contract.
+During 0.7.2 migration, existing projects should reconcile, rather than blindly replace, the following legacy paths: compact `dev/now.md`, active-only `dev/parking-lot.md`, adaptive task templates, milestone summaries, standalone `B-*` bug records, done folders, `dev/hdt.md`, and the compact `dev/verification.md` contract.
 
 ## 0.7.4 lifecycle integrity
 
-When migrating to 0.7.4, reconcile record lifecycle without bulk-rewriting historical files: new/materially updated task, milestone, and bug records use YAML frontmatter; create `dev/tasks/cancelled/` and `dev/bug-fixes/cancelled/`; preserve user-supplied cancellation reasons and never infer missing ones; reconcile linked milestones when task state changes; add the `planning` commit checkpoint; and document verification-evidence reuse. If a legacy task is already marked `CANCELLED` but stored in `done/`, move it to `cancelled/` and strike through its milestone entry. If its reason is missing, ask the user; never invent one.
+When migrating to 0.7.4, reconcile record lifecycle without bulk-rewriting historical files: new/materially updated task, milestone, and bug records use YAML frontmatter; create `dev/tasks/cancelled/` and `dev/bug-fixes/cancelled/`; preserve user-supplied cancellation reasons and never infer missing ones; reconcile linked milestones when task state changes; add the `planning` commit checkpoint; and document verification-evidence reuse. If a legacy task is already marked `CANCELLED` but stored in `dev/tasks/done/`, move it to `dev/tasks/cancelled/` and strike through its milestone entry. If its reason is missing, ask the user; never invent one.
+
+
+## 0.8.0 — State directory migration
+
+AAW 0.8.0 moves workflow-managed state from the legacy `dev/` layout into `.aaw/`. `.aaw/manifest.yml` is authoritative; `AAW_SCHEMA` is `2`. `docs/` remains for human-facing project documentation and ADRs.
+
+During migration from 0.7.x, move only known AAW-owned files and folders, preserving IDs, frontmatter, status, cancellation reasons, HDT evidence, and milestone history. Use `git mv` for tracked records when possible. If both the old and new paths exist, reconcile instead of overwriting. Do not move unrelated source code or user files that happen to reside under `dev/`, and do not delete that directory if unrelated contents remain. Update only references that point to AAW-managed paths.
+
+New task triage is task-first: several related small changes that share a verification boundary become one task. Create a milestone only for a genuinely large/broad coordinated outcome needing multiple task files (usually three or more; two only when real dependencies/phases/shared exit criteria warrant it). Never create or complete a milestone for a single task. Migration itself remains `MIGRATION` control-plane work and must stop after verification.

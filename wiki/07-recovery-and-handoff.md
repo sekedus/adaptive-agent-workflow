@@ -21,7 +21,7 @@ The workflow assumes this will happen.
 On resume:
 
 ```text
-dev/now.md
+.aaw/now.md
   + current task
   + roadmap
   + git status
@@ -84,7 +84,7 @@ finish bounded unit
 
 Commits are useful recovery boundaries.
 
-The default commit policy is `ask`. Read `dev/commit-policy.md` to determine whether to ask or auto-commit at initial bootstrap, standalone planning, and task-completion checkpoints.
+The default commit policy is `ask`. Read `.aaw/commit-policy.md` to determine whether to ask or auto-commit at initial bootstrap, standalone planning, and task-completion checkpoints.
 
 `initial: auto` applies only to bootstrap. `planning: auto` applies only to a standalone milestone/task planning transaction. `task: auto` applies only after completed and verified tasks. A planning-only request gets a planning checkpoint and then stops; a combined request that explicitly names implementation uses the task checkpoint instead of pausing for a separate planning commit.
 

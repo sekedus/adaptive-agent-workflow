@@ -13,10 +13,10 @@ The agent should:
 1. install/merge workflow files;
 2. create the project's own root `README.md`;
 3. initialize project state without inventing product scope;
-4. set `dev/now.md` to `DISCOVERY_PENDING`;
-5. leave `dev/tasks/` without a product task;
+4. set `.aaw/now.md` to `DISCOVERY_PENDING`;
+5. leave `.aaw/tasks/` without a product task;
 6. validate the installation;
-7. apply `dev/commit-policy.md` (default: ask; `initial: auto` may create the checkpoint automatically after safety checks).
+7. apply `.aaw/commit-policy.md` (default: ask; `initial: auto` may create the checkpoint automatically after safety checks).
 
 The first product task is **not** created during installation.
 
@@ -67,7 +67,7 @@ The README should summarize the project, not reproduce the entire grill or roadm
 
 ## 6. Establish project constraints early
 
-Before implementation, fill in `dev/constraints.md` with what is actually known.
+Before implementation, fill in `.aaw/constraints.md` with what is actually known.
 
 ## 7. Create the first bounded task
 
@@ -83,7 +83,7 @@ A task should answer:
 
 ## 8. Establish the checkpoint
 
-`dev/now.md` should identify:
+`.aaw/now.md` should identify:
 
 ```text
 workflow phase

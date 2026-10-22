@@ -55,7 +55,7 @@ For very large work, route through `/wayfinder`.
 Run the recovery protocol:
 
 ```text
-dev/now.md
+.aaw/now.md
 -> current task
 -> git status
 -> git diff
@@ -153,7 +153,7 @@ Record important project dependencies on skill behavior in project docs if the b
 
 ## Security skill seems wrong
 
-**Do not** guess from a skill name. Open `dev/security.md` and classify the changed attack surface first.
+**Do not** guess from a skill name. Open `.aaw/security.md` and classify the changed attack surface first.
 
 Use:
 
@@ -185,7 +185,7 @@ Symptoms include: all questions arriving in one batch, missing `CONTEXT.md` upda
 
 Fix:
 
-1. Read `dev/skill-dependencies.md`.
+1. Read `.aaw/skill-dependencies.md`.
 2. Verify the child skills are installed.
 3. Reload the harness if it caches skill discovery.
 4. Re-run the parent skill.

@@ -101,7 +101,7 @@ what's next?
 
 Actions:
 
-1. read `dev/now.md`;
+1. read `.aaw/now.md`;
 2. read the current task;
 3. reconcile the worktree if the previous session may have been interrupted;
 4. continue the exact next action.

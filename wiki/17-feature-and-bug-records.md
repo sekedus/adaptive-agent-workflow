@@ -1,6 +1,6 @@
 # Task, Milestone, and Bug Records
 
-AAW keeps active work in `dev/tasks/`, broad bounded outcomes in `dev/milestones/`, and meaningful standalone bug records in `dev/bug-fixes/`.
+AAW keeps active work in `.aaw/tasks/`, broad multi-task outcomes in `.aaw/milestones/`, and meaningful standalone bug records in `.aaw/bug-fixes/`. There is no separate `features/` record type; feature work is tracked as a task and documented in project docs or ADRs only when useful.
 
 ## Tasks
 
@@ -19,7 +19,7 @@ Keep small task files concise. Use deeper planning/evidence sections only when t
 
 ## Milestones
 
-A milestone groups several related tasks when one task is too narrow for the request but a second roadmap system is unnecessary.
+A milestone groups a genuinely large/broad outcome that needs coordinated work across multiple task files, usually three or more. Two tasks may justify one when dependencies, phases, or shared exit criteria make coordination valuable. Several related small changes with one coherent acceptance/verification boundary belong in one task; a few small independent tasks do not automatically need a milestone. Never create a one-task milestone.
 
 A milestone should contain:
 
@@ -49,14 +49,14 @@ B-0001-<bug-slug>.md
 Keep active folders easy to scan while preserving the distinction between completion and cancellation:
 
 ```text
-dev/tasks/
+.aaw/tasks/
   T-xxxx-*.md
   done/
     T-xxxx-*.md
   cancelled/
     T-xxxx-*.md
 
-dev/bug-fixes/
+.aaw/bug-fixes/
   B-xxxx-*.md
   done/
     B-xxxx-*.md

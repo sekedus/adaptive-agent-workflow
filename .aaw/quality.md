@@ -76,7 +76,7 @@ Evaluate as appropriate:
 - dependency/supply-chain risk;
 - runtime attack surface.
 
-Use `dev/security.md` to map the project's actual attack surface to targeted security skills.
+Use `.aaw/security.md` to map the project's actual attack surface to targeted security skills.
 
 **Do not** treat a generic security checklist or a single AI review as a security guarantee.
 
@@ -102,7 +102,7 @@ Design agreement is not automatically implementation authorization when the chan
 
 ## 2. Verification Contract
 
-Use `dev/verification.md` as the project's concrete verification contract. Quality-gate selection answers **what** needs confidence; `dev/verification.md` answers **which commands/evidence** prove it.
+Use `.aaw/verification.md` as the project's concrete verification contract. Quality-gate selection answers **what** needs confidence; `.aaw/verification.md` answers **which commands/evidence** prove it.
 
  mark a task `VERIFIED` merely because an agent reports that a change works. Require evidence appropriate to the risk and project contract.
 
@@ -199,7 +199,7 @@ Use:
 
 ## 9. Security Gate
 
-Use `dev/security.md` to classify the attack surface first.
+Use `.aaw/security.md` to classify the attack surface first.
 
 Security routing should follow:
 

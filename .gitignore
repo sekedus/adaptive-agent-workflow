@@ -1,2 +1,2 @@
 # Keep workflow documentation in the repository.
-# Do not ignore dev/now.md, tasks, ADRs, or project context.
+# Do not ignore .aaw/ workflow state, tasks, milestones, ADRs, or project context.

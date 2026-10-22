@@ -45,7 +45,7 @@ The workflow keeps multiple design options available:
 
 ## Security skills
 
-Users do not need to memorize security-skill names. The workflow classifies the project's attack surface in `dev/security.md` and routes to the smallest relevant security workflow.
+Users do not need to memorize security-skill names. The workflow classifies the project's attack surface in `.aaw/security.md` and routes to the smallest relevant security workflow.
 
 See [Skills](10-skills.md) and [Security / Quality Gates](06-quality-gates.md) for the routing model.
 

@@ -117,7 +117,7 @@ Ask:
 The project-level routing file is:
 
 ```text
-/dev/security.md
+/.aaw/security.md
 ```
 
 It maps project characteristics to security domains and targeted skills.

@@ -55,7 +55,7 @@ implementation
 
 ## Commit policy
 
-Commit behavior is persistent in `dev/commit-policy.md` and has three independent checkpoints:
+Commit behavior is persistent in `.aaw/commit-policy.md` and has three independent checkpoints:
 
 ```yaml
 initial: ask
@@ -72,7 +72,7 @@ The default is to ask the user. The user may set each checkpoint to `auto`.
 
 ### `planning`
 
-- `ask` — offer a commit after creating/replanning a milestone and its planned task records.
+- `ask` — offer a commit after a standalone planning transaction creates/updates a task or a genuine milestone and its child tasks.
 - `auto` — commit the validated planning-only changes, only when no implementation or unrelated work is included.
 
 Planning ends without starting a task unless implementation was explicitly authorized. For a combined plan-and-named-task request, skip the separate planning checkpoint and apply the task checkpoint after the bounded transaction.
@@ -123,7 +123,7 @@ The README is not a changelog.
 
 ## Cancellation and milestone reconciliation
 
-If a task cancellation has no user-supplied reason, ask before changing the record; do not guess. Record `status: CANCELLED` and the reason in task frontmatter, move the record to `dev/tasks/cancelled/`, and strike through the task entry in its milestone. Strike through an exit criterion only if the cancelled task was the sole work needed for it. Do not delete these entries. A milestone is `COMPLETE` when every non-cancelled task is complete and every remaining exit criterion passes. If every task in a non-empty milestone is cancelled, the milestone is `CANCELLED`.
+If a task cancellation has no user-supplied reason, ask before changing the record; do not guess. Record `status: CANCELLED` and the reason in task frontmatter, move the record to `.aaw/tasks/cancelled/`, and strike through the task entry in its milestone. Strike through an exit criterion only if the cancelled task was the sole work needed for it. Do not delete these entries. A milestone is `COMPLETE` when every non-cancelled task is complete and every remaining exit criterion passes. If every task in a non-empty milestone is cancelled, the milestone is `CANCELLED`.
 
 ## Verification evidence reuse
 

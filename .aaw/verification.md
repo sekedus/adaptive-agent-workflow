@@ -46,7 +46,7 @@ Replace the generic rows with the project's actual commands and requirements aft
 
 ## Human Development Test (HDT)
 
-See `dev/hdt.md`.
+See `.aaw/hdt.md`.
 
 HDT is recommended or required only when real human/runtime behavior matters. It is not mandatory for every task.
 

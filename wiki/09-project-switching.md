@@ -34,7 +34,7 @@ Open the repository and say:
 continue
 ```
 
-The agent should rely on `dev/now.md`, the current task, and actual repository state rather than attempting to reconstruct the old conversation.
+The agent should rely on `.aaw/now.md`, the current task, and actual repository state rather than attempting to reconstruct the old conversation.
 
 ## 3. Switching models
 

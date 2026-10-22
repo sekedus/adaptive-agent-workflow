@@ -3,7 +3,7 @@
 This project uses three independent commit checkpoints:
 
 - `initial` — after Adaptive Agent Workflow bootstrap in an empty/new project.
-- `planning` — after a standalone planning transaction creates or materially updates a milestone and its planned child tasks.
+- `planning` — after a standalone planning-only transaction creates or materially updates a task, or a genuine milestone and its planned child tasks.
 - `task` — only after a task has met all acceptance and verification gates, including HDT when required.
 
 ## Defaults
@@ -44,17 +44,23 @@ task: auto
 
 ## Planning Checkpoint
 
-For a standalone planning-only request, after a milestone and its planned child tasks have been created or materially replanned:
+For a standalone planning-only request, apply this checkpoint after creating/materially updating a task record or a genuine milestone with planned child tasks:
 
-1. update the milestone, `dev/roadmap.md`, and `dev/now.md`;
-2. reconcile related parking-lot candidates without promoting them unless the user selected them;
+1. update the task or milestone, `.aaw/roadmap.md`, and `.aaw/now.md` as applicable;
+2. inspect related parking-lot candidates only when planning a genuine milestone; never promote them unless the user selected them;
 3. inspect Git status/diff and confirm the checkpoint contains only the planning changes;
 4. if `planning: ask`, offer a planning commit; if `planning: auto`, commit only when the scope is unambiguous and safe;
-5. stop after the planning checkpoint. Creating a milestone never authorizes starting a child task.
+5. stop after the planning checkpoint. Planning never authorizes implementation by itself.
 
 If the same user request explicitly authorizes implementing a named task as well, do not pause for a separate planning checkpoint; keep the plan and implementation in the same bounded transaction and apply the task checkpoint at the end. Do not create an empty or duplicate commit.
 
-Use a concise message such as:
+Use one concise message appropriate to the planning record:
+
+```text
+chore: plan T-0001 <task-name>
+```
+
+or:
 
 ```text
 chore: plan M-0001 <milestone-name>
@@ -95,6 +101,7 @@ chore: initialize adaptive agent workflow
 Planning checkpoint:
 
 ```text
+chore: plan T-xxxx <task-name>
 chore: plan M-xxxx <milestone-name>
 ```
 
@@ -112,7 +119,7 @@ The user may change the policy using natural language, for example:
 
 - `keep asking before commits`
 - `automatically commit the initial setup`
-- `auto-commit after planning milestones`
+- `auto-commit after planning tasks/milestones`
 - `auto-commit after every completed task`
 
-After changing the policy, update this file and `dev/now.md` when the change affects the current checkpoint.
+After changing the policy, update this file and `.aaw/now.md` when the change affects the current checkpoint.

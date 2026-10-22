@@ -49,7 +49,7 @@ Avoid creating abstractions solely for hypothetical reuse.
 
 ## Verification
 
-`dev/verification.md` is the project's compact verification contract.
+`.aaw/verification.md` is the project's compact verification contract.
 
 Keep historical evidence in the task/bug record or Git history rather than growing the verification contract with old test reports.
 
@@ -59,7 +59,7 @@ Keep historical evidence in the task/bug record or Git history rather than growi
 AGENTS.md
   = workflow instructions
 
-dev/* state
+.aaw/* state
   = project data / workflow state
 
 ARCHITECTURE-MAP.md

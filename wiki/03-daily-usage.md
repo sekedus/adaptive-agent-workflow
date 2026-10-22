@@ -14,7 +14,7 @@ or:
 resume
 ```
 
-The agent reads `dev/now.md`, resolves the current task, verifies task/roadmap state, and checks Git when relevant before continuing.
+The agent reads `.aaw/now.md`, resolves the current task, verifies task/roadmap state, and checks Git when relevant before continuing.
 
 ## 2. Asking a question
 
@@ -78,7 +78,7 @@ run applicable automated checks
 
 If the agent already ran automated checks successfully, it reports the commands and results; it does not ask the user to repeat them. HDT is separate and asks the user to exercise real UI/runtime behavior only when required.
 
-When the user asks to create a milestone from several work items, create the milestone and planned child tasks, update the roadmap and current-state snapshot, run state-integrity checks, apply the `planning` commit policy (`ask` by default), then stop. Do not start the first/easiest task unless the user explicitly asks for implementation too.
+Triage before creating a milestone. If several related small items share one outcome and verification boundary, create one task file and no milestone. Create a milestone only when a genuinely large/broad outcome needs coordinated work across multiple independently trackable task records, usually three or more (two only when real dependencies/phases/shared exit criteria warrant it). If the user requested planning only, leave records `PLANNED`, update the roadmap/current snapshot, apply the `planning` checkpoint, and stop; do not start implementation.
 
 A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. `planning: ask|auto` controls the checkpoint after milestone/task planning; `task: ask|auto` controls completed task checkpoints. A planning commit never authorizes implementation.
 
@@ -144,4 +144,4 @@ I'm stopping here.
 
 should cause the agent to checkpoint if the current state is safe to record.
 
-The next session can recover from `dev/now.md`, task state, roadmap state, and Git evidence.
+The next session can recover from `.aaw/now.md`, task state, roadmap state, and Git evidence.
