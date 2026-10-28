@@ -13,6 +13,20 @@ and this project follows Semantic Versioning.
 
 ### Fixed
 
+## [0.8.1] - 2026-10-28
+
+### Added
+
+- Added `AWAITING_USER_REVIEW` as a pre-close state for tasks after verification, regardless of whether HDT is required.
+- Added guidance for missing referenced attachments and for parking unrelated requests while an active task remains unfinished.
+
+### Changed
+
+- Clarified that `HDT: NOT_REQUIRED` skips human testing, not the pre-close user review.
+- Strengthened README writing rules with beginner-focused paragraph and information-preservation guidance.
+- Updated task lifecycle, state-integrity, and workflow documentation to keep tasks active until the user review is answered.
+
+
 ## [0.8.0] - 2026-10-20
 
 ### Added

@@ -1,6 +1,6 @@
 # Project Copilot Adapter
 
-> AAW_VERSION: 0.8.0
+> AAW_VERSION: 0.8.1
 
 This file is an optional VS Code Copilot adapter. The portable workflow source of truth is the root `AGENTS.md`.
 
@@ -28,12 +28,14 @@ When work becomes large or likely to exceed the current context, prefer bounded 
 
 Do not modify production code for questions, explanations, or review requests unless the user clearly requests implementation/fixing.
 
-Before calling a task complete:
+Before closing a task:
 
 - run applicable automated checks yourself and report the results; do not ask the user to repeat checks that already passed;
 - resolve HDT as `REQUIRED` or `NOT_REQUIRED` using `.aaw/verification.md`;
-- when HDT is required, keep the task active as `AWAITING_HDT` until the user's report passes; do not move it to `done/` or offer the normal completion commit early;
-- only after all required gates pass, mark the task complete, move it to `done/`, synchronize affected state artifacts, check README impact, verify state integrity, and apply `.aaw/commit-policy.md`.
+- if HDT is required, keep the task active as `AWAITING_HDT` until the user's report passes;
+- after the verification gate passes, set `AWAITING_USER_REVIEW` for both `REQUIRED` and `NOT_REQUIRED` tasks and ask whether the user wants related revisions/additions before closing;
+- if the user asks for no further changes, mark the task complete, move it to `done/`, synchronize affected state artifacts, check README impact, verify state integrity, and apply `.aaw/commit-policy.md`;
+- if the user requests an unrelated addition while the current task remains unfinished, park it in `.aaw/parking-lot.md`; do not silently expand the task.
 
 Triage work before creating records. Several related small changes that share one acceptance/verification boundary belong in one task file and do not need a milestone. Create a milestone only for a broad outcome requiring at least two independently trackable tasks. If one task is enough, do not create a one-task milestone. For a genuine milestone-planning-only request, create the planned milestone and child tasks, update roadmap/now, run state-integrity checks, apply the `planning` checkpoint, then stop without implementation.
 

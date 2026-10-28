@@ -4,7 +4,7 @@
 [![GitHub License](https://img.shields.io/github/license/sekedus/adaptive-agent-workflow?label=License)](./LICENSE)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sekedus/adaptive-agent-workflow)
 
-**Workflow version: 0.8.0**
+**Workflow version: 0.8.1**
 
 A reusable, recovery-first workflow template for AI-assisted software development.
 
@@ -76,7 +76,7 @@ The workflow activates the smallest meaningful quality gates for the change inst
 
 ## Human-friendly interaction
 
-AAW scales the amount of interaction to the work instead of forcing every change through the deepest workflow. Small local changes can remain lightweight; ambiguous, architectural, security-sensitive, or user-visible changes may use design confirmation and deeper review. When HDT is required by the project's verification contract, the task stays active until human/runtime verification passes. Automated checks are run by the agent when possible; users are not asked to repeat checks that already passed.
+AAW scales the amount of interaction to the work instead of forcing every change through the deepest workflow. Small local changes can remain lightweight; ambiguous, architectural, security-sensitive, or user-visible changes may use design confirmation and deeper review. When HDT is required by the project's verification contract, the task stays active until human/runtime verification passes. Automated checks are run by the agent when possible; users are not asked to repeat checks that already passed. After verification, every task enters `AWAITING_USER_REVIEW` before it is closed, whether or not HDT was required.
 
 The `/wait-what` skill is optional. AAW still provides the core behavior: explain what changed and why. For automated-only changes, report checks the agent actually ran. For required HDT, provide human/runtime steps, expected behavior, and what to report if it fails.
 
@@ -152,7 +152,7 @@ The template root README is not copied into target projects. In an empty/new pro
 1. The agent runs applicable automated checks and records their actual results.
 2. Resolve the effective HDT requirement from the project's verification contract.
 3. If HDT is `REQUIRED`, keep the task active as `AWAITING_HDT` until the user reports a sufficient PASS. Do not move it to `done/` or offer the normal completion commit early.
-4. If HDT is `NOT_REQUIRED`, do not ask the user to rerun automated checks that the agent already executed successfully.
+4. If HDT is `NOT_REQUIRED`, do not ask the user to rerun automated checks that the agent already executed successfully. The task still waits in `AWAITING_USER_REVIEW` before closure.
 5. Only after all required gates pass, mark the task `COMPLETE`, move it to `done/`, reconcile its linked milestone, synchronize affected state, review README impact, and check state integrity.
 6. Reuse successful application-test evidence when relevant implementation/test inputs have not changed; status/documentation-only closeout does not require rerunning product tests.
 7. Apply the `task` commit policy: ask by default, or auto-commit when `task: auto` is configured and all safety checks pass.

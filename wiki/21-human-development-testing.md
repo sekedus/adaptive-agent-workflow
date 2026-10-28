@@ -13,14 +13,15 @@ Toolchain-only changes can be `NOT_REQUIRED` when the agent has run the relevant
 ```text
 implementation
   -> agent runs automated checks and reports results
-  -> NOT_REQUIRED: mark complete only after automated evidence is recorded
+  -> NOT_REQUIRED: record automated evidence; set AWAITING_USER_REVIEW; keep task active
   -> REQUIRED: set AWAITING_HDT; keep task active/in progress; give manual test steps
   -> user reports observations
-  -> PASS: record evidence, mark COMPLETE, move to done/, then apply commit policy
+  -> PASS: record evidence, set AWAITING_USER_REVIEW, keep task active
   -> FAIL/unclear: keep task active; investigate/fix or request missing evidence; repeat relevant test
+  -> user review has no additions: mark COMPLETE, move to done/, apply commit policy
 ```
 
-If required HDT is pending, failed, or declined, the task must not be marked `COMPLETE`, moved to `done/`, or offered the normal completed-task commit checkpoint. A user's refusal does not silently waive the gate. An explicitly requested partial checkpoint commit leaves the task incomplete.
+If required HDT is pending, failed, or declined—or the pre-close user review is unanswered—the task must not be marked `COMPLETE`, moved to `done/`, or offered the normal completed-task commit checkpoint. This review is required even when HDT is `NOT_REQUIRED`. A user's refusal does not silently waive the gate. An explicitly requested partial checkpoint commit leaves the task incomplete.
 
 ## Do Not Ask Users to Repeat Agent-Run Checks
 
