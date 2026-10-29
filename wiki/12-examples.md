@@ -293,20 +293,20 @@ After the implementation and all required verification gates are satisfied, the 
 The agent should:
 
 ```text
-run automated checks
+run automated checks and record results
 -> resolve HDT requirement
--> if required, wait for HDT PASS
--> mark COMPLETE and move task to done/
--> update roadmap if status changed
--> update now
+-> if required, wait for HDT PASS while the task stays active
 -> review README impact
--> state-integrity check
--> offer commit if uncommitted
+-> set AWAITING_USER_REVIEW and ask about related revisions/additions
+-> if changes are requested, triage and re-verify affected checks
+-> if no changes are requested, mark COMPLETE and move task to done/
+-> update task/milestone/roadmap/now and run state-integrity checks
+-> apply the commit policy
 ```
 
-Example offer:
+Example pre-close review prompt after verification:
 
-> `T-0003` is complete and verified. The changes are uncommitted. A commit is recommended as a checkpoint for review and recovery. Commit now?
+> `T-0003` has passed the required verification gates and is waiting in `AWAITING_USER_REVIEW`. Do you want any related revisions or additions before I close it?
 
-The agent should not auto-commit unless explicitly authorized.
+Only after the user says there are no further changes should the agent close the task and offer the commit if `task: ask`. The agent should not auto-commit unless the configured policy allows it and all safety checks pass.
 

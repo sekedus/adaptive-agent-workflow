@@ -1,6 +1,6 @@
 # Adaptive Agent Workflow — Project Rules
 
-> AAW_VERSION: 0.8.1
+> AAW_VERSION: 0.8.2
 > Canonical version metadata: `.aaw/manifest.yml`
 > Canonical AAW source: `https://github.com/sekedus/adaptive-agent-workflow`
 
@@ -20,10 +20,10 @@ Adaptive Agent Workflow maintenance is a **control-plane operation**, not produc
 Before routing a natural-language request into normal project work, detect whether the user is asking to install, upgrade, downgrade, repair, migrate, or otherwise maintain AAW itself. Examples:
 
 ```text
-update adaptive-agent-workflow to 0.8.0
-update AAW to v0.8.0
+update adaptive-agent-workflow to 0.8.2
+update AAW to v0.8.2
 upgrade aaw
-migrate this project to AAW 0.8.0
+migrate this project to AAW 0.8.2
 ```
 
 Normalize legacy release labels:
@@ -125,10 +125,12 @@ After bootstrap:
 - no product task should be invented merely to populate `.aaw/tasks/`;
 - task IDs begin at `T-0001` only after the first real product/work requirement is defined.
 
+For installation into a project that does not already use AAW, follow `docs/workflow/aaw-installation.md`. For an existing AAW installation, use `docs/workflow/aaw-migration.md`; do not treat an upgrade as a fresh install.
+
 For an empty/new project:
 
 1. Install the workflow files.
-2. Create a user-facing root `README.md` describing the actual project state. Do not copy the template repository's agent-oriented root README verbatim.
+2. Create a user-facing root `README.md` describing the actual project state. The template repository README is a human-friendly introduction to AAW plus a short agent-routing section, but it is still template documentation—not the target project's README.
 3. Initialize `.aaw/project.md`, `.aaw/constraints.md`, `.aaw/quality.md`, `.aaw/security.md`, `.aaw/roadmap.md`, `.aaw/now.md`, and `.aaw/verification.md` to reflect the real project.
 4. Initialize `ARCHITECTURE-MAP.md` as the project's living codebase map.
 5. Set the workflow state to `DISCOVERY_PENDING` until a real project objective exists.
@@ -140,7 +142,7 @@ For an existing project:
 - merge workflow files with existing project-specific instructions;
 - reconcile project state before claiming installation is complete, including `ARCHITECTURE-MAP.md` and `.aaw/verification.md` when applicable.
 
-Never copy the template source repository's root `README.md` into an existing project merely because it exists in the template. That README is documentation for agents and for the template itself.
+Never copy the template source repository's root `README.md` into a target project merely because it exists in the template. Preserve an existing project README; for a new project, write one from the actual project facts.
 
 ---
 
@@ -548,7 +550,7 @@ Do not update the README for every internal implementation detail, small bug fix
 
 After implementation and verification, explicitly check whether the README needs an update. Then enter `AWAITING_USER_REVIEW` regardless of whether HDT was required. If the user requests no further changes, close the task; if they request changes, triage them before closing.
 
-The template repository's own root README is agent-facing documentation. When installing into an actual project, create or update the target project's README from the project's real state instead of copying template-only instructions.
+The template repository's own root README introduces AAW to humans and provides a short agent-routing section. It is not an application README and must not be copied verbatim into a target project. When installing into an actual project, preserve the project's existing README or create one from the project's real state.
 
 ---
 

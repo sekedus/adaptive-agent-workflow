@@ -39,6 +39,8 @@ Do not copy task-by-task history, implementation notes, every test result, or th
 
 Preserve an existing project README. For an empty/new project, create a concise human-facing README from the project's real state rather than copying the AAW template README.
 
+The AAW source repository's own README is a human-friendly introduction to the workflow template. It may include short instructions for agents that maintain the template, but it is not an application README and must not be copied verbatim into a target project.
+
 ## Task Completion Review
 
 Ask internally:

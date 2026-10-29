@@ -118,7 +118,7 @@ Git is the physical source of code/worktree history.
 
 `.aaw/manifest.yml` identifies the installed AAW release. The rest of `.aaw/` contains workflow-managed state and policy: current snapshot, roadmap, tasks, milestones, verification/HDT, quality/security, commit policy, and parking lot. This directory is normally tracked by Git so another session or agent can recover the project.
 
-Use `docs/` for human-facing project documentation such as design docs and ADRs. Do not put AAW runtime state back under `dev/` in a 0.8.0 project. During migration from 0.7.x, move only known AAW-owned files, not unrelated application files that happen to live under `dev/`.
+Use `docs/` for human-facing project documentation such as design docs and ADRs. Do not put AAW runtime state back under `dev/` in a 0.8.x project. During migration from 0.7.x, move only known AAW-owned files, not unrelated application files that happen to live under `dev/`.
 
 ## Why these are separate
 

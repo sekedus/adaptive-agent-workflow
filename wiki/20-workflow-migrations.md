@@ -7,9 +7,9 @@ AAW 0.7.1 introduced a dedicated control plane for upgrading, downgrading, repai
 The user does not need a migration command. Examples:
 
 ```text
-update AAW to v0.8.0
-update adaptive-agent-workflow to 0.8.0
-upgrade this project to AAW 0.8.0
+update AAW to v0.8.2
+update adaptive-agent-workflow to 0.8.2
+upgrade this project to AAW 0.8.2
 ```
 
 The agent detects workflow maintenance rather than application work.
@@ -21,7 +21,7 @@ The authoritative installed version is `.aaw/manifest.yml`:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.8.0
+AAW_VERSION: 0.8.2
 AAW_SCHEMA: 2
 ```
 
@@ -96,7 +96,7 @@ migration lock -> removed
 
 After completion, the agent stops. It must not interpret the same request as permission to start or resume application work.
 
-See [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) for the agent-facing procedure.
+See [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) for the agent-facing procedure. For a project without an existing AAW installation, use [`docs/workflow/aaw-installation.md`](../docs/workflow/aaw-installation.md).
 
 
 ## 0.7.2 workflow ergonomics
@@ -108,9 +108,9 @@ During 0.7.2 migration, existing projects should reconcile, rather than blindly 
 When migrating to 0.7.4, reconcile record lifecycle without bulk-rewriting historical files: new/materially updated task, milestone, and bug records use YAML frontmatter; create `dev/tasks/cancelled/` and `dev/bug-fixes/cancelled/`; preserve user-supplied cancellation reasons and never infer missing ones; reconcile linked milestones when task state changes; add the `planning` commit checkpoint; and document verification-evidence reuse. If a legacy task is already marked `CANCELLED` but stored in `dev/tasks/done/`, move it to `dev/tasks/cancelled/` and strike through its milestone entry. If its reason is missing, ask the user; never invent one.
 
 
-## 0.8.0 — State directory migration
+## 0.8.0 — Historical state directory migration
 
-AAW 0.8.0 moves workflow-managed state from the legacy `dev/` layout into `.aaw/`. `.aaw/manifest.yml` is authoritative; `AAW_SCHEMA` is `2`. `docs/` remains for human-facing project documentation and ADRs.
+AAW 0.8.0 moved workflow-managed state from the legacy `dev/` layout into `.aaw/`. This is a one-time historical migration for projects that predate 0.8.0; do not repeat it when upgrading between 0.8.x releases. `.aaw/manifest.yml` is authoritative; `AAW_SCHEMA` is `2`. `docs/` remains for human-facing project documentation and ADRs.
 
 During migration from 0.7.x, move only known AAW-owned files and folders, preserving IDs, frontmatter, status, cancellation reasons, HDT evidence, and milestone history. Use `git mv` for tracked records when possible. If both the old and new paths exist, reconcile instead of overwriting. Do not move unrelated source code or user files that happen to reside under `dev/`, and do not delete that directory if unrelated contents remain. Update only references that point to AAW-managed paths.
 

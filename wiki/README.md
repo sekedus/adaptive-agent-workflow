@@ -30,7 +30,7 @@ For a new project, read [Installation](01-installation.md) and [State Integrity]
 
 ## Important distinction
 
-The repository root `README.md` is the **template repository README**. When the workflow is installed into another project, do **not** overwrite that project's root `README.md` with the template README unless the user explicitly asks.
+The repository root `README.md` is a human-friendly introduction to the AAW template and includes a short agent-routing section. When the workflow is installed into another project, do **not** overwrite that project's root `README.md` with the template README unless the user explicitly asks.
 
 The `wiki/` directory is optional project documentation. Keep it in the target project when the user wants the workflow guide available locally; otherwise it can remain only in the template repository.
 

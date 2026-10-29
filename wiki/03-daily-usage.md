@@ -66,27 +66,28 @@ identify bounded issue
 A task goes through this sequence:
 
 ```text
-run applicable automated checks
+run applicable automated checks and record results
 -> decide HDT: NOT_REQUIRED or REQUIRED
 -> if REQUIRED: wait for user HDT PASS while task stays active
--> mark COMPLETE and move to done/ only after all required gates pass
--> synchronize task/roadmap/now
--> review README impact
--> state-integrity check
+-> review README impact, then set AWAITING_USER_REVIEW and keep the task active
+-> ask whether the user wants related changes before closing
+-> if changes are requested: triage them and re-verify affected checks
+-> if no changes are requested: mark COMPLETE and move to done/
+-> synchronize task/roadmap/now and check state integrity
 -> offer/perform commit according to policy
 ```
 
-If the agent already ran automated checks successfully, it reports the commands and results; it does not ask the user to repeat them. HDT is separate and asks the user to exercise real UI/runtime behavior only when required.
+If the agent already ran automated checks successfully, it reports the commands and results; it does not ask the user to repeat them. HDT is separate and asks the user to exercise real UI/runtime behavior only when required. `HDT: NOT_REQUIRED` skips the human test round, not the pre-close user review.
 
 Triage before creating a milestone. If several related small items share one outcome and verification boundary, create one task file and no milestone. Create a milestone only when a genuinely large/broad outcome needs coordinated work across multiple independently trackable task records, usually three or more (two only when real dependencies/phases/shared exit criteria warrant it). If the user requested planning only, leave records `PLANNED`, update the roadmap/current snapshot, apply the `planning` checkpoint, and stop; do not start implementation.
 
 A commit is recommended because it provides a durable review and recovery boundary. By default the agent asks. `planning: ask|auto` controls the checkpoint after milestone/task planning; `task: ask|auto` controls completed task checkpoints. A planning commit never authorizes implementation.
 
-Example when HDT is not required and the policy is `ask`:
+Example when HDT is not required:
 
-> `T-0001` is complete and verified. Automated checks passed: `npm run lint`, `npm test`, `npm run compile`. A commit is recommended as a checkpoint for review and recovery. Commit now?
+> Automated checks run by the agent passed: `npm run lint`, `npm test`, and `npm run compile`. HDT is `NOT_REQUIRED` under this project's verification contract. Task `T-0001` is waiting in `AWAITING_USER_REVIEW` and remains active. Do you want any related revisions or additions before I close it?
 
-For a task with required HDT, do not use this completion/commit message until the user reports a sufficient PASS result.
+Only after the user says there are no further changes should the agent mark the task complete, move it to `done/`, synchronize state, and follow the commit policy (which asks by default). For a task with required HDT, do not use this review prompt until the user reports a sufficient PASS result.
 
 ## 6. Initial project commit
 

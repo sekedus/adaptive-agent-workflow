@@ -13,7 +13,7 @@ Example:
 ```yaml
 AAW_ID: adaptive-agent-workflow
 AAW_SOURCE: https://github.com/sekedus/adaptive-agent-workflow
-AAW_VERSION: 0.8.0
+AAW_VERSION: 0.8.2
 AAW_SCHEMA: 2
 ```
 
@@ -55,7 +55,7 @@ Install the workflow files without blindly overwriting project-specific files. R
 
 Install the workflow files and create a **project-specific root `README.md`**.
 
-**Do not** copy the template repository's agent-facing root README verbatim into the target project.
+**Do not** copy the template repository's root README verbatim into the target project. It introduces the AAW template, but it does not describe the target application.
 
 The initial project state should be:
 
@@ -104,6 +104,8 @@ For example:
 ```
 
 See [`.aaw/skill-dependencies.md`](../.aaw/skill-dependencies.md) for the maintained matrix and installation guidance.
+
+For the full agent installation sequence, including collision handling and state validation, see [`docs/workflow/aaw-installation.md`](../docs/workflow/aaw-installation.md). For an existing AAW installation, use [`docs/workflow/aaw-migration.md`](../docs/workflow/aaw-migration.md) instead.
 
 ## 7. Verify installation
 

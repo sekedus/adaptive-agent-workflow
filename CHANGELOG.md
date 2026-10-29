@@ -13,6 +13,23 @@ and this project follows Semantic Versioning.
 
 ### Fixed
 
+## [0.8.2] - 2026-10-29
+
+### Added
+
+- Added a dedicated agent-facing installation procedure at `docs/workflow/aaw-installation.md`.
+
+### Changed
+
+- Reworked the root README into a beginner-friendly guide with separate agent installation and migration routing.
+- Clarified the difference between fresh installation and migration of an existing AAW installation.
+- Updated migration guidance to distinguish routine 0.8.x upgrades from the historical 0.7.x-to-0.8.0 state-layout migration.
+- Aligned workflow overview, wiki, agent rules, and Copilot adapter with the 0.8.1 `AWAITING_USER_REVIEW` lifecycle and milestone threshold.
+
+### Fixed
+
+- Corrected workflow specification, daily-usage guidance, quality checklist, and example wording that could incorrectly close `HDT: NOT_REQUIRED` tasks without waiting for user review.
+
 ## [0.8.1] - 2026-10-28
 
 ### Added
@@ -126,7 +143,10 @@ and this project follows Semantic Versioning.
 - AAW migration control plane, manifest, and durable migration lock.
 - State-preserving, resumable, and verifiable migration rules.
 
-[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.4...HEAD
+[Unreleased]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.8.2...HEAD
+[0.8.2]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.8.1...v0.8.2
+[0.8.1]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.8.0...v0.8.1
+[0.8.0]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.4...v0.8.0
 [0.7.4]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.3...v0.7.4
 [0.7.3]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/sekedus/adaptive-agent-workflow/compare/v0.7.1...v0.7.2
